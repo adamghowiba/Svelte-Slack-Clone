@@ -1,5 +1,5 @@
 import { Router, Request, Response, NextFunction } from "express";
-import prisma from "../controller/DatabaseController";
+import prisma from "@controller/DatabaseController";
 const router = Router();
 
 /* Verify Authorzation */

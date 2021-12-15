@@ -1,8 +1,8 @@
 const path = require('path');
 import express from 'express';
-import userRouter from './routes/user/UserEntry';
-import indexRouter from './routes/index';
-import authRouter from './routes/Auth';
+import userRouter from './api/routes/user/UserEntry';
+import indexRouter from './api/routes/index';
+import authRouter from './api/routes/Auth';
 import setupError from './loaders/setupError';
 import setupParsers from './loaders/setupParsers';
 import setupSession from './loaders/session';
@@ -13,8 +13,8 @@ const app = express();
 const server = http.createServer(app);
 
 /* Setup View Engine & Parsers */
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('views', path.join(__dirname, 'api/views'));
+app.set('view engine', 'ejs');
 app.use(setupParsers);
 
 /* Setup Sessions */

@@ -1,6 +1,6 @@
 import { Router, Request, Response, NextFunction } from "express";
-import { onError } from "../../utils/ErrorUtil";
-import prisma from "../../controller/DatabaseController";
+import { onError } from "../../../utils/ErrorUtil";
+import prisma from "@controller/DatabaseController";
 const router = Router();
 
 /* Verify Authorzation */
