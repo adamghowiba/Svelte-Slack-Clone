@@ -1,0 +1,72 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+model User {
+  id       Int       @id @default(autoincrement())
+  username String    @unique
+  messages Message[]
+
+  friends   Friendship[] @relation("friends")
+  friend_of Friendship[] @relation("friend_of")
+
+  requesting FriendRequest[] @relation("requesting")
+  requests   FriendRequest[] @relation("requests")
+}
+
+enum RelationshipStatus {
+  FRIENDS
+  MUTED
+  BLOCKED
+}
+
+model Friendship {
+  user      User               @relation(name: "friends", fields: [user_id], references: [id])
+  user_id   Int
+  friend    User               @relation(name: "friend_of", fields: [friend_id], references: [id])
+  friend_id Int
+  status    RelationshipStatus @default(FRIENDS)
+
+  @@id([user_id, friend_id])
+}
+
+enum FriendRequestStatus {
+  PENDING
+  DENIED
+  ACCEPTED
+  BLOCKED
+}
+
+model FriendRequest {
+  from_user User                @relation(name: "requesting", fields: [from_uid], references: [id])
+  from_uid  Int
+  to_user   User                @relation(name: "requests", fields: [to_uid], references: [id])
+  to_uid    Int
+  status    FriendRequestStatus @default(PENDING)
+
+  @@id([from_uid, to_uid])
+}
+
+model Message {
+  id      Int      @id @default(autoincrement())
+  message String
+  date    DateTime @default(now())
+  user    User     @relation(fields: [userId], references: [id])
+  userId  Int
+}
+
+model Session {
+  id        String   @id
+  sid       String   @unique
+  data      String
+  expiresAt DateTime
+}
