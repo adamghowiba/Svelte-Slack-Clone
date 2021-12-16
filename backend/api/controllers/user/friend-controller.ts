@@ -1,5 +1,5 @@
 import { FriendRequest } from "@prisma/client";
-import prisma from "./DatabaseController";
+import prisma from "../db-controller";
 
 const error = (error: string, status: number = 500) => {
     return { error, status };

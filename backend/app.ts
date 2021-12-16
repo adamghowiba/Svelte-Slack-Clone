@@ -1,59 +1,39 @@
-const path = require('path');
-import express from 'express';
-import userRouter from './api/routes/user/UserEntry';
-import indexRouter from './api/routes/index';
-import authRouter from './api/routes/Auth';
-import setupError from './loaders/setupError';
-import setupParsers from './loaders/setupParsers';
-import setupSession from './loaders/session';
-import http from 'http';
-import { Server } from 'socket.io';
-
+import express, { Request, Response, NextFunction } from 'express';
+import expressInitialization from './loaders/express';
+import createError from 'http-errors';
+import logger from '@logger';
+import config from '@config';
 const app = express();
-const server = http.createServer(app);
 
-/* Setup View Engine & Parsers */
-app.set('views', path.join(__dirname, 'api/views'));
-app.set('view engine', 'ejs');
-app.use(setupParsers);
+const expressLoader = new expressInitialization(app);
 
-/* Setup Sessions */
-app.use(setupSession);
+expressLoader.registerCors();
+expressLoader.setupViewEngine();
+expressLoader.registerParsers();
+expressLoader.registerSessions();
+expressLoader.registerRoutes();
 
-/* Routes */
-app.use('/', indexRouter);
-app.use('/auth', authRouter);
-app.use('/user', userRouter);
-
-/* Establish Websocket */
-const io = new Server(server, {
-  cors: {
-    origin: 'http://localhost:3000',
-    credentials: true
-  }
+/* 404 Error Handler */
+app.use((req: Request, res: Response, next: NextFunction) => {
+  next(createError(404));
 });
 
-io.on('connection', (socket) => {
-  console.log('User has connected to the socket');
-  socket.send('Websocket has been established');
+/* General Error Handler */
+app.use(function (err: any, req: Request, res: Response, next: NextFunction) {
+  res.locals.message = err.message;
+  res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  socket.on('chat_message', (message) => {
-    io.emit('new_message', {
-      ...message
-    })
-    console.log(`${message.username} says ${message.message}`)
-  })
-
-  socket.on('disconnect', () => {
-    console.log('User has disconnected from socket');
-  })
+  res.status(err.status || 500);
+  res.render('error');
 });
 
-/* Setup Error Handleing */
-app.use(setupError);
+process.on('unhandledRejection', (reason: string, promise: Promise<any>) => {
+  logger.warn(`Unhandled promise ${promise}`)
+  throw reason;
+})
 
-server.listen(5000, () => {
-  console.log('Listenting on port 5000');
+app.listen(5000, () => {
+  logger.info(`Loaded app sucessfully on port ${config.port}`)
 })
 
 export default app;

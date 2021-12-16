@@ -1,9 +1,9 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import { onError } from '../../../utils/ErrorUtil';
-import prisma from "@controller/DatabaseController";
+import prisma from "@controllers/db-controller";
 import { requestBody as ValidateFriendRequest } from '../../../validation/UserValidation';
 import { FriendshipStatus } from '@prisma/client';
-import { sendFriendRequest } from '@controller/FriendRequestController';
+import { sendFriendRequest } from '@controllers/user/friend-controller';
 const router = Router({ mergeParams: true });
 
 /* Validate User Id & Requesting User Id */

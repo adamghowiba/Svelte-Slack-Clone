@@ -1,9 +1,10 @@
 import { Router, Request, Response, NextFunction } from "express";
 import { onError } from "../../../utils/ErrorUtil";
-import prisma from "@controller/DatabaseController";
+import prisma from "@controllers/db-controller";
 const router = Router();
 
 /* Verify Authorzation */
+/* Migrated */
 router.get('/me', (req: Request, res: Response) => {
     if (!req.session?.user) return res.status(400).send('User not authorized');
     res.status(200).json(req.session.user);
