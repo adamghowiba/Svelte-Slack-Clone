@@ -39,19 +39,12 @@ model Friendship {
   @@id([user_id, friend_id])
 }
 
-enum FriendRequestStatus {
-  PENDING
-  DENIED
-  ACCEPTED
-  BLOCKED
-}
 
 model FriendRequest {
   from_user User                @relation(name: "requesting", fields: [from_uid], references: [id])
   from_uid  Int
   to_user   User                @relation(name: "requests", fields: [to_uid], references: [id])
   to_uid    Int
-  status    FriendRequestStatus @default(PENDING)
 
   @@id([from_uid, to_uid])
 }

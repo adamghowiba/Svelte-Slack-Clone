@@ -1,33 +1,85 @@
-import { FriendRequest } from "@prisma/client";
-import prisma from "../db-controller";
+import ApiError from "@errors/ApiError";
+import { userService } from "@services";
+import { catchAsync } from "@utils/ErrorUtil";
+import { Request, Response, NextFunction } from 'express';
+import { QueryParams } from "@validation/FriendRequestValidation";
+import { FriendRequestType } from "../../../globaltypes/user";
 
-const error = (error: string, status: number = 500) => {
-    return { error, status };
+/* TODO Move Function */
+const validateFriendParams = (req: Request, multipleUsers: boolean) => {
+    const userId = parseInt(req.params.id);
+    const toId = parseInt(req.params.toId);
+
+    if (!userId) throw new ApiError('User id is required');
+    if (!toId && multipleUsers) throw new ApiError('To user id is required');
+
+    if (multipleUsers) return { userId, toId };
+
+    return { userId }
 }
 
-export const sendFriendRequest = async (fromUserId: number, toUserId: number): Promise<FriendRequest> => {
-    try {
-        const findUsers = await prisma.user.findMany({
-            where: {
-                id: {
-                    in: [fromUserId, toUserId]
-                },
-            },
+/* Friend Requests */
+export const getAllRequests = catchAsync(async (req: Request<any, any, any, { type: FriendRequestType }>, res: Response) => {
+    const friendParams = validateFriendParams(req, false);
+    const { error } = QueryParams.validate(req.query);
 
-        });
+    if (error) throw new ApiError(error.message);
 
-        if (findUsers.length < 2) throw new Error("Can't find user you're attempting to request.");
+    const friendRequests = await userService.friends.findAllRequests(friendParams.userId, req.query.type);
 
-        const createRequest = await prisma.friendRequest.create({
-            data: {
-                from_uid: fromUserId,
-                to_uid: toUserId,
-                status: "PENDING"
-            }
-        });
+    res.status(200).json(friendRequests);
+});
 
-        return createRequest;
-    } catch (err) {
-        error(err);
+export const getRequestById = catchAsync(async (req: Request, res: Response) => {
+    const friendParams = validateFriendParams(req, true);
+
+    const friendRequests = await userService.friends.findRequestByIds(friendParams.userId, friendParams.toId);
+
+    res.status(200).json(friendRequests);
+});
+
+export const postRequest = catchAsync(async (req: Request, res: Response) => {
+    const friendParams = validateFriendParams(req, true);
+
+    const friendship = await userService.friends.findFriendshipById(friendParams.userId, friendParams.toId);
+
+    if (friendship) throw new ApiError("You're already friends with that user.")
+
+    const friendRequest = await userService.friends.sendRequest(friendParams.userId, friendParams.toId);
+
+    res.status(200).json(friendRequest);
+});
+
+export const updateRequest = catchAsync(async (req: Request, res: Response) => {
+    const friendParams = validateFriendParams(req, true);
+
+    const status = req.body.status;
+
+    if (status == 'accepted') {
+        const friendRequest = await userService.friends.findRequestByIds(friendParams.toId, friendParams.userId);
+        if (!friendRequest) throw new ApiError('User has not sent you a friend request');
+
+        const freindship = await userService.friends.addFriend(friendParams.userId, friendParams.toId);
+        await userService.friends.deleteRequest(friendParams.toId, friendParams.userId);
+
+        return res.status(200).json(freindship);
     }
-}
+
+});
+
+export const deleteRequest = catchAsync(async (req: Request, res: Response) => {
+    const friendParams = validateFriendParams(req, true);
+
+    const friendRequest = await userService.friends.deleteRequest(friendParams.userId, friendParams.toId);
+
+    res.status(200).json(friendRequest);
+});
+
+/* Friends */
+export const getAllFriends = catchAsync(async (req: Request, res: Response) => {
+    const friendParams = validateFriendParams(req, false);
+
+    const friendRequests = await userService.friends.findAllFriends(friendParams.userId);
+
+    res.status(200).json(friendRequests);
+});

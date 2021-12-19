@@ -23,12 +23,7 @@ export default class App {
     registerCors() {
         this.app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
     }
-
-    setupViewEngine() {
-        this.app.set('views', path.join(__dirname, 'views'));
-        this.app.set('view engine', 'jade');
-    }
-
+    
     registerParsers() {
         this.app.use(morgan('dev'));
         this.app.use(express.json());
@@ -40,7 +35,7 @@ export default class App {
         this.app.use(session);
         logger.info('Sessions have been initialized')
     }
-    
+
     registerRoutes() {
         this.app.use('/', indexRouter);
         this.app.use('/auth', authRouter);

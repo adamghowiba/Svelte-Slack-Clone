@@ -10,19 +10,25 @@
     "pretty": true,
     "baseUrl": ".",
     "paths": {
-      "@routes/*": ["api/routes/*"],
       "@controllers/*": ["api/controllers/*"],
       "@controllers": ["api/controllers"],
+      
       "@services/*": ["services/*"],
       "@services": ["services"],
-      "@validation/*": ["validation/*"],
-      "@errors/*": ["errors/*"],
+      
       "@middlewear/*": ["api/middlewears/*"],
+      "@middlewear": ["api/middlewears"],
+      
       "@config/*": ["config/*"],
       "@config": ["config"],
+      
+      "@logger": ["loaders/logger.ts"],
+      "@routes/*": ["api/routes/*"],
+      "@validation/*": ["validation/*"],
+      "@errors/*": ["errors/*"],
       "@utils/*": ["utils/*"],
       "@repo/*": ["repositories/*"],
-      "@logger": ["loaders/logger.ts"],
+      "@globaltypes/*": ["globaltypes/*"],
       "*": ["node_modules/*"]
     }
   }
