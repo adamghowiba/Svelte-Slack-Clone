@@ -28,7 +28,7 @@
 		const result = await response.json();
 		querying = false;
 
-		if (!response.ok) return (status.error = result.error);
+		if (!response.ok) return (status.error = result.message);
 		
 		$session.user = response;
 		goto('/chat');

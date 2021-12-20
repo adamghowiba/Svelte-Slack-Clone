@@ -1,4 +1,4 @@
-import { ICustomError } from "./IApiError";
+import { ICustomError } from "./ICustomError";
 
 export default class ApiError extends ICustomError {
     message: string;

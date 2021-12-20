@@ -10,6 +10,7 @@ process.on('unhandledRejection', (reason: string, promise: Promise<any>) => {
   throw reason;
 })
 
+
 const expressLoader = new expressInitialization(app);
 expressLoader.registerCors();
 expressLoader.registerParsers();

@@ -24,7 +24,8 @@ const login = catchAsync(async (req: Request, res: Response) => {
     const foundUser = await userService.findByUsername(req.body.username);
 
     if (!foundUser) throw new ApiError(`Username ${req.body.username} does not exsist.`)
-
+    
+    req.session.user = foundUser;
     res.status(200).send(foundUser);
 });
 

@@ -4,13 +4,14 @@ import { catchAsync } from "@utils/ErrorUtil";
 import { Request, Response, NextFunction } from 'express';
 import { QueryParams } from "@validation/FriendRequestValidation";
 import { FriendRequestType } from "../../../globaltypes/user";
+import logger from "@logger";
 
 /* TODO Move Function */
 const validateFriendParams = (req: Request, multipleUsers: boolean) => {
     const userId = parseInt(req.params.id);
     const toId = parseInt(req.params.toId);
 
-    if (!userId) throw new ApiError('User id is required');
+    if (!userId) throw new ApiError(`User ${userId} is required`);
     if (!toId && multipleUsers) throw new ApiError('To user id is required');
 
     if (multipleUsers) return { userId, toId };

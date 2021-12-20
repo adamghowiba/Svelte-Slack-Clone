@@ -1,3 +1,19 @@
+<!-- <script context="module" lang="ts">
+	import type { Load } from '@sveltejs/kit';
+	export const load: Load = async ({ session }) => {
+		if (!session.user) {
+			return {
+				status: 302,
+				redirect: '/'
+			};
+		}
+		return {
+			status: 200
+		};
+	};
+</script> -->
+
+
 <script lang="ts">
 	import Sidebar from '$lib/chat/sidebar/Sidebar.svelte';
 </script>

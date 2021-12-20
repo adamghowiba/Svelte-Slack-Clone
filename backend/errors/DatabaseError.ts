@@ -1,4 +1,4 @@
-import { ICustomError } from '@errors/IApiError';
+import { ICustomError } from '@errors/ICustomError';
 import { Prisma } from '@prisma/client';
 import { PrismaClientKnownRequestError, PrismaClientUnknownRequestError, PrismaClientValidationError } from '@prisma/client/runtime';
 

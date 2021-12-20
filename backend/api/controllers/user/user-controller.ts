@@ -3,7 +3,6 @@ import { userService } from '@services';
 import { onError } from '@utils/ErrorUtil';
 import logger from '@logger';
 import ApiError from '@errors/ApiError';
-import { validUserId } from '@middlewear/user-mw';
 import * as friends from '@controllers/user/friend-controller';
 import { catchAsync } from '@utils/ErrorUtil';
 

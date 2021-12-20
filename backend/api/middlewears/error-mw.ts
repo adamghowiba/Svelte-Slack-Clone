@@ -1,6 +1,5 @@
 import { DatabaseError } from '@errors/DatabaseError';
-import { ICustomError } from '@errors/IApiError';
-import { IDatabseError } from '@errors/IDatabaseError';
+import { ICustomError } from '@errors/ICustomError';
 import logger from '@logger';
 import { Request, Response, NextFunction } from 'express';
 import createError from 'http-errors';
