@@ -22,6 +22,7 @@ export default class App {
 
     registerCors() {
         this.app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+        return this;
     }
     
     registerParsers() {
@@ -29,11 +30,13 @@ export default class App {
         this.app.use(express.json());
         this.app.use(express.urlencoded({ extended: false }));
         this.app.use(cookieParser());
+        return this;
     }
 
     registerSessions() {
         this.app.use(session);
         logger.info('Sessions have been initialized')
+        return this;
     }
 
     registerRoutes() {
@@ -41,6 +44,7 @@ export default class App {
         this.app.use('/auth', authRouter);
         this.app.use('/user', userRouter);
         logger.info('API Routes registered sucessfully')
+        return this;
     }
 
     /***

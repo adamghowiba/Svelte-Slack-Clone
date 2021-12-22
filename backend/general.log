@@ -2545,3 +2545,737 @@ info: [object Object],[object Object],[object Object]
 info: [object Object],[object Object],[object Object]
 info: [object Object],[object Object],[object Object]
 info: [object Object],[object Object],[object Object]
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+error: Error: Username fuckme does not exsist.
+error: Error: User NaN is required
+info: [object Object],[object Object],[object Object]
+info: [object Object],[object Object],[object Object]
+info: [object Object],[object Object],[object Object]
+info: [object Object],[object Object],[object Object]
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: User has connected
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: User has connect to socket.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: User has connect to socket.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: User has connect to socket.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: User has connect to socket.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: User has connect to socket.
+info: User says The message
+info: User says The message
+info: User says The message
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: User has connect to socket.
+info: User says The message
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: User has connect to socket.
+info: User says The message
+info: User says The message
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+warn: Unhandled promise [object Promise]
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+warn: Unhandled promise [object Promise]
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+warn: Unhandled promise [object Promise]
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+error: Error
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+error: Fuck that aint work
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+error: Fuck that aint work
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+error: Error: Fuck that aint work
+    at C:\Code\Chatapp\backend\api\controllers\db-controller.ts:11:15
+    at Generator.next (<anonymous>)
+    at C:\Code\Chatapp\backend\api\controllers\db-controller.ts:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (C:\Code\Chatapp\backend\api\controllers\db-controller.ts:4:12)
+    at connectDb (C:\Code\Chatapp\backend\api\controllers\db-controller.ts:9:37)
+    at Object.<anonymous> (C:\Code\Chatapp\backend\app.ts:18:10)
+    at Module._compile (internal/modules/cjs/loader.js:1063:30)
+    at Module.m._compile (C:\Code\Chatapp\backend\node_modules\ts-node\src\index.ts:1371:23)
+    at Module._extensions..js (internal/modules/cjs/loader.js:1092:10)
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+error: Error: 
+    at C:\Code\Chatapp\backend\api\controllers\db-controller.ts:11:15
+    at Generator.next (<anonymous>)
+    at C:\Code\Chatapp\backend\api\controllers\db-controller.ts:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (C:\Code\Chatapp\backend\api\controllers\db-controller.ts:4:12)
+    at connectDb (C:\Code\Chatapp\backend\api\controllers\db-controller.ts:9:37)
+    at Object.<anonymous> (C:\Code\Chatapp\backend\app.ts:18:10)
+    at Module._compile (internal/modules/cjs/loader.js:1063:30)
+    at Module.m._compile (C:\Code\Chatapp\backend\node_modules\ts-node\src\index.ts:1371:23)
+    at Module._extensions..js (internal/modules/cjs/loader.js:1092:10)
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+error: [object Object]
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+error: [object Object]
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+error: hello
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+error: [object Object]
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+error: Error log {"user":"adam"}
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+error: Error log {"error":{"statusCode":500}}
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+error: Error log {"statusCode":500}
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+error: Error log {"statusCode":500}
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+error: Error log {"statusCode":500}
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+error: Database connection failed!  {"statusCode":500}
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+error: Database connection failed! Reason: unknown {"statusCode":500}
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+error: Database connection failed! Reason: Big error mate {"statusCode":500}
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: A new socker user has connected
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: A new socker user has connected
+info: Socket user has disconnected
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: A new socker user has connected
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: A new socker user has connected
+info: adamscode has joined room projects
+info: adamscode has joined room projects
+info: adamscode has joined room projects
+info: adamscode has joined room projects
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: A new socker user has connected
+info: adamscode has joined room projects
+info: adamscode has joined room projects
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: A new socker user has connected
+info: A new socker user has connected
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: A new socker user has connected AbUPmhF2ESqhjJRSAAAB
+info: A new socker user has connected TYOomFnyF0PparNNAAAD
+info: adamscode has joined room projects
+info: adamscode has joined room projects
+info: frank has joined room projects
+info: frank has joined room projects
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: A new socker user has connected YDPLn8S9O3hcpMwRAAAB
+info: Databse connection established successfully.
+info: adamscode has joined room projects
+info: adamscode has joined room projects
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: A new socker user has connected wz6CS5U20b89EHz8AAAB
+info: adamscode has joined room projects
+info: A new socker user has connected osA5iQLtQRAtrXkYAAAD
+info: frank has joined room projects
+info: Socket user has disconnected
+info: A new socker user has connected TLcmG-C1fcYcEgYPAAAF
+info: A new socker user has connected tkYTNPYh6ot4YMQYAAAH
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: A new socker user has connected L2gEH7HsMql-MZ-BAAAB
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: A new socker user has connected Pq1XpNM-IjHK0glwAAAB
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: A new socker user has connected o0OPLzQbTyuwSvL6AAAB
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: A new socker user has connected X9UoAMbFXGTsJDU4AAAB
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: A new socker user has connected wPQbIg_WCZlKhMPPAAAB
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: A new socker user has connected SigaP4NIBmp0PvbQAAAB
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: A new socker user has connected K1A30O4gp0fclnblAAAB
+info: Frank has joined room projects
+info: A new socker user has connected M6UgSTg5veXyiWy4AAAD
+info: Adam has joined room projects
+info: A new socker user has connected rp2f9TCN4KNQk03QAAAF
+info: Dan has joined room projects
+info: Socket user has disconnected
+info: A new socker user has connected 4o9ucmmhdDelJVdgAAAH
+info: Dan has joined room projects
+info: Socket user has disconnected
+info: A new socker user has connected W8xzijrW1DyH5CzuAAAJ
+info: Dan has joined room projects
+info: Socket user has disconnected
+info: A new socker user has connected 9fDmRv2AMo_o_VSOAAAL
+info: Dan has joined room projects
+info: Socket user has disconnected
+info: A new socker user has connected Hj1iUTgLrpDj12iNAAAN
+info: Dan has joined room projects
+info: Socket user has disconnected
+info: A new socker user has connected uvyzCSOemzZ5hjW1AAAP
+info: Dan has joined room projects
+info: Dan has joined room projects
+info: Dan has joined room projects
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: A new socker user has connected 2CDH3DfqGVOeJBahAAAB
+info: A new socker user has connected 3PYbFzPStCUz-mCwAAAD
+info: A new socker user has connected Q_2t3A_NLQxLfykkAAAF
+info: Dan has joined room projects
+info: Dan has joined room projects
+info: Dan has joined room projects
+info: Adam has joined room projects
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: A new socker user has connected KuDzYu8-Of3-ESBvAAAB
+info: Dan has joined room projects
+info: A new socker user has connected Ctnjm3emlmh78mTQAAAD
+info: Frank has joined room projects
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: A new socker user has connected L-_BtSwRr11jMVokAAAB
+info: Socket user has disconnected
+info: [object Set]
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: A new socker user has connected NlxCUJRXrUAtpRoSAAAB
+info: Databse connection established successfully.
+info: Socket user has disconnected
+info: A new socker user has connected cTIqfRldJyqU6OTkAAAD
+info: Dan has joined room projects
+info: Socket user has disconnected
+info: A new socker user has connected 7glhH8Vy8HgCZ4icAAAF
+info: Dan has joined room projects
+info: Dan has joined room projects
+info: Socket user has disconnected
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: A new socker user has connected 8oxRJNzTN3Q1Hy5AAAAB
+info: Dan has joined room projects
+info: Socket user has disconnected
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Frank has joined room projects
+info: Adam has joined room projects
+info: Socket user has disconnected
+info: Socket user has disconnected
+info: Dan has joined room projects
+info: Adam has joined room projects
+info: Socket user has disconnected
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: [object Object],[object Object],[object Object]
+info: [object Object],[object Object],[object Object]
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Socket user has disconnected
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Frank has joined room projects
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Frank has joined room projects
+info: Databse connection established successfully.
+info: Frank has joined room projects
+info: Socket 4y0OJNRP_9suXFZzAAAB has disconnected
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Socket SX7iOdV1W8ONAf9KAAAB has disconnected
+info: Socket HcBSqpMcmY6gvYKkAAAD has disconnected
+info: Socket W7qgcBhcDVxtzwSWAAAF has disconnected
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Socket SeSQj2ucYgYt2XVLAAAB has disconnected
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Socket JfqKSBtBI9RdRcWIAAAB has disconnected
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Socket -uEHQoWi9UHZqyjCAAAB has disconnected
+info: Socket -uEHQoWi9UHZqyjCAAAB has disconnected
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+warn: Unhandled promise [object Promise]
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.

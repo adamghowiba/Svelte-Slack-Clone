@@ -1,0 +1,1 @@
+const adam = { name: 'adam', name3: 'adam', name2: 'adam', n5ame: 'adam', nam3e: 'adam', name1: 'adam', nam3e5: 'adam', nam3e7: 'adam', nam3es: 'adam' };

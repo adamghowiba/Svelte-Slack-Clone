@@ -1,6 +1,6 @@
 import winston, { format } from 'winston';
 import config, { isProduction } from "@config";
-const { combine, timestamp, printf, simple, cli } = format;
+const { combine, timestamp, printf, simple, cli, errors } = format;
 
 const productionLogOutput = printf(({ level, message, timestamp }) => {
     return `${timestamp} - ${level.toUpperCase()}: ${message}`;
@@ -10,7 +10,6 @@ const stageOptions = {
     production: {
         format: combine(timestamp({ format: 'MM/DD HH:mm' }), productionLogOutput),
         transports: [
-            new winston.transports.File({ filename: 'error.log', level: 'error' }),
             new winston.transports.Console({ level: 'warn' }),
         ]
     },
@@ -28,6 +27,7 @@ const logger = winston.createLogger({
     format: isProduction ? stageOptions.production.format : stageOptions.development.format,
     transports: [
         ...stageOptions[isProduction ? 'production' : 'development'].transports,
+        new winston.transports.File({ filename: 'error.log', level: 'error' }),
         new winston.transports.File({ filename: 'general.log' }),
     ],
 })

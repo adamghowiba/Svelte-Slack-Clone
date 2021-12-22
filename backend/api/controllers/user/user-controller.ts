@@ -6,7 +6,7 @@ import ApiError from '@errors/ApiError';
 import * as friends from '@controllers/user/friend-controller';
 import { catchAsync } from '@utils/ErrorUtil';
 
-/* TODO: Implement async catch handler to avoid try { catch } blocks */
+// TODO: Implement async catch handler to avoid try { catch } blocks
 const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const allUsers = await userService.findAll();

@@ -1,0 +1,37 @@
+error: Error
+error: Fuck that aint work
+error: Fuck that aint work
+error: Error: Fuck that aint work
+    at C:\Code\Chatapp\backend\api\controllers\db-controller.ts:11:15
+    at Generator.next (<anonymous>)
+    at C:\Code\Chatapp\backend\api\controllers\db-controller.ts:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (C:\Code\Chatapp\backend\api\controllers\db-controller.ts:4:12)
+    at connectDb (C:\Code\Chatapp\backend\api\controllers\db-controller.ts:9:37)
+    at Object.<anonymous> (C:\Code\Chatapp\backend\app.ts:18:10)
+    at Module._compile (internal/modules/cjs/loader.js:1063:30)
+    at Module.m._compile (C:\Code\Chatapp\backend\node_modules\ts-node\src\index.ts:1371:23)
+    at Module._extensions..js (internal/modules/cjs/loader.js:1092:10)
+error: Error: 
+    at C:\Code\Chatapp\backend\api\controllers\db-controller.ts:11:15
+    at Generator.next (<anonymous>)
+    at C:\Code\Chatapp\backend\api\controllers\db-controller.ts:8:71
+    at new Promise (<anonymous>)
+    at __awaiter (C:\Code\Chatapp\backend\api\controllers\db-controller.ts:4:12)
+    at connectDb (C:\Code\Chatapp\backend\api\controllers\db-controller.ts:9:37)
+    at Object.<anonymous> (C:\Code\Chatapp\backend\app.ts:18:10)
+    at Module._compile (internal/modules/cjs/loader.js:1063:30)
+    at Module.m._compile (C:\Code\Chatapp\backend\node_modules\ts-node\src\index.ts:1371:23)
+    at Module._extensions..js (internal/modules/cjs/loader.js:1092:10)
+error: [object Object]
+error: [object Object]
+error: hello
+error: [object Object]
+error: Error log {"user":"adam"}
+error: Error log {"error":{"statusCode":500}}
+error: Error log {"statusCode":500}
+error: Error log {"statusCode":500}
+error: Error log {"statusCode":500}
+error: Database connection failed!  {"statusCode":500}
+error: Database connection failed! Reason: unknown {"statusCode":500}
+error: Database connection failed! Reason: Big error mate {"statusCode":500}

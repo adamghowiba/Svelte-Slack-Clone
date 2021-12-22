@@ -8,6 +8,7 @@
     "sourceMap": true,
     "outDir": "dist",
     "pretty": true,
+    "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
       "@controllers/*": ["api/controllers/*"],
@@ -28,7 +29,6 @@
       "@errors/*": ["errors/*"],
       "@utils/*": ["utils/*"],
       "@repo/*": ["repositories/*"],
-      "@globaltypes/*": ["globaltypes/*"],
       "*": ["node_modules/*"]
     }
   }

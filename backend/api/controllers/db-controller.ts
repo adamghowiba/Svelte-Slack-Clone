@@ -1,7 +1,24 @@
+import config from '@config';
+import logger from '@logger';
 import { PrismaClient } from '@prisma/client';
 
-const prismaClient = new PrismaClient({
-    errorFormat: 'minimal'
-});
+declare global {
+    var prisma: PrismaClient
+}
 
-export default prismaClient
+const prisma = global.prisma || new PrismaClient({ errorFormat: 'minimal' });
+
+if (config.isDevelopment) global.prisma = prisma;
+
+export const connectDb = async () => {
+    try {
+        await prisma.$connect()
+        logger.info('Databse connection established successfully.')
+    } catch (error) {
+        const { message, stack, statusCode } = error;
+        logger.error(`Database connection failed!`, { message, stack, statusCode });
+        process.exitCode = 1;
+    }
+}
+
+export default prisma;

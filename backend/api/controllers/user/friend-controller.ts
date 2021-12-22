@@ -3,10 +3,10 @@ import { userService } from "@services";
 import { catchAsync } from "@utils/ErrorUtil";
 import { Request, Response, NextFunction } from 'express';
 import { QueryParams } from "@validation/FriendRequestValidation";
-import { FriendRequestType } from "../../../globaltypes/user";
+import { FriendRequestType } from "../../../types/user";
 import logger from "@logger";
 
-/* TODO Move Function */
+// TODO Move function
 const validateFriendParams = (req: Request, multipleUsers: boolean) => {
     const userId = parseInt(req.params.id);
     const toId = parseInt(req.params.toId);

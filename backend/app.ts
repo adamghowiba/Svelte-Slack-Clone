@@ -1,27 +1,38 @@
-import express, { Request, Response, NextFunction } from 'express';
+import express from 'express';
 import expressInitialization from './loaders/express';
-import { errorHandler } from '@middlewear';
 import logger from '@logger';
 import config from '@config';
+import { errorHandler } from '@middlewear';
+import http from 'http';
+import { InitializeSocket } from './socket';
+import { connectDb } from '@controllers/db-controller';
 const app = express();
+const server = http.createServer(app);
 
 process.on('unhandledRejection', (reason: string, promise: Promise<any>) => {
   logger.warn(`Unhandled promise ${promise}`)
   throw reason;
 })
 
+/* Setup Database Connection */
+connectDb();
 
-const expressLoader = new expressInitialization(app);
-expressLoader.registerCors();
-expressLoader.registerParsers();
-expressLoader.registerSessions();
-expressLoader.registerRoutes();
+/* Initlize Express Application */
+new expressInitialization(app)
+  .registerCors()
+  .registerParsers()
+  .registerSessions()
+  .registerRoutes();
 
-// /* Error Handleing */
+/* Setup Socket Handler */
+const socket = InitializeSocket(server);
+
+/* Error Handleing */
 app.use(errorHandler.notFoundError);
 app.use(errorHandler.apiError);
 
-app.listen(5000, () => {
+/* Lights, Camera, Action. */
+server.listen(config.port, () => {
   logger.info(`Loaded app sucessfully on port ${config.port}`)
 })
 

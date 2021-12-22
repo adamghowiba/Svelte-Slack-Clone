@@ -4,7 +4,7 @@ import logger from '@logger';
 import { Request, Response, NextFunction } from 'express';
 import createError from 'http-errors';
 
-/* TODO: Handle JOI errors */
+// TODO: Handle JOI errors
 
 /* 404 Error */
 export const notFoundError = ((req: Request, res: Response, next: NextFunction) => {
