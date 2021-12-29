@@ -19,7 +19,7 @@ router.get('/:id', userController.getUserById);
 
 /* User Friends Routes */
 router.route('/:id/friends')
-    .get(verifyCache(100), userController.friends.getAllFriends)
+    .get(userController.friends.getAllFriends)
     .post()
     .put()
     .delete();

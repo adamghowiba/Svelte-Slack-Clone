@@ -4,7 +4,7 @@
 	import { messages, user } from '$lib/stores';
 	import { session } from '$app/stores';
 	import ChannelBio from '$lib/chat/ChannelBio.svelte';
-
+	
 
 	function submitMessage(event: CustomEvent) {
 		let attached = false;

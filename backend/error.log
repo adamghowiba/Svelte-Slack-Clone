@@ -35,3 +35,10 @@ error: Error log {"statusCode":500}
 error: Database connection failed!  {"statusCode":500}
 error: Database connection failed! Reason: unknown {"statusCode":500}
 error: Database connection failed! Reason: Big error mate {"statusCode":500}
+error: Error: Unauthorized
+error: Error: User NaN is required
+error: Error: Unauthorized
+error: Error: User NaN is required
+error: Error: Unauthorized
+error: Error: User NaN is required
+error: Error: User NaN is required

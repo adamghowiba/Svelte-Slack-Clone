@@ -4,31 +4,24 @@
 	import ChannelPreview from './ChannelPreview.svelte';
 	import Search from './Search.svelte';
 	import SidebarGroup from './SidebarGroup.svelte';
-
-	let usersMock = [
+	let mockChannels = [
 		{
-			username: 'Adam Ghowiba',
-			chanel: 'Projects',
-			notifications: 5
+			chanel: 'projects',
 		},
 		{
-			username: 'Nathan Ewuin',
-			chanel: 'Developers',
+			chanel: 'developers',
 			notifications: 2
 		},
 		{
-			username: 'Elon Musk',
-			chanel: 'Designers',
+			chanel: 'designers',
 			notifications: 400
 		},
 		{
-			username: 'Zsolt Merwin',
-			chanel: 'Admin Chat',
+			chanel: 'admin',
 			notifications: 0
 		},
 		{
-			username: 'Mark Raymon',
-			chanel: 'UX Designers',
+			chanel: 'ux',
 			notifications: 0
 		}
 	];
@@ -60,9 +53,9 @@
 			<h4>{error}</h4>
 		{/await}
 	</SidebarGroup>
-	<SidebarGroup title="Direct messages">
-		{#each usersMock as user}
-			<ChannelPreview name={user.chanel} notifications={user.notifications} type="group" />
+	<SidebarGroup title="Group Chats">
+		{#each mockChannels as channel}
+			<ChannelPreview name={channel.chanel} notifications={channel.notifications} type="group" />
 		{/each}
 	</SidebarGroup>
 </section>

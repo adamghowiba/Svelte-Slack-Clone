@@ -14,9 +14,9 @@
 
 	function handleKeyDown(event: KeyboardEvent) {
 		if (event.key == 'Enter' && !event.shiftKey) {
-			// event.preventDefault();
-
+			
 			if (value) {
+				event.preventDefault();
 				dispatch('submitMessage', value);
 				value = '';
 			}

@@ -4,6 +4,7 @@
 
 	import Button from '$lib/global/Button.svelte';
 	import TextInput from '$lib/global/TextInput.svelte';
+import { connectClient } from '$lib/socket';
 
 	let value: string;
 	let status = {
@@ -33,6 +34,7 @@
 		$session.user = response;
 		goto('/chat');
 		status.success = 'Sucessful login. Redirecting...';
+		connectClient();
 	};
 </script>
 

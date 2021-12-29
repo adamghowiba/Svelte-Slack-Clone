@@ -7,7 +7,7 @@
 	export let notifications: number = 0;
 </script>
 
-<a href={name} class="wrap" sveltekit:prefetch>
+<a href='/chat/{type}/{name}' class="wrap" sveltekit:prefetch>
 	{#if type == 'user'}
 		<img
 			src="https://avatars.dicebear.com/api/initials/{name}.svg?r=50&fontSize=40"
