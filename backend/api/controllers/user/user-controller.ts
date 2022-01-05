@@ -5,6 +5,7 @@ import logger from '@logger';
 import ApiError from '@errors/ApiError';
 import * as friends from '@controllers/user/friend-controller';
 import { catchAsync } from '@utils/ErrorUtil';
+import { webSocket } from '../../../socket';
 
 // TODO: Implement async catch handler to avoid try { catch } blocks
 const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
@@ -15,6 +16,8 @@ const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
     } catch (error) {
         next(error);
     }
+
+    // webSocket.emit('cache:users')
 }
 
 const getUserById = async (req: Request, res: Response, next: NextFunction) => {

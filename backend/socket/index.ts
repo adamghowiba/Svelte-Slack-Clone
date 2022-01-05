@@ -17,11 +17,13 @@ const SOCKET_SERVER_CONFIG: Partial<ServerOptions> = {
 	path: '/socket.io'
 };
 
+
 /**
  * Initialize the socket server, and register the needed socket handlers.
  * @param {HttpServer} httpServer The HTTP server that will create the socket server.
  * @returns {io} Returns the created `Socket IO Server`
  */
+let webSocket: Socket;
 export const InitializeSocket = (httpServer: HttpServer): SocketServer => {
 	const io = new SocketServer(httpServer, SOCKET_SERVER_CONFIG);
 	io.use(validateUser);
@@ -31,6 +33,7 @@ export const InitializeSocket = (httpServer: HttpServer): SocketServer => {
 		registerRoomHandler(io, socket);
 		registerMessageHandler(io, socket);
 		handleDisconnect(socket);
+		webSocket = socket;
 	};
 
 	io.on('connection', registerHandlers);
@@ -43,6 +46,8 @@ const handleSocketError = (socket: Socket) => {
         socket.disconnect();
     })
 }
+
+export {webSocket};
 
 declare module 'socket.io' {
 	interface Socket {

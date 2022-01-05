@@ -1,62 +1,83 @@
 <script lang="ts">
-	import { session } from '$app/stores';
-
-	import ChannelPreview from './ChannelPreview.svelte';
-	import Search from './Search.svelte';
-	import SidebarGroup from './SidebarGroup.svelte';
+	import { session } from "$app/stores";
+	import { fetchFriendsList, fetchUsersList } from "$lib/utils/requestUtils";
+	import ChannelPreview from "./ChannelPreview.svelte";
+	import Search from "./Search.svelte";
+	import SidebarGroup from "./SidebarGroup.svelte";
 	let mockChannels = [
 		{
-			chanel: 'projects',
+			chanel: "projects"
 		},
 		{
-			chanel: 'developers',
+			chanel: "developers",
 			notifications: 2
 		},
 		{
-			chanel: 'designers',
+			chanel: "designers",
 			notifications: 400
 		},
 		{
-			chanel: 'admin',
+			chanel: "admin",
 			notifications: 0
 		},
 		{
-			chanel: 'ux',
+			chanel: "ux",
 			notifications: 0
 		}
 	];
 
-	async function loadFriends() {
-		const response = await fetch(`http://localhost:5000/user/${$session.user.id}/friends`, {
-			method: 'GET',
-			credentials: 'include'
-		});
-		const result = await response.json();
+	/* 
+	Cache strat
+	- Cache the data client side with a last updated time.
 
-		if (!response.ok) return Promise.reject(result.message);
+	- When the user views there friends use a worker to make a request to the database
 
-		return result;
-	}
-	const promise = loadFriends();
+	- if the last updated time in the database is the same send the cached results from the backend
+	- if different make query & update cahce through web worker. 
+
+	ISSUE: When is it determined when a user views there friends?
+
+	ISSUE: Using websockets doesn't update if they're offline.
+
+	Sol: Add custom que events attached to a user in the database. such as
+	- NewFriend
+	- NewMessages
+
+	Than when the apap loads use web worker to check if that user has any unseen events. 
+	If they do run a task specfic to that event to update the client side cache.  
+	*/
 </script>
 
 <section>
 	<Search />
+
+	<!-- Direct Messages -->
 	<SidebarGroup title="Direct messages">
-		{#await promise}
-			<h4>Loading....</h4>
+		{#await fetchFriendsList($session.user.id)}
+			<h3>Loading...</h3>
 		{:then friends}
-			{#each friends as userFriend}
-				<ChannelPreview name={userFriend.friend.username} notifications={0} type="user" />
+			{#each friends || [] as userFriend}
+				<ChannelPreview name={userFriend?.friend?.username} notifications={0} type="user" />
 			{/each}
-		{:catch error}
-			<h4>{error}</h4>
 		{/await}
 	</SidebarGroup>
+
+	<!-- Group Chats -->
 	<SidebarGroup title="Group Chats">
 		{#each mockChannels as channel}
 			<ChannelPreview name={channel.chanel} notifications={channel.notifications} type="group" />
 		{/each}
+	</SidebarGroup>
+
+	<!-- All Users -->
+	<SidebarGroup title="All users">
+		{#await fetchUsersList()}
+			<h3>Loading...</h3>
+		{:then users}
+			{#each users || [] as user}
+				<ChannelPreview name={user.username} notifications={0} type="user" />
+			{/each}
+		{/await}
 	</SidebarGroup>
 </section>
 

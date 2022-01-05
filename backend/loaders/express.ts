@@ -3,6 +3,7 @@ const morgan = require('morgan');
 import path from 'path';
 import userRouter from '@routes/User';
 import indexRouter from '@routes/index';
+import messageRouter from '@routes/Messages';
 import authRouter from '@routes/Auth';
 import cors from 'cors';
 import express, { Application, Request, Response, NextFunction } from 'express';
@@ -43,6 +44,7 @@ export default class App {
         this.app.use('/', indexRouter);
         this.app.use('/auth', authRouter);
         this.app.use('/user', userRouter);
+        this.app.use('/messages', messageRouter);
         logger.info('API Routes registered sucessfully')
         return this;
     }

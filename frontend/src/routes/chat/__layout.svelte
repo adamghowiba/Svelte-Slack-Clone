@@ -12,10 +12,14 @@
 		};
 	};
 </script> -->
-
-
 <script lang="ts">
-	import Sidebar from '$lib/chat/sidebar/Sidebar.svelte';
+	import Sidebar from "$lib/chat/sidebar/Sidebar.svelte";
+	import { socket } from "$lib/socket";
+	import { onMount } from "svelte";
+
+	onMount(() => {
+		if (!socket.connected) socket.connect();
+	});
 </script>
 
 <section class="wrapper">

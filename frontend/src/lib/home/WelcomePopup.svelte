@@ -1,10 +1,9 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
-	import { session } from '$app/stores';
+	import { goto } from "$app/navigation";
+	import { session } from "$app/stores";
 
-	import Button from '$lib/global/Button.svelte';
-	import TextInput from '$lib/global/TextInput.svelte';
-import { connectClient } from '$lib/socket';
+	import Button from "$lib/global/Button.svelte";
+	import TextInput from "$lib/global/TextInput.svelte";
 
 	let value: string;
 	let status = {
@@ -18,11 +17,11 @@ import { connectClient } from '$lib/socket';
 		status.success = null;
 		querying = true;
 
-		const response = await fetch('http://localhost:5000/auth/login', {
-			method: 'POST',
-			credentials: 'include',
+		const response = await fetch("http://localhost:5000/auth/login", {
+			method: "POST",
+			credentials: "include",
 			headers: {
-				'Content-Type': 'application/json'
+				"Content-Type": "application/json"
 			},
 			body: JSON.stringify({ username: value })
 		});
@@ -30,11 +29,9 @@ import { connectClient } from '$lib/socket';
 		querying = false;
 
 		if (!response.ok) return (status.error = result.message);
-		
-		$session.user = response;
-		goto('/chat');
-		status.success = 'Sucessful login. Redirecting...';
-		connectClient();
+
+		goto("/chat");
+		status.success = "Sucessful login. Redirecting...";
 	};
 </script>
 
@@ -44,8 +41,7 @@ import { connectClient } from '$lib/socket';
 			class="status"
 			class:error={status.error}
 			class:success={status.success}
-			on:click={() => (status.error = null)}
-		>
+			on:click={() => (status.error = null)}>
 			<p>{status.success || status.error}</p>
 		</div>
 	{/if}

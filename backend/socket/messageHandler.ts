@@ -1,34 +1,45 @@
 import { Server, Socket } from 'socket.io';
-import { Server as HttpServer } from 'http';
 import logger from '@logger';
 import prisma from '@controllers/db-controller';
+import cache from '@utils/CacheUtils';
 
-interface MessagePayload {
-    room: string
-    message: string
+interface GroupMessage {
+	room: string;
+	message: string;
+}
+
+interface PrivateMessage {
+	username: string;
+	message: string;
+	socketId?: string | number;
+	userId?: number;
 }
 
 export default (io: Server, socket: Socket) => {
+	const onGroupMessageSend = async ({ message, room }: GroupMessage) => {
+		if (!socket.rooms.has(room)) return;
 
-    const onSendMessage = async ({ message, room }: MessagePayload) => {
-        if (!socket.rooms.has(room)) return;
-        
-        io.in(room).emit('message:read', {message, username: socket.user.username, room});
-        
-        await prisma.message.create({
-            data: {
-                message,
-                room,
-                userId: socket.user.id,
-                date: new Date()
-            }
-        })
-    }
+		const payload = { message, username: socket.user.username, room };
+		io.in(room).emit('message:read', payload);
 
-    const onReadMessage = (payload: any) => {
+		console.log(socket.rooms)
 
-    }
+		const created = await prisma.message.create({
+			data: {
+				message,
+				room,
+				userId: socket.user.id,
+				date: new Date()
+			}
+		});
+	};
 
-    socket.on("message:send", onSendMessage);
-    socket.on("message:read", onReadMessage);
-}
+	const onPrivateMessageSend = ({message, username, socketId}: PrivateMessage) => {
+		const payload = { message, username: socket.user.username };
+
+		
+	};
+
+	socket.on('message:send', onGroupMessageSend);
+	socket.on('private:send', onPrivateMessageSend);
+};

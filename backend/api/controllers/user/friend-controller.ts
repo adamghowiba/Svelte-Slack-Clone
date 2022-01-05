@@ -5,6 +5,8 @@ import { Request, Response, NextFunction } from 'express';
 import { QueryParams } from "@validation/FriendRequestValidation";
 import { FriendRequestType } from "../../../types/user";
 import logger from "@logger";
+import { isObject } from "util";
+import { webSocket } from "../../../socket";
 
 // TODO Move function
 const validateFriendParams = (req: Request, multipleUsers: boolean) => {
@@ -53,6 +55,8 @@ export const postRequest = catchAsync(async (req: Request, res: Response) => {
 
 export const updateRequest = catchAsync(async (req: Request, res: Response) => {
     const friendParams = validateFriendParams(req, true);
+    webSocket.emit('friend:added', 'new friend added');
+    return res.status(200).json('Added friend');
 
     const status = req.body.status;
 
@@ -81,6 +85,5 @@ export const getAllFriends = catchAsync(async (req: Request, res: Response) => {
     const friendParams = validateFriendParams(req, false);
 
     const friendRequests = await userService.friends.findAllFriends(friendParams.userId);
-
     res.status(200).json(friendRequests);
 });

@@ -1,12 +1,15 @@
 /// <reference types="@sveltejs/kit" />
 
 interface User {
-    username: string
+	username: string;
 }
 
 interface Message {
-    username: string;
-    message: string;
-    attached: boolean;
-    date?: Date;
+	message: string;
+	user: { username: string };
+	room: string;
+}
+
+interface Notifcation extends Message {
+	id: number;
 }

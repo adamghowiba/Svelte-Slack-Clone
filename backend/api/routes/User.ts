@@ -24,7 +24,6 @@ router.route('/:id/friends')
     .put()
     .delete();
 
-
 /* All Friend Requsts For A User */
 router.get('/:id/friends/requests', userController.friends.getAllRequests);
 
