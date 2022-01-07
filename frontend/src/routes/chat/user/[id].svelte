@@ -10,8 +10,7 @@
 		return {
 			props: {
 				channelId,
-				username,
-				page: 1
+				username
 			}
 		};
 	};
@@ -22,19 +21,23 @@
 	import ChatInput from "$lib/chat/ChatInput.svelte";
 	import Message from "$lib/chat/Message.svelte";
 	import { browser } from "$app/env";
+	import { onDestroy } from "svelte";
+	import { messageStorage } from "$lib/utils/localStorage";
+	import { loadChatMessages } from "$lib/utils/requestUtils";
 
 	export let channelId: number;
 	export let username: string;
-	export let page: string;
 
 	let messages = [];
 	let query;
 
 	/* Read incoming messages */
 	socket.on("message:read", (payload) => {
-		const messageData = { message: payload.message, sender: { username: payload.username }, channelId };
+		const messageData = { message: payload.message, sender: { username: payload.username, id: 0 }, channelId };
 		messages = [messageData, ...messages];
-		// setMessages(room, messages);
+
+		console.log("Socket Recvied Message");
+		messageStorage.update(channelId, messages);
 	});
 
 	/* Handle submitted messages */
@@ -44,38 +47,21 @@
 		socket.emit("message:send", { message, room: username, channelId });
 	};
 
-	/* 
-	UUID Tactic
-	- Generate Public Channel UUIDS by there name.
-	- Generate Private UUIDS by name+name
-	
-	*/
-
-
-	const loadChatMessages = async (channel: number) => {
-		// const sessionMessages = getMessages(currentRoom);
-
-		// if (sessionMessages) return (messages = sessionMessages);
-
+	const loadMessages = async (channelId: number) => {
 		query = true;
-		const response = await fetch(`http://localhost:5000/messages/channel/${channel}`, {
-			method: "GET",
-			credentials: "include"
-		});
-		if (!response.ok) return (messages = undefined);
-
-		const result = await response.json();
+		const messageData = await loadChatMessages(channelId);
 		query = false;
 
-		if (channel != channelId) return;
-		console.log(result);
-		messages = result;
-		// setMessages(currentRoom, result);
+		messages = messageData;
 	};
 
-	$: if (browser && channelId) {
+	onDestroy(() => {
 		messages = [];
-		loadChatMessages(channelId);
+		socket.removeAllListeners();
+	});
+
+	$: if (browser && channelId) {
+		loadMessages(channelId);
 	}
 </script>
 

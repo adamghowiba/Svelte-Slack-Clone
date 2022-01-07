@@ -11,7 +11,8 @@ const config = {
 		adapter: adapter(),
 		vite: {
 			build: {
-				minify: true
+				minify: true,
+				sourcemap: true
 			}
 		},
 

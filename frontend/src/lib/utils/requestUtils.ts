@@ -1,5 +1,5 @@
 import { browser } from '$app/env';
-import { Storage } from './localStorage';
+import { messageStorage, Storage } from './localStorage';
 import type { ChannelState } from './localStorage';
 
 /* TODO: These shouldn't be here */
@@ -62,8 +62,8 @@ export const fetchUsersList = async (updateCache = false): Promise<User[]> => {
 
 	if (usersList) {
 		console.log('Fetched users from storage');
-		return usersList
-	};
+		return usersList;
+	}
 
 	const response = await fetch(url, {
 		method: 'GET',
@@ -95,5 +95,23 @@ export const fetchPrivateChannels = async (userId: number): Promise<PrivateChann
 
 	const result = await response.json();
 	storage.update('private', result);
+	return result;
+};
+
+export const loadChatMessages = async (channel: number) => {
+	const localMessages = messageStorage.getItem(channel);
+
+	if (localMessages) {
+		console.log(`Found messages for ${channel} in storage`);
+		return localMessages;
+	}
+
+	const response = await fetch(`http://localhost:5000/messages/channel/${channel}`, {
+		method: 'GET',
+		credentials: 'include'
+	});
+	const result = await response.json();
+	messageStorage.update(channel, result);
+
 	return result;
 };

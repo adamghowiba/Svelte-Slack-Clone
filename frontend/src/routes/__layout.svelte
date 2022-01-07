@@ -7,7 +7,7 @@
 	import Spinner from "$lib/global/Spinner.svelte";
 	import { socket } from "$lib/socket";
 	import { notifcations } from "$lib/stores";
-	import { fetchFriendsList, fetchUsersList } from "$lib/utils/requestUtils";
+	import { fetchUsersList } from "$lib/utils/requestUtils";
 	import { onMount } from "svelte";
 	import { fade } from "svelte/transition";
 
