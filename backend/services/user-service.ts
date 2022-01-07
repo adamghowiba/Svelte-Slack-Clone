@@ -1,4 +1,4 @@
-import { FriendRequest, User } from "@prisma/client";
+import { Channel, ChannelType, FriendRequest, User } from "@prisma/client";
 import prisma from '@controllers/db-controller';
 import ApiError from '@errors/ApiError';
 import logger from "@logger";

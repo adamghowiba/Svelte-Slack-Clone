@@ -93,3 +93,31 @@ error: Error: User NaN is required
 error: Error: Unauthorized
 error: Error: Username bossa does not exsist.
 error: Error: User NaN is required
+error: Error: No valid message to send
+error: Error: No valid message to send
+error: Error: "senderId" is not allowed
+error: Error: Public channels must have a name
+error: Error: Public channels must have a name
+error: Error: "type" must be one of [private, public]
+error: Error: Public channels must have a name
+error: Error: Public channels must have a name
+error: Error: Public channels must have a name
+error: Error: "type" must be one of [private, public]
+error: Error: Public channels must have a name
+error: Error: Private channels must have a senderId & receiverId
+error: Error: Private channels must have a senderId & receiverId
+error: Error: Private channels must have a senderId & receiverId
+error: Error: "senderId" must be a number
+error: Error: Valid channel ID is required
+error: Error: You're already in a private chat with that user
+error: Error: You're already in a private chat with that user
+error: Error: You're already in a private chat with that user
+error: Error: Unauthorized
+error: Error: User NaN is required
+error: Error: Unauthorized
+error: Error: User NaN is required
+error: Error: Invalid channel id
+error: Error: Invalid channel id
+error: Error: Invalid channel id
+error: Error: Username boy does not exsist.
+error: Error: Invalid channel id

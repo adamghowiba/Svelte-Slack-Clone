@@ -1,30 +1,10 @@
 <script lang="ts">
 	import { session } from "$app/stores";
-	import { fetchFriendsList, fetchUsersList } from "$lib/utils/requestUtils";
+	import { fetchChannelList, fetchPrivateChannels, fetchUsersList } from "$lib/utils/requestUtils";
 	import ChannelPreview from "./ChannelPreview.svelte";
+	import Popup from "./Popup.svelte";
 	import Search from "./Search.svelte";
 	import SidebarGroup from "./SidebarGroup.svelte";
-	let mockChannels = [
-		{
-			chanel: "projects"
-		},
-		{
-			chanel: "developers",
-			notifications: 2
-		},
-		{
-			chanel: "designers",
-			notifications: 400
-		},
-		{
-			chanel: "admin",
-			notifications: 0
-		},
-		{
-			chanel: "ux",
-			notifications: 0
-		}
-	];
 
 	/* 
 	Cache strat
@@ -46,32 +26,39 @@
 	Than when the apap loads use web worker to check if that user has any unseen events. 
 	If they do run a task specfic to that event to update the client side cache.  
 	*/
+
+	let searchValue: string;
 </script>
 
 <section>
-	<Search />
+	<Search bind:value={searchValue} />
 
-	<!-- Direct Messages -->
-	<SidebarGroup title="Direct messages">
-		{#await fetchFriendsList($session.user.id)}
+	<!-- Group Chats -->
+	<SidebarGroup title="Group Chats">
+		{#await fetchChannelList()}
 			<h3>Loading...</h3>
-		{:then friends}
-			{#each friends || [] as userFriend}
-				<ChannelPreview name={userFriend?.friend?.username} notifications={0} type="user" />
+		{:then channels}
+			{#each channels || [] as channel}
+				<ChannelPreview name={channel?.name} channelId={channel.id} notifications={0} type="group" />
 			{/each}
 		{/await}
 	</SidebarGroup>
 
-	<!-- Group Chats -->
-	<SidebarGroup title="Group Chats">
-		{#each mockChannels as channel}
-			<ChannelPreview name={channel.chanel} notifications={channel.notifications} type="group" />
-		{/each}
+	<!-- All Users -->
+	<SidebarGroup title="Direct Messages">
+		<Popup />
+		{#await fetchPrivateChannels($session.user.id)}
+			<h3>Loading...</h3>
+		{:then channels}
+			{#each channels || [] as channel}
+				<ChannelPreview name={channel.username} channelId={channel.channelId} type="user" />
+			{/each}
+		{/await}
 	</SidebarGroup>
 
 	<!-- All Users -->
 	<SidebarGroup title="All users">
-		{#await fetchUsersList()}
+		{#await fetchUsersList(true)}
 			<h3>Loading...</h3>
 		{:then users}
 			{#each users || [] as user}

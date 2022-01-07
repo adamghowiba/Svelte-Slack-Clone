@@ -6,6 +6,7 @@ import ApiError from '@errors/ApiError';
 import * as friends from '@controllers/user/friend-controller';
 import { catchAsync } from '@utils/ErrorUtil';
 import { webSocket } from '../../../socket';
+import { findAllPrivate } from '@services/channel-service';
 
 // TODO: Implement async catch handler to avoid try { catch } blocks
 const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
@@ -35,9 +36,20 @@ const getUserById = async (req: Request, res: Response, next: NextFunction) => {
     }
 }
 
+const getAllUserChannels = catchAsync(async (req: Request, res: Response) => {
+    const userId = parseInt(req.params.id);
+
+    if (!userId) throw new ApiError('Invalid or missing query paramter id. Must be a number');
+
+    const userChannels = await findAllPrivate(userId, "PRIVATE");
+    
+    res.status(200).json(userChannels);
+});
+
 
 export {
     friends,
+    getAllUserChannels,
     getAllUsers,
     getUserById,
 }

@@ -1,12 +1,12 @@
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
-import path from 'path';
 import userRouter from '@routes/User';
 import indexRouter from '@routes/index';
 import messageRouter from '@routes/Messages';
+import channelRouter from '@routes/Channels';
 import authRouter from '@routes/Auth';
 import cors from 'cors';
-import express, { Application, Request, Response, NextFunction } from 'express';
+import express, { Application } from 'express';
 import session from './session';
 import logger from '@logger';
 
@@ -45,6 +45,7 @@ export default class App {
         this.app.use('/auth', authRouter);
         this.app.use('/user', userRouter);
         this.app.use('/messages', messageRouter);
+        this.app.use('/channel', channelRouter);
         logger.info('API Routes registered sucessfully')
         return this;
     }

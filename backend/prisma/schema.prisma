@@ -9,13 +9,37 @@ datasource db {
 }
 
 model User {
-  id         Int             @id @default(autoincrement())
-  username   String          @unique
-  requesting FriendRequest[] @relation("requesting")
-  requests   FriendRequest[] @relation("requests")
-  friend_of  Friendship[]    @relation("friend_of")
-  friends    Friendship[]    @relation("friends")
-  messages   Message[]
+  id           Int             @id @default(autoincrement())
+  email        String          @unique
+  first_name   String
+  last_name    String
+  display_name String
+  username     String          @unique
+  requesting   FriendRequest[] @relation("requesting")
+  requests     FriendRequest[] @relation("requests")
+  friend_of    Friendship[]    @relation("friend_of")
+  friends      Friendship[]    @relation("friends")
+  channels     Channel[]
+  messages     Message[]
+}
+
+model Message {
+  id         Int      @id @default(autoincrement())
+  sender_uid Int
+  channel_id Int
+  message    String
+  sender     User     @relation(fields: [sender_uid], references: [id])
+  channel    Channel  @relation(fields: [channel_id], references: [id])
+  date       DateTime @default(now())
+}
+
+model Channel {
+  id           Int         @id @default(autoincrement())
+  name         String?
+  type         ChannelType
+  messages     Message[]
+  users        User[]
+  created_date DateTime    @default(now())
 }
 
 model Friendship {
@@ -37,15 +61,6 @@ model FriendRequest {
   @@id([from_uid, to_uid])
 }
 
-model Message {
-  id      Int      @id @default(autoincrement())
-  message String
-  date    DateTime @default(now())
-  userId  Int
-  room    String
-  user    User     @relation(fields: [userId], references: [id])
-}
-
 model Session {
   id        String   @id
   sid       String   @unique
@@ -57,4 +72,9 @@ enum RelationshipStatus {
   FRIENDS
   MUTED
   BLOCKED
+}
+
+enum ChannelType {
+  PUBLIC
+  PRIVATE
 }

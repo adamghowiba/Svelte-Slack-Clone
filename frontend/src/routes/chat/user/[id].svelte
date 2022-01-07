@@ -2,12 +2,14 @@
 	import type { Load } from "@sveltejs/kit";
 	import { socket } from "$lib/socket";
 
-	export const load: Load = async ({ page, fetch }) => {
-		const username = page.params.id;
-		// socket.emit("room:join", { room });
+	export const load: Load = async ({ page, stuff }) => {
+		const channelId = page.params.id;
+		const username = page.query.get("user");
+		socket.emit("room:join", { room: username });
 
 		return {
 			props: {
+				channelId,
 				username,
 				page: 1
 			}
@@ -19,12 +21,9 @@
 	import ChannelBio from "$lib/chat/ChannelBio.svelte";
 	import ChatInput from "$lib/chat/ChatInput.svelte";
 	import Message from "$lib/chat/Message.svelte";
-	import { page as sveltePage, session } from "$app/stores";
-	import { onMount } from "svelte";
 	import { browser } from "$app/env";
-	import { getMessages, setMessages } from "$lib/utils/roomUtils";
-	import { notifcations } from "$lib/stores";
 
+	export let channelId: number;
 	export let username: string;
 	export let page: string;
 
@@ -32,49 +31,51 @@
 	let query;
 
 	/* Read incoming messages */
-	socket.on("private:read", (payload) => {
-		const messageData = { message: payload.message, user: { username: payload.username } };
+	socket.on("message:read", (payload) => {
+		const messageData = { message: payload.message, sender: { username: payload.username }, channelId };
 		messages = [messageData, ...messages];
-
 		// setMessages(room, messages);
 	});
-
-	const notifyUser = (username: string, messageData: any) => {
-		if (username == $session.user.username) return;
-		const data: Notifcation = { id: Math.floor(Math.random() * 1000), ...messageData };
-		$notifcations = [...$notifcations, data];
-	};
 
 	/* Handle submitted messages */
 	const handleMessageSubmit = (event) => {
 		const message = event.detail;
 
-		socket.emit("private:send", { message, username });
+		socket.emit("message:send", { message, room: username, channelId });
 	};
 
-	const loadChatMessages = async (user: string) => {
+	/* 
+	UUID Tactic
+	- Generate Public Channel UUIDS by there name.
+	- Generate Private UUIDS by name+name
+	
+	*/
+
+
+	const loadChatMessages = async (channel: number) => {
 		// const sessionMessages = getMessages(currentRoom);
 
 		// if (sessionMessages) return (messages = sessionMessages);
 
 		query = true;
-		const response = await fetch(`http://localhost:5000/messages/user/${user}`, {
+		const response = await fetch(`http://localhost:5000/messages/channel/${channel}`, {
 			method: "GET",
 			credentials: "include"
 		});
-        if (!response.ok) return messages = undefined;
+		if (!response.ok) return (messages = undefined);
 
 		const result = await response.json();
 		query = false;
 
-        if (user != username) return;
+		if (channel != channelId) return;
+		console.log(result);
 		messages = result;
 		// setMessages(currentRoom, result);
 	};
 
-	$: if (browser && username) {
-		// messages = [];
-		loadChatMessages(username);
+	$: if (browser && channelId) {
+		messages = [];
+		loadChatMessages(channelId);
 	}
 </script>
 
@@ -84,7 +85,7 @@
 	<div class="messages">
 		{#if !query}
 			{#each messages || [] as message, i}
-				<Message message={message?.message} user={message?.user?.username} attachedMessage={false} date={new Date()} />
+				<Message message={message?.message} user={message.sender.username} attachedMessage={false} date={new Date()} />
 			{/each}
 		{:else}
 			<h2>Loading...</h2>

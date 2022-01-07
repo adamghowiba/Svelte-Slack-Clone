@@ -1,5 +1,4 @@
 import ApiError from '@errors/ApiError';
-import { fetchGroupMessages } from '@services/message-service';
 import { catchAsync } from '@utils/ErrorUtil';
 import { Request, Response } from 'express';
 
@@ -17,9 +16,9 @@ export const getGroupMessages = catchAsync(async (req: Request, res: Response) =
     //     return res.json(cachedMessages);
     // }
 
-	const messages = await fetchGroupMessages(name, page);
+	// const messages = await fetchGroupMessages(name, page);
 
     // cache.put(cacheKey, messages, 1000 * 60)
 
-	res.json(messages);
+	// res.json(messages);
 });

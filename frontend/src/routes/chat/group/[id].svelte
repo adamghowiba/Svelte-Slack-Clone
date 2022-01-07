@@ -3,17 +3,21 @@
 	import { socket } from "$lib/socket";
 
 	export const load: Load = async ({ page, fetch }) => {
-		const room = page.params.id;
+		const channelId = page.params.id;
+		const room = page.query.get("group");
 		socket.emit("room:join", { room });
 
 		return {
 			props: {
 				room,
+				channelId,
 				page: 1
 			}
 		};
 	};
+
 </script>
+
 
 <script lang="ts">
 	import ChannelBio from "$lib/chat/ChannelBio.svelte";
@@ -25,8 +29,8 @@
 	import { getMessages, setMessages } from "$lib/utils/roomUtils";
 	import MessageContainer from "$lib/MessageContainer.svelte";
 	import { notifcations } from "$lib/stores";
-
-	export let room, page;
+	import { messageStorage } from "$lib/utils/localStorage";
+	export let room, page, channelId;
 
 	let messages = [];
 	let query;
@@ -34,14 +38,13 @@
 
 	/* Read incoming messages */
 	socket.on("message:read", (payload) => {
-		const messageData = { message: payload.message, user: { username: payload.username }, room: payload.room };
-		if (payload.room == room) {
-			messages = [messageData, ...messages];
-		} else {
-			notifyUsers(payload.username, messageData);
-		}
+		const messageData = { message: payload.message, sender: { username: payload.username, id: 0 }, channelId };
+		messages = [messageData, ...messages];
 
-		setMessages(room, messages);
+		const localMessages = messageStorage.getItem(channelId);
+		console.log(localMessages);
+		messageStorage.update(channelId, [messageData, ...localMessages]);
+		// setMessages(room, messages);
 	});
 
 	const notifyUsers = (username: string, messageData: any) => {
@@ -54,7 +57,7 @@
 	const handleMessageSubmit = (event) => {
 		const message = event.detail;
 
-		socket.emit("message:send", { message, room });
+		socket.emit("message:send", { message, room, channelId });
 	};
 
 	// let page = 1;
@@ -65,27 +68,27 @@
 		});
 		const chatMessages = await response.json();
 		messages = [...messages, ...chatMessages];
-		console.log(`Loading page results ${page}`);
+		console.log(`Loading pagee results ${page}`);
 		page++;
 	};
 
-	const loadChatMessages = async (currentRoom: string) => {
-		const sessionMessages = getMessages(currentRoom);
-
-		if (sessionMessages) return (messages = sessionMessages);
+	const loadChatMessages = async (channel: number) => {
+		if (query) return;
+		const localMessages = messageStorage.getItem(channel);
+		if (localMessages) {
+			console.log(`Found messages for ${channel} in storage`);
+			return (messages = localMessages);
+		}
 
 		query = true;
-		const response = await fetch(`http://localhost:5000/messages/group/${currentRoom}`, {
+		const response = await fetch(`http://localhost:5000/messages/channel/${channel}`, {
 			method: "GET",
 			credentials: "include"
 		});
 		const result = await response.json();
-
 		query = false;
-
-		if (currentRoom != room) return;
+		messageStorage.update(channel, result);
 		messages = result;
-		setMessages(currentRoom, result);
 	};
 
 	onMount(() => {
@@ -95,9 +98,9 @@
 		// observer.observe(blankSpace);
 	});
 
-	$: if (browser && room) {
+	$: if (browser && channelId) {
 		messages = [];
-		loadChatMessages(room);
+		loadChatMessages(channelId);
 	}
 </script>
 
@@ -109,7 +112,11 @@
 	<div class="messages">
 		{#if !query}
 			{#each messages || [] as message, i}
-				<Message message={message?.message} user={message?.user?.username} attachedMessage={false} date={new Date()} />
+				<Message
+					message={message?.message}
+					user={message?.sender?.username}
+					attachedMessage={false}
+					date={new Date()} />
 			{/each}
 		{:else}
 			<h2>Loading...</h2>

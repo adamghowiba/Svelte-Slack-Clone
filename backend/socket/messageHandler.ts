@@ -5,6 +5,7 @@ import cache from '@utils/CacheUtils';
 
 interface GroupMessage {
 	room: string;
+	channelId: string;
 	message: string;
 }
 
@@ -16,19 +17,19 @@ interface PrivateMessage {
 }
 
 export default (io: Server, socket: Socket) => {
-	const onGroupMessageSend = async ({ message, room }: GroupMessage) => {
+	const onGroupMessageSend = async ({ message, room, channelId }: GroupMessage) => {
 		if (!socket.rooms.has(room)) return;
 
 		const payload = { message, username: socket.user.username, room };
 		io.in(room).emit('message:read', payload);
 
-		console.log(socket.rooms)
+		const parsedChannelId = parseInt(channelId);
 
-		const created = await prisma.message.create({
+		await prisma.message.create({
 			data: {
 				message,
-				room,
-				userId: socket.user.id,
+				channel_id: parsedChannelId,
+				sender_uid: socket.user.id,
 				date: new Date()
 			}
 		});
@@ -36,8 +37,6 @@ export default (io: Server, socket: Socket) => {
 
 	const onPrivateMessageSend = ({message, username, socketId}: PrivateMessage) => {
 		const payload = { message, username: socket.user.username };
-
-		
 	};
 
 	socket.on('message:send', onGroupMessageSend);
