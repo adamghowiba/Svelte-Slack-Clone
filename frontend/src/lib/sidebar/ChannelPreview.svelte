@@ -1,17 +1,15 @@
 <script lang="ts">
-	import { goto } from "$app/navigation";
+import type { ChannelType } from "$lib/types";
 
 	import Icon from "@iconify/svelte";
-	type ChannelType = "user" | "group";
 
 	export let name: string;
 	export let type: ChannelType;
 	export let channelId: number = 0;
 	export let notifications: number = 0;
-
 </script>
 
-<a href="/chat/{type}/{channelId || name}?{type}={name}" class="wrap" data--id={channelId}>
+<a href="/chat/{channelId || name}?{type}={name}&type={type}" class="wrap" data--id={channelId}>
 	{#if type == "user"}
 		<img src="https://avatars.dicebear.com/api/initials/{name}.svg?r=50&fontSize=40" alt="User Avatar" />
 	{:else}

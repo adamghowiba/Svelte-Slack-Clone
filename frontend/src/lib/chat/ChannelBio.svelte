@@ -22,7 +22,6 @@
 
 		<header>
 			<h5>{channel}</h5>
-
 			{#if type == 'group'}
 				<div class="members">
 					<span class="members__count">{members} member{members > 1 ? 's' : ''}</span>

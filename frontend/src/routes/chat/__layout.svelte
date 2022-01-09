@@ -1,8 +1,9 @@
-<!-- <script context="module" lang="ts">
+<script context="module" lang="ts">
 	import type { Load } from '@sveltejs/kit';
 	export const load: Load = async ({ session }) => {
 		if (!session.user) {
 			return {
+				error: 'Not valid session',
 				status: 302,
 				redirect: '/'
 			};
@@ -11,9 +12,9 @@
 			status: 200
 		};
 	};
-</script> -->
+</script>
 <script lang="ts">
-	import Sidebar from "$lib/chat/sidebar/Sidebar.svelte";
+	import Sidebar from "$lib/sidebar/Sidebar.svelte";
 	import { socket } from "$lib/socket";
 	import { onMount } from "svelte";
 

@@ -17,8 +17,5 @@ router.get('/', userController.getAllUsers);
 /* Get User By Id */
 router.get('/:id', userController.getUserById);
 
-/* Get Users Channels */
-router.get('/:id/channels', userController.getAllUserChannels)
-
 export default router;
 

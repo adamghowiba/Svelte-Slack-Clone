@@ -65,6 +65,10 @@ class Storage<T> {
 }
 
 let messageStorage: Storage<MessageState>;
-if (browser) messageStorage = new Storage<MessageState>('message')
+let channelStorage: Storage<ChannelState>;
+if (browser) {
+	messageStorage = new Storage<MessageState>('message');
+	channelStorage = new Storage<ChannelState>('channel');
+}
 
-export { Storage, messageStorage };
+export { Storage, messageStorage, channelStorage };

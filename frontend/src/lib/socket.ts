@@ -10,14 +10,7 @@ const socket: Socket = io('ws://localhost:5000/', {
 	}
 });
 
-// export const connectClient = (): void => {
-// 	/* Connect to socket. */
-// 	socket.on('connect', () => {
-// 		console.log('Connected', socket.id);
-// 	});
-// };
-
-// /* Handle connection error */
+/* Handle connection error */
 // socket.on('connect_error', err => {
 // 	socket.io.opts.transports = ['polling', 'websocket'];
 // 	console.log('error', err);

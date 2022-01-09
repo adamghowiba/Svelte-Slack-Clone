@@ -1,15 +1,18 @@
 <script context="module" lang="ts">
 	import type { Load } from "@sveltejs/kit";
 
-	export const load: Load = async ({ page, fetch }) => {
+	export const load: Load = async ({ page }) => {
 		const channelId = page.params.id;
-		const room = page.query.get("group");
+		const channelType = page.query.get("type");
+		const room = page.query.get(channelType);
+
 		socket.emit("room:join", { room });
 
 		return {
 			props: {
 				room,
-				channelId
+				channelId,
+				channelType
 			}
 		};
 	};
@@ -19,13 +22,16 @@
 	import ChannelBio from "$lib/chat/ChannelBio.svelte";
 	import ChatInput from "$lib/chat/ChatInput.svelte";
 	import Message from "$lib/chat/Message.svelte";
-	import { session } from "$app/stores";
-	import { onDestroy, onMount } from "svelte";
+	import { onDestroy } from "svelte";
 	import { browser } from "$app/env";
 	import { messageStorage } from "$lib/utils/localStorage";
 	import { socket } from "$lib/socket";
-import { loadChatMessages } from "$lib/utils/requestUtils";
-	export let room, channelId;
+	import { loadChatMessages } from "$lib/utils/requestUtils";
+	import type { ChannelType } from "$lib/types";
+
+	export let room: string;
+	export let channelId: number;
+	export let channelType: ChannelType;
 
 	let messages = [];
 	let query: boolean;
@@ -52,23 +58,23 @@ import { loadChatMessages } from "$lib/utils/requestUtils";
 
 		messages = messageData;
 	};
-	
+
 	onDestroy(() => {
 		messages = [];
 		socket.removeAllListeners();
 	});
-	
+
 	$: if (browser && channelId) {
 		loadMessages(channelId);
 	}
 </script>
 
 <section>
-	<ChannelBio channel={room} type="group" members={5} />
+	<ChannelBio channel={room} type={channelType} members={5} />
 
 	<div class="messages">
 		{#if !query}
-			{#each messages || [] as message, i}
+			{#each messages || [] as message}
 				<Message
 					message={message?.message}
 					user={message?.sender?.username}

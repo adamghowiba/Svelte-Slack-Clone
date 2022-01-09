@@ -1,18 +1,18 @@
 <script lang="ts">
 	import Icon from "@iconify/svelte";
-	import Popup from "./Popup.svelte";
 
-	export let title;
+	export let title: string;
 	export let addable = true;
 </script>
 
 <div class="wrap">
 	<slot name="popup" />
 	<header>
-		<!-- <Popup /> -->
 		<h6>{title}</h6>
 		{#if addable}
-			<Icon icon="akar-icons:plus" width="20px" height="20px" color="var(--color-gray-s2)" />
+			<div class="popup__icon" on:click>
+				<Icon icon="akar-icons:plus" width="20px" height="20px" color="var(--color-gray-s2)" />
+			</div>
 		{/if}
 	</header>
 	<slot />
