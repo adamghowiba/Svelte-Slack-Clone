@@ -1,11 +1,11 @@
+<svelte:options immutable />
+
 <script lang="ts">
 	import { session } from "$app/stores";
-	import { ChannelState } from "$lib/controllers/channel-controller";
-	import { channelStore } from "$lib/stores";
-	import { clickOutside } from "$lib/utils/clickOutside";
-	import { fetchChannelList, fetchPrivateChannels, fetchUsersList } from "$lib/utils/requestUtils";
-	import { onDestroy } from "svelte";
-	import { claim_svg_element } from "svelte/internal";
+	import { channelStore, groupChannels, privateChannels } from "$lib/store/channel";
+import { chatStore } from "$lib/store/chatMessages";
+	import { fetchPrivateChannels, fetchUsersList } from "$lib/utils/requestUtils";
+	import { onMount } from "svelte/internal";
 	import ChannelPreview from "./ChannelPreview.svelte";
 	import Popup from "./Popup.svelte";
 	import Search from "./Search.svelte";
@@ -37,6 +37,9 @@
 	  anything in localstorage shouldn't be highly dynamic data. Things that don't change frequently
 */
 
+	// Initlize channelstore
+	// channelStore.init();
+
 	const popupStatus = {
 		channels: false,
 		dms: false
@@ -47,13 +50,10 @@
 	};
 
 	function addChannelState() {
-		// $channelStore.publicChannels = [
-		// 	...$channelStore.publicChannels,
-		// 	{ id: 10, type: "group", users: [], name: "randomname" }
-		// ];
+		// channelStore.addPublicChannel({id: 0, users: [], name: 'funstuff'})
 	}
 
-	fetchChannelList();
+	onMount(() => {});
 
 	let searchValue: string;
 </script>
@@ -63,25 +63,26 @@
 
 	<!-- Group Chats -->
 	<SidebarGroup title="Group Chats">
-		{#if $channelStore.publicChannels.length >= 1}
-			{#each $channelStore.publicChannels || [] as channel}
+		{#if $channelStore.status == "loading"}
+			<h3>Loading...</h3>
+		{:else if $channelStore.status == "available"}
+			{#each $groupChannels as channel}
 				<ChannelPreview name={channel?.name} channelId={channel.id} notifications={0} type="group" />
 			{/each}
-		{:else}
-			<h3>Loading...</h3>
 		{/if}
 	</SidebarGroup>
 
 	<!-- All Users -->
 	<SidebarGroup title="Direct Messages" on:click={() => togglePopup("dms")}>
 		<Popup active={popupStatus.dms} on:clickOutside={() => togglePopup("dms")} />
-		{#await fetchPrivateChannels($session.user.id)}
+
+		{#if $channelStore.status == "loading"}
 			<h3>Loading...</h3>
-		{:then channels}
-			{#each channels || [] as channel}
-				<ChannelPreview name={channel.username} channelId={channel.channelId} type="user" />
+		{:else if $channelStore.status == "available"}
+			{#each $privateChannels || [] as channel}
+				<ChannelPreview name={channel?.username} channelId={channel?.channelId} type="user" />
 			{/each}
-		{/await}
+		{/if}
 	</SidebarGroup>
 
 	<!-- All Users -->

@@ -2,7 +2,7 @@
 	import type { Load } from "@sveltejs/kit";
 
 	export const load: Load = async ({ page }) => {
-		const channelId = page.params.id;
+		const channelId = parseInt(page.params.id);
 		const channelType = page.query.get("type");
 		const room = page.query.get(channelType);
 
@@ -24,10 +24,11 @@
 	import Message from "$lib/chat/Message.svelte";
 	import { onDestroy } from "svelte";
 	import { browser } from "$app/env";
-	import { messageStorage } from "$lib/utils/localStorage";
 	import { socket } from "$lib/socket";
 	import { loadChatMessages } from "$lib/utils/requestUtils";
 	import type { ChannelType } from "$lib/types";
+	import { navigating } from "$app/stores";
+	import { chatStore } from "$lib/store/chatMessages";
 
 	export let room: string;
 	export let channelId: number;
@@ -40,9 +41,9 @@
 	socket.on("message:read", (payload) => {
 		const messageData = { message: payload.message, sender: { username: payload.username, id: 0 }, channelId };
 		messages = [messageData, ...messages];
+		chatStore.addMessages(channelId, messageData);
 
 		console.log("Socket Recvied Message");
-		messageStorage.update(channelId, messages);
 	});
 
 	const handleMessageSubmit = (event) => {
@@ -61,11 +62,17 @@
 
 	onDestroy(() => {
 		messages = [];
-		socket.removeAllListeners();
+		socket.removeListener("message:read");
 	});
 
-	$: if (browser && channelId) {
+	/* TODO: Save scroll with this bad boy. */
+	$: if ($navigating) {
+		const scroll = document.querySelector(".messages");
+	}
+
+	$: {
 		loadMessages(channelId);
+		console.log($chatStore.entries());
 	}
 </script>
 

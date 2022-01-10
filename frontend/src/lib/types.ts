@@ -25,8 +25,8 @@ export interface User {
 
 export interface Message {
 	message: string;
-	user: User;
-	room: string;
+	sender: User;
+	channelId: number;
 }
 
 export interface Notifcation extends Message {

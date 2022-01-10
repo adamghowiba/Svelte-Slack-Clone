@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { browser } from "$app/env";
 
-	import { session } from "$app/stores";
+	import { navigating, page, session } from "$app/stores";
 	import { loaderMessages } from "$lib/constants";
 	import ChatNotifcation from "$lib/global/ChatNotifcation.svelte";
 	import Spinner from "$lib/global/Spinner.svelte";
@@ -20,7 +20,7 @@
 		// await fetchFriendsList($session.user.id, true);
 		// loading = false;
 		if (browser) window.sessionStorage.clear();
-		console.log('Connect to socket io server');
+		console.log("Connect to socket io server");
 	});
 
 	const cycleMessages = () => {

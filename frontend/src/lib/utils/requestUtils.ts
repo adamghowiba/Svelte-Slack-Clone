@@ -1,15 +1,13 @@
-import { messageStorage } from './localStorage';
-import { ChannelState as channel } from '$lib/controllers/channel-controller';
-import type { ChannelStore, User } from '$lib/types';
-import { channelStore } from '$lib/stores';
+import type { Channel, ChannelStore, User } from '$lib/types';
+import { get } from 'svelte/store';
+import type { Writable } from 'svelte/store';
+import { chatStore } from '$lib/store/chatMessages';
 
-export const fetchChannelList = async (updateCache = false): Promise<ChannelStore['publicChannels']> => {
-	const url = `http://localhost:5000/channel`;
-	const channels = channel.getPublic();
+const queryData = async <T>(url: string, store: Writable<T[]>): Promise<Writable<T[]>> => {
+	const storeData = get(store);
 
-	if (channels && channels.length >= 1) {
-		console.log('Found CHANNELS in state', channels);
-		return channels;
+	if (storeData && storeData?.length > 0) {
+		return store;
 	}
 
 	const response = await fetch(url, {
@@ -20,18 +18,19 @@ export const fetchChannelList = async (updateCache = false): Promise<ChannelStor
 	if (!response.ok) throw new Error('Error retriving channels...');
 	const result = await response.json();
 
-	channel.setPublic(result);
-	return result;
+	store.set(result);
+	return store;
 };
+
+// export const fetchChannelList = async (): Promise<Writable<Channel[]>> => {
+// 	const url = `http://localhost:5000/channel`;
+// 	const data = await queryData<Channel>(url, channelStores.groupChannel);
+
+// 	return data;
+// };
 
 export const fetchPrivateChannels = async (userId: number): Promise<ChannelStore['privateChannels']> => {
 	const url = `http://localhost:5000/channel/user/${userId}&type=PRIVATE`;
-	const channels = channel.getPrivate();
-
-	if (channels && channels.length >= 1) {
-		// console.log('Found PRIVATE CHANNEL in state', channels);
-		return channels;
-	}
 
 	const response = await fetch(url, {
 		method: 'GET',
@@ -41,7 +40,6 @@ export const fetchPrivateChannels = async (userId: number): Promise<ChannelStore
 	if (!response.ok) throw new Error('Error retriving user channels...');
 
 	const result = await response.json();
-	channel.setPrivate(result);
 	return result;
 };
 
@@ -60,11 +58,10 @@ export const fetchUsersList = async (updateCache = false): Promise<User[]> => {
 };
 
 export const loadChatMessages = async (channel: number) => {
-	const localMessages = messageStorage.getItem(channel);
+	const messages = get(chatStore);
 
-	if (localMessages) {
-		// console.log(`Found messages for ${channel} in storage`);
-		return localMessages;
+	if (messages.has(channel)) {
+		return messages.get(channel);
 	}
 
 	const response = await fetch(`http://localhost:5000/messages/channel/${channel}`, {
@@ -72,7 +69,6 @@ export const loadChatMessages = async (channel: number) => {
 		credentials: 'include'
 	});
 	const result = await response.json();
-	messageStorage.update(channel, result);
-
+	chatStore.setMessages(channel, result);
 	return result;
 };

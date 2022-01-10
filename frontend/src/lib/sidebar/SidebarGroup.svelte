@@ -1,8 +1,13 @@
 <script lang="ts">
 	import Icon from "@iconify/svelte";
+	import { beforeUpdate } from "svelte";
 
 	export let title: string;
 	export let addable = true;
+
+	beforeUpdate(() => {
+		console.log("Updated state for", title);
+	});
 </script>
 
 <div class="wrap">

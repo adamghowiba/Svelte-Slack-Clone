@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
 	import Spinner from "$lib/global/Spinner.svelte";
-	import { clickOutside } from "$lib/utils/clickOutside.js";
-	import { channelStorage } from "$lib/utils/localStorage";
+	import { clickOutside } from "$lib/utils/clickOutside";
 	import { createEventDispatcher } from "svelte";
 	import Search from "./Search.svelte";
 
@@ -19,16 +18,16 @@
 	};
 
 	const handleResultClick = (username: string) => {
-		const privateChannels = channelStorage.getItem("private");
-		const result = privateChannels.find((val) => val.username == username);
+		// const privateChannels = channelStorage.getItem("private");
+		// const result = privateChannels.find((val) => val.username == username);
 
-		if (!result) {
-			// TODO Create Channel
-			return;
-		}
+		// if (!result) {
+		// 	// TODO Create Channel
+		// 	return;
+		// }
 
-		// TODO Fix this shit, figure ot  a way to rid it.
-		goto(`/chat/${result.channelId}?user=${result.username}&type=user`);
+		// // TODO Fix this shit, figure ot  a way to rid it.
+		// goto(`/chat/${result.channelId}?user=${result.username}&type=user`);
 	};
 
 	$: filteredResults = usersResult.filter((users) =>

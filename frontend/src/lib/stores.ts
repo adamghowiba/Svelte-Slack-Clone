@@ -1,15 +1,8 @@
 import { writable, get, derived } from 'svelte/store';
 import type { Writable } from 'svelte/store';
-import type { ChannelStore, Notifcation } from './types';
-
-const initalChannelData: ChannelStore = {
-	privateChannels: [],
-	publicChannels: []
-};
+import type { Notifcation } from './types';
 
 export const notifcations: Writable<Notifcation[]> = writable([]);
-export const channelStore: Writable<ChannelStore> = writable(initalChannelData);
-
 
 /* OPTION 1 Using Svelte */
 // export const someState = {

@@ -134,3 +134,14 @@ error: Error: Unauthorized
 error: Error: Unauthorized
 error: Error: Unauthorized
 error: Error: You're already in a private chat with that user
+error: Error: Invalid or missing query paramter id. Must be a number
+error: Error: Invalid or missing query paramter id. Must be a number
+error: Error: Invalid or missing query paramter id. Must be a number
+error: Error: Invalid or missing query paramter id. Must be a number
+error: Error: Invalid or missing query paramter id. Must be a number
+error: Error: Invalid or missing query paramter id. Must be a number
+error: Error: Invalid or missing query paramter id. Must be a number
+error: Error: Invalid channel id
+error: Error: Invalid channel id
+error: Error: Invalid channel id
+error: Error: Invalid channel id
