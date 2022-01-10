@@ -1,3 +1,7 @@
+import { getPlayer } from "@logic/player-logic";
+
+export const SERVER = 'http://localhost:5000'
+
 export const loaderMessages = [
     {
         title: "Discovering new ways of making you wait.",
