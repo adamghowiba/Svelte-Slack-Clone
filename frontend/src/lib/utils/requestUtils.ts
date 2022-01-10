@@ -60,7 +60,7 @@ export const fetchUsersList = async (updateCache = false): Promise<User[]> => {
 export const loadChatMessages = async (channel: number) => {
 	const messages = get(chatStore);
 
-	if (messages.has(channel)) {
+	if (messages.has(channel) && messages.get(channel).length > 0) {
 		return messages.get(channel);
 	}
 

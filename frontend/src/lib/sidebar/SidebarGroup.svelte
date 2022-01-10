@@ -28,7 +28,7 @@
 		position: relative;
 		display: flex;
 		flex-direction: column;
-		gap: 0.9rem;
+		gap: 0.6rem;
 	}
 	header {
 		position: relative;

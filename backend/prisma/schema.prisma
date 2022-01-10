@@ -10,10 +10,10 @@ datasource db {
 
 model User {
   id           Int             @id @default(autoincrement())
-  email        String          @unique
-  first_name   String
-  last_name    String
-  display_name String
+  email        String          @unique @default(uuid())
+  first_name   String?
+  last_name    String?
+  display_name String?
   username     String          @unique
   requesting   FriendRequest[] @relation("requesting")
   requests     FriendRequest[] @relation("requests")
@@ -36,6 +36,7 @@ model Message {
 model Channel {
   id           Int         @id @default(autoincrement())
   name         String?
+  section      String?
   type         ChannelType
   messages     Message[]
   users        User[]

@@ -67,12 +67,11 @@
 
 	/* TODO: Save scroll with this bad boy. */
 	$: if ($navigating) {
-		const scroll = document.querySelector(".messages");
+		// const scroll = document.querySelector(".messages");
 	}
 
 	$: {
 		loadMessages(channelId);
-		console.log($chatStore.entries());
 	}
 </script>
 

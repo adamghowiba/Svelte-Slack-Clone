@@ -3,14 +3,14 @@ export interface Channel {
 	users: User[];
 	type: ChannelType;
 	notifcations?: number;
+	section: string | null;
 	name?: string;
 }
 
 /* TODO: Fix return value */
 export interface PrivateChannel {
-	username: string;
 	id: number;
-	channelId: number;
+	users: User
 }
 
 export interface ChannelStore {

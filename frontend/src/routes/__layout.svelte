@@ -8,10 +8,10 @@
 	import { socket } from "$lib/socket";
 	import { notifcations } from "$lib/stores";
 	import { fetchUsersList } from "$lib/utils/requestUtils";
-	import { onMount } from "svelte";
+	import { onDestroy, onMount } from "svelte";
 	import { fade } from "svelte/transition";
 
-	let loading: boolean;
+	let loading: boolean = false;
 	let currentIndex = 0;
 
 	socket.on("connect", async () => {
@@ -19,7 +19,6 @@
 		// await fetchUsersList(true);
 		// await fetchFriendsList($session.user.id, true);
 		// loading = false;
-		if (browser) window.sessionStorage.clear();
 		console.log("Connect to socket io server");
 	});
 
@@ -41,6 +40,10 @@
 			clearInterval(interval);
 		};
 	});
+
+	onDestroy(() => {
+		socket.removeListener("connect");
+	});
 </script>
 
 {#if loading}
@@ -55,9 +58,11 @@
 	</div>
 {:else}
 	<div class="wrapper">
-		{#each $notifcations as data}
-			<ChatNotifcation id={data.id} message={data.message} username={data.user.username} />
-		{/each}
+		{#if $notifcations}
+			{#each $notifcations as data}
+				<ChatNotifcation id={data.id} message={data.message} username={data.sender.username} />
+			{/each}
+		{/if}
 	</div>
 	<slot />
 {/if}

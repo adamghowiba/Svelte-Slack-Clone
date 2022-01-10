@@ -12,6 +12,7 @@ const findAllPublic = async (users = true) => {
 				id: true,
 				name: true,
 				type: true,
+				section: true,
 				users: !users
 					? false
 					: {
@@ -56,7 +57,7 @@ const findById = async (channelId: number, users = true) => {
 	}
 };
 
-const findAllPrivate = async (userId: number, type: ChannelType): Promise<Pick<User, 'id' | 'username'>[]> => {
+const findAllPrivate = async (userId: number, type: ChannelType): Promise<Channel[]> => {
 	const userData = await prisma.user.findUnique({
 		where: {
 			id: userId
@@ -78,12 +79,11 @@ const findAllPrivate = async (userId: number, type: ChannelType): Promise<Pick<U
 		}
 	});
 
-	const sanitizedChannel = (data: any, channelId: any) => {
-		return { ...data, channelId };
+	const sanitizedChannel = (data: Channel & { users: User[] }) => {
+		return { ...data, users: data.users.reduce((prev, curr) => (prev.id == userId ? curr : prev)) };
 	};
-	const data = userData.channels.map(channel =>
-		channel.users.reduce((prev, curr) => sanitizedChannel(prev.id == userId ? curr : prev, channel.id))
-	);
+	const data = userData.channels.map(sanitizedChannel);
+
 	return data;
 };
 
@@ -94,7 +94,7 @@ export const checkPrivateExists = async (user1Id: number, user2Id: number) => {
 				AND: {
 					type: 'PRIVATE',
 					users: {
-						some: {
+						every: {
 							id: { in: [user1Id, user2Id] }
 						}
 					}
@@ -108,9 +108,9 @@ export const checkPrivateExists = async (user1Id: number, user2Id: number) => {
 	}
 };
 
-const createPrivate = async (senderId: number, receiverId: number) => {
+const createPrivate = async (senderId: number, receiverId: number): Promise<Channel> => {
 	try {
-		const result = prisma.channel.create({
+		const result = await prisma.channel.create({
 			data: {
 				type: 'PRIVATE',
 				users: {

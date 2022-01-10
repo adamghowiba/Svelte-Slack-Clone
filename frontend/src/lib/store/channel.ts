@@ -1,6 +1,6 @@
 import { derived, get, writable } from 'svelte/store';
 import type { Writable } from 'svelte/store';
-import type { Channel, PrivateChannel, ChannelType } from '../types';
+import type { Channel, PrivateChannel, ChannelType, User } from '../types';
 import { session } from '$app/stores';
 
 type Status = 'loading' | 'available' | 'error';
@@ -26,10 +26,8 @@ const fetchChannelData = async <Channel>(type: ChannelType): Promise<Channel> =>
 
 const createChannelStore = () => {
 	const store = writable({ status: 'loading', privateChannels: [], publicChannels: [] }, () => {
-		if (get(store).status == 'loading') {
-			console.log('New Subscription: fufulling data');
-			init();
-		}
+		// console.log('New Subscription: fufulling data');
+		init();
 	}) as Writable<ChannelStore>;
 
 	const init = async () => {
@@ -58,15 +56,30 @@ const createChannelStore = () => {
 		});
 	};
 
+	const addMember = (channelId, user: User) => {
+		store.update(channels => {
+			const addedUser = channels.publicChannels.map(channel => {
+				if (channel.id == channelId) {
+					channel.users.push(user);
+				}
+				return channel;
+			});
+			channels.publicChannels = addedUser;
+
+			return channels;
+		});
+	};
+
 	return {
 		subscribe: store.subscribe,
 		set: store.set,
 		update: store.update,
 		addPrivateChannel,
-		addPublicChannel
+		addPublicChannel,
+		addMember
 	};
 };
 
 export const channelStore = createChannelStore();
-export const privateChannels = derived(channelStore, $state => $state.privateChannels);
-export const groupChannels = derived(channelStore, $state => $state.publicChannels);
+export const privateChannels = derived(channelStore, state => state.privateChannels);
+export const groupChannels = derived(channelStore, state => state.publicChannels);

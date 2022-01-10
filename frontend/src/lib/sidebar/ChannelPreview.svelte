@@ -1,7 +1,7 @@
 <script lang="ts">
-import type { ChannelType } from "$lib/types";
-
+	import type { ChannelType } from "$lib/types";
 	import Icon from "@iconify/svelte";
+	import { onlineUsers } from "$lib/store/users";
 
 	export let name: string;
 	export let type: ChannelType;
@@ -9,9 +9,9 @@ import type { ChannelType } from "$lib/types";
 	export let notifications: number = 0;
 </script>
 
-<a href="/chat/{channelId || name}?{type}={name}&type={type}" class="wrap" data--id={channelId}>
+<a href="/chat/{channelId}?{type}={name}&type={type}" class="wrap" data--id={channelId}>
 	{#if type == "user"}
-		<img src="https://avatars.dicebear.com/api/initials/{name}.svg?r=50&fontSize=40" alt="User Avatar" />
+		<div class="status" class:online={$onlineUsers.find((user) => user.username == name)} />
 	{:else}
 		<Icon icon="fontisto:hashtag" color="inherit" />
 	{/if}
@@ -39,10 +39,15 @@ import type { ChannelType } from "$lib/types";
 	h6 {
 		color: inherit;
 	}
-	img {
-		width: 30px;
-		height: 30px;
+	.status {
+		width: 6px;
+		height: 6px;
 		border-radius: 50%;
+		background-color: rgba(224, 224, 224, 0.541);
+
+		&.online {
+			background-color: #00ff00;
+		}
 	}
 	.notifcation {
 		display: flex;

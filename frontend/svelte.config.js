@@ -9,14 +9,6 @@ const config = {
 
 	kit: {
 		adapter: adapter(),
-		vite: {
-			build: {
-				minify: true,
-				sourcemap: true
-			}
-		},
-
-		// hydrate the <div id="svelte"> element in src/app.html
 		target: '#svelte'
 	}
 };

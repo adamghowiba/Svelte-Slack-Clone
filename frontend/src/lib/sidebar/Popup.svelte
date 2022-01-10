@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
+	import { session } from "$app/stores";
 	import Spinner from "$lib/global/Spinner.svelte";
+	import { channelStore, privateChannels } from "$lib/store/channel";
 	import { clickOutside } from "$lib/utils/clickOutside";
 	import { createEventDispatcher } from "svelte";
 	import Search from "./Search.svelte";
@@ -14,20 +16,39 @@
 		const result = await response.json();
 
 		usersResult = result;
+		console.log(result);
 		return result;
 	};
 
-	const handleResultClick = (username: string) => {
-		// const privateChannels = channelStorage.getItem("private");
-		// const result = privateChannels.find((val) => val.username == username);
+	const handleResultClick = async (username: string, id: number) => {
+		const channel = $privateChannels.find((channels) => channels.users.username === username);
 
-		// if (!result) {
-		// 	// TODO Create Channel
-		// 	return;
-		// }
+		if (!channel) {
+			const postData = {
+				type: "private",
+				senderId: $session.user.id,
+				receiverId: id
+			};
+			const response = await fetch("http://localhost:5000/channel", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify(postData),
+				credentials: "include"
+			});
+			const result = await response.json();
+
+			if (!response.ok) console.error(result);
+			console.log("Create private channel, redirecting", result, result.id);
+			channelStore.addPrivateChannel({ id: result.id, users: { username, id: id } });
+			goto(`/chat/${result.id}?user=${username}&type=user`);
+			return;
+		}
 
 		// // TODO Fix this shit, figure ot  a way to rid it.
-		// goto(`/chat/${result.channelId}?user=${result.username}&type=user`);
+		active = false;
+		goto(`/chat/${channel.id}?user=${channel.users.username}&type=user`);
 	};
 
 	$: filteredResults = usersResult.filter((users) =>
@@ -49,7 +70,7 @@
 				<Spinner />
 			{:then users}
 				{#each searchValue ? filteredResults : users as user}
-					<div class="results__user" on:click={() => handleResultClick(user?.username)}>
+					<div class="results__user" on:click={() => handleResultClick(user.username, user.id)}>
 						<img
 							src="https://avatars.dicebear.com/api/initials/{user?.username || 'a'}.svg?r=50&fontSize=40"
 							alt="User Avatar" />
