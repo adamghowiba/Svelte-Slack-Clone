@@ -1,9 +1,8 @@
-import { Channel, ChannelType, FriendRequest, User } from '@prisma/client';
+import { Channel, ChannelType, User } from '@prisma/client';
 import prisma from '@controllers/db-controller';
 import ApiError from '@errors/ApiError';
 import logger from '@logger';
 import { DatabaseError } from '@errors/DatabaseError';
-import * as friends from '@services/friend-service';
 
 const findAll = async (): Promise<User[]> => {
 	const allUsers = await prisma.user.findMany();
@@ -52,4 +51,4 @@ const createUser = async (username: string): Promise<Partial<User>> => {
 	}
 };
 
-export { findById, findAll, createUser, findByUsername, friends };
+export { findById, findAll, createUser, findByUsername };

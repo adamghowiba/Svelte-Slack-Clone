@@ -1,85 +1,24 @@
-import { derived, get, writable } from 'svelte/store';
-import type { Writable } from 'svelte/store';
-import type { Channel, PrivateChannel, ChannelType, User } from '../types';
 import { session } from '$app/stores';
+import { fetchChannelData } from '$lib/api/channel-api';
+import { get, writable } from 'svelte/store';
+import type { PrivateChannel, ChannelGroup } from '../types';
 
 type Status = 'loading' | 'available' | 'error';
-interface ChannelStore {
-	status: Status;
-	publicChannels: readonly Channel[];
-	privateChannels: readonly PrivateChannel[];
+interface AsyncStore<T> {
+	state: Status;
+	data?: T;
 }
 
-const fetchChannelData = async <Channel>(type: ChannelType): Promise<Channel> => {
-	const url = `http://localhost:5000/channel${type == 'user' ? `/user/1` : ''}`;
+const initalAsyncState: AsyncStore<[]> = { state: 'loading', data: [] };
 
-	const response = await fetch(url, {
-		method: 'GET',
-		credentials: 'include'
+export const privateChannels = writable<AsyncStore<PrivateChannel[]>>(initalAsyncState, set => {
+	fetchChannelData('user', get(session).user.id).then((value: PrivateChannel[]) => {
+		set({ state: 'available', data: value });
 	});
+});
 
-	if (!response.ok) throw new Error('Error retriving user channels...');
-
-	const result = await response.json();
-	return result;
-};
-
-const createChannelStore = () => {
-	const store = writable({ status: 'loading', privateChannels: [], publicChannels: [] }, () => {
-		// console.log('New Subscription: fufulling data');
-		init();
-	}) as Writable<ChannelStore>;
-
-	const init = async () => {
-		const publicChannels = await fetchChannelData<Channel[]>('group');
-		const privateChannels = await fetchChannelData<PrivateChannel[]>('user');
-
-		store.update(value => {
-			value.status = 'available';
-			value.publicChannels = Object.freeze(publicChannels);
-			value.privateChannels = Object.freeze(privateChannels);
-			return value;
-		});
-	};
-
-	const addPublicChannel = (channel: Omit<Channel, 'type'>) => {
-		store.update(channels => {
-			channels.publicChannels = [...channels.publicChannels, { ...channel, type: 'group' }];
-			return channels;
-		});
-	};
-
-	const addPrivateChannel = (channel: PrivateChannel) => {
-		store.update(channels => {
-			channels.privateChannels = [...channels.privateChannels, channel];
-			return channels;
-		});
-	};
-
-	const addMember = (channelId, user: User) => {
-		store.update(channels => {
-			const addedUser = channels.publicChannels.map(channel => {
-				if (channel.id == channelId) {
-					channel.users.push(user);
-				}
-				return channel;
-			});
-			channels.publicChannels = addedUser;
-
-			return channels;
-		});
-	};
-
-	return {
-		subscribe: store.subscribe,
-		set: store.set,
-		update: store.update,
-		addPrivateChannel,
-		addPublicChannel,
-		addMember
-	};
-};
-
-export const channelStore = createChannelStore();
-export const privateChannels = derived(channelStore, state => state.privateChannels);
-export const groupChannels = derived(channelStore, state => state.publicChannels);
+export const publicChannels = writable<AsyncStore<ChannelGroup[]>>(initalAsyncState, set => {
+	fetchChannelData('group',  get(session).user.id).then((value: ChannelGroup[]) => {
+		set({ state: 'available', data: value });
+	});
+});

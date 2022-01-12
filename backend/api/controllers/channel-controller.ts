@@ -4,6 +4,7 @@ import {
 	checkPrivateExists,
 	createPrivate,
 	createPublic,
+	findAllChannels,
 	findAllPublic,
 	findById,
 } from '@services/channel-service';
@@ -13,8 +14,16 @@ import { Request, Response, NextFunction } from 'express';
 
 // TODO: Add query paramters for filtering & pagnation
 export const getAllChannels = catchAsync(async (req: Request, res: Response) => {
-	const channels = await findAllPublic();
+	const group = req.query.group;
+	if (group && group !== 'section') throw new ApiError('Invalid channel group');
 
+	if (group == 'section') {
+		const groupedChannels = await findAllChannels(group);
+
+		return res.json(groupedChannels);
+	}
+
+	const channels = await findAllPublic();
 	return res.status(200).json(channels);
 });
 
@@ -29,6 +38,7 @@ export const getChannelById = catchAsync(async (req: Request, res: Response) => 
 
 interface ChannelBody {
 	name?: string;
+	section?: string;
 	type: keyof typeof ChannelType;
 	senderId: string;
 	receiverId: string;
@@ -57,7 +67,7 @@ export const postChannel = catchAsync(async (req: Request<any, any, ChannelBody>
 	if (type == 'PUBLIC') {
 		if (!req.body.name) throw new ApiError('Public channels must have a name');
 
-		const publicChannel = await createPublic(req.body.name);
+		const publicChannel = await createPublic(req.body.name, req.body.section);
 
 		return res.status(200).json(publicChannel);
 	}

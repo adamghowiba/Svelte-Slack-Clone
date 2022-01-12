@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { parseDate } from '$lib/utils/dateUtils';
+	import { parseDate } from '@utils/dateUtils';
 
 	export let user: String;
 	export let message: string;

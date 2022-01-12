@@ -2,9 +2,9 @@
 	import { goto } from "$app/navigation";
 	import { session } from "$app/stores";
 	import Spinner from "$lib/global/Spinner.svelte";
-	import { channelStore, privateChannels } from "$lib/store/channel";
+	import { privateChannels } from "$lib/store/channel";
 	import { clickOutside } from "$lib/utils/clickOutside";
-	import { createEventDispatcher } from "svelte";
+	import { log } from "@utils/logger";
 	import Search from "./Search.svelte";
 
 	export let active = false;
@@ -16,32 +16,39 @@
 		const result = await response.json();
 
 		usersResult = result;
-		console.log(result);
 		return result;
 	};
 
 	const handleResultClick = async (username: string, id: number) => {
-		const channel = $privateChannels.find((channels) => channels.users.username === username);
+		const channel = $privateChannels.data.find((channels) => channels.users.username === username);
 
 		if (!channel) {
-			const postData = {
-				type: "private",
-				senderId: $session.user.id,
-				receiverId: id
-			};
+			log.debug("Private channel not found... Attempting to createa.");
+
 			const response = await fetch("http://localhost:5000/channel", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json"
 				},
-				body: JSON.stringify(postData),
+				body: JSON.stringify({
+					type: "private",
+					senderId: $session.user.id,
+					receiverId: id
+				}),
 				credentials: "include"
 			});
-			const result = await response.json();
 
-			if (!response.ok) console.error(result);
-			console.log("Create private channel, redirecting", result, result.id);
-			channelStore.addPrivateChannel({ id: result.id, users: { username, id: id } });
+			const result = await response.json();
+			if (!response.ok) return log.error(result);
+
+			// Update local state
+			privateChannels.update((channels) => {
+				channels.data.push({ id: result.id, users: { username, id } });
+				return channels;
+			});
+
+			log.info("Private channel created sucessfully, redirecting..", result);
+			active = false;
 			goto(`/chat/${result.id}?user=${username}&type=user`);
 			return;
 		}

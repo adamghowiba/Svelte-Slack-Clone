@@ -1,13 +1,10 @@
-<svelte:options immutable />
-
+<!-- <svelte:options immutable /> -->
 <script lang="ts">
-	import { session } from "$app/stores";
-	import { channelStore, groupChannels, privateChannels } from "$lib/store/channel";
-import type { Channel } from "$lib/types";
-import { groupByKey } from "$lib/utils/dateUtils";
-	import { fetchUsersList } from "$lib/utils/requestUtils";
+	import Button from "$lib/global/Button.svelte";
+	import Loader from "$lib/global/Loader.svelte";
+	import { privateChannels, publicChannels } from "$lib/store/channel";
+	import { allUsers } from "$lib/store/users";
 	import ChannelGroup from "./ChannelGroup.svelte";
-	import ChannelPreview from "./ChannelPreview.svelte";
 	import GroupChannel from "./GroupChannel.svelte";
 	import Popup from "./Popup.svelte";
 	import Search from "./Search.svelte";
@@ -15,63 +12,60 @@ import { groupByKey } from "$lib/utils/dateUtils";
 	import UserChannel from "./UserChannel.svelte";
 
 	let directMessagePopup = false;
-
 	let searchValue: string;
 
-	//@ts-ignore
-	$: groupedChannels = groupByKey<Channel>($privateChannels, 'section')
-
-	// $: groupedChannel = groupByKey($privateChannels, '');
+	// TODO - Remove
+	function testFunction() {
+		console.log("adam");
+	}
 </script>
 
 <section>
 	<Search bind:value={searchValue} />
 	<!-- Group Chats -->
 	<SidebarGroup title="Group Chats">
-		<ChannelGroup groupName="Staff">
-			<GroupChannel channelName={"projects"} channelId={0} notifications={0} />
-		</ChannelGroup>
-
-		<ChannelGroup groupName="Staff">
-			<GroupChannel channelName={"projects"} channelId={0} notifications={0} />
-			<GroupChannel channelName={"projects"} channelId={0} notifications={0} />
-		</ChannelGroup>
-
-		<GroupChannel channelName={"projects"} channelId={0} notifications={0} />
-		<GroupChannel channelName={"projects"} channelId={0} notifications={0} />
-
-		{#if $channelStore.status == "loading"}
-			<h3>Loading...</h3>
-		{:else if $channelStore.status == "available"}
-			{#each groupedChannels as channel}
-				<GroupChannel channelName={channel.name} channelId={channel.id} notifications={0} />
+		{#if $publicChannels.state == "loading"}
+			<Loader />
+		{:else if $publicChannels.state == "available"}
+			{#each $publicChannels.data || [] as group}
+				<ChannelGroup groupName={group.name}>
+					{#each group.channel as channel}
+						<GroupChannel channelName={channel.name} channelId={channel.id} notifications={0} />
+					{/each}
+				</ChannelGroup>
 			{/each}
+		{:else}
+			<h6>Error</h6>
 		{/if}
 	</SidebarGroup>
 
 	<!-- All Users -->
-	<SidebarGroup title="Direct Messages" on:click={() => (directMessagePopup = true)}>
+	<SidebarGroup title="Direct Mesasages" on:click={() => (directMessagePopup = true)}>
 		<Popup bind:active={directMessagePopup} on:clickOutside={() => (directMessagePopup = false)} />
 
-		{#if $channelStore.status == "loading"}
-			<h3>Loading...</h3>
-		{:else if $channelStore.status == "available"}
-			{#each $privateChannels as channel}
-				<UserChannel username={channel.users.username} channelId={channel.id} notifications={0} />
+		{#if $privateChannels.state == "loading"}
+			<Loader />
+		{:else}
+			{#each $privateChannels.data || [] as channel}
+				<UserChannel username={channel?.users?.username} channelId={channel?.id} notifications={0} />
 			{/each}
 		{/if}
 	</SidebarGroup>
 
 	<!-- All Users -->
 	<SidebarGroup title="All users" addable={false}>
-		{#await fetchUsersList(true)}
-			<h3>Loading...</h3>
-		{:then users}
-			{#each users as user}
+		{#if $allUsers.state == "loading"}
+			<Loader />
+		{:else}
+			{#each $allUsers.data as user}
 				<UserChannel username={user.username} notifications={0} />
 			{/each}
-		{/await}
+		{/if}
 	</SidebarGroup>
+
+	<div class="adam__world" />
+
+	<Button on:click={testFunction} type="button">Test Function</Button>
 </section>
 
 <style lang="scss">

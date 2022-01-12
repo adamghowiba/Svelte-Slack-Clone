@@ -1,10 +1,9 @@
 <script lang="ts">
 	import Icon from "@iconify/svelte";
-	import { fade, fly, slide } from "svelte/transition";
 
 	export let groupName: string;
-	const iconSize = 11;
-	let expanded = false;
+	const iconSize = 8.5;
+	let expanded = true;
 
 	const toggleSidebarExpanded = () => {
 		expanded = !expanded;
@@ -32,7 +31,7 @@
 	header {
 		display: flex;
 		align-items: center;
-		gap: 0.8rem;
+		gap: 0.7rem;
 		position: relative;
 		color: #8e9297;
 

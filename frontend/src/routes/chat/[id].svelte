@@ -1,10 +1,10 @@
 <script context="module" lang="ts">
 	import type { Load } from "@sveltejs/kit";
 
-	export const load: Load = async ({ page }) => {
-		const channelId = parseInt(page.params.id);
-		const channelType = page.query.get("type");
-		const room = page.query.get(channelType);
+	export const load: Load = async ({ url, params }) => {
+		const channelId = parseInt(params.id);
+		const channelType = url.searchParams.get("type");
+		const room = url.searchParams.get(channelType);
 
 		socket.emit("room:join", { room });
 
@@ -25,10 +25,11 @@
 	import { onDestroy } from "svelte";
 	import { browser } from "$app/env";
 	import { socket } from "$lib/socket";
-	import { loadChatMessages } from "$lib/utils/requestUtils";
+	import { loadChatMessages } from "$lib/api/chat-api";
 	import type { ChannelType } from "$lib/types";
 	import { navigating } from "$app/stores";
-	import { chatStore } from "$lib/store/chatMessages";
+	import { chatStore } from "$lib/store/chat";
+	import ChannelPopup from "$lib/global/ChannelPopup.svelte";
 
 	export let room: string;
 	export let channelId: number;
@@ -77,6 +78,15 @@
 
 <section>
 	<ChannelBio channel={room} type={channelType} members={5} />
+	<ChannelPopup navItems={["about", "members", "intergrations"]}>
+		<div slot="head">
+			<h5>hello</h5>
+		</div>
+
+		<div class="body" slot="body">
+			<h5>body</h5>
+		</div>
+	</ChannelPopup>
 
 	<div class="messages">
 		{#if !query}

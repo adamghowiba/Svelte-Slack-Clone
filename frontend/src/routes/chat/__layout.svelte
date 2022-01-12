@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<!-- <script context="module" lang="ts">
 	import type { Load } from "@sveltejs/kit";
 	export const load: Load = async ({ session }) => {
 		if (!session.user) {
@@ -12,14 +12,14 @@
 			status: 200
 		};
 	};
-</script>
-
+</script> -->
 <script lang="ts">
 	import Sidebar from "$lib/sidebar/Sidebar.svelte";
 	import { socket } from "$lib/socket";
 	import { onDestroy, onMount } from "svelte";
 	import type { User } from "$lib/types";
 	import { onlineUsers } from "$lib/store/users";
+	import { log } from "@utils/logger";
 
 	socket.on("user:active", (users: User[]) => {
 		$onlineUsers = users;
@@ -38,14 +38,16 @@
 		});
 	});
 
+	socket.on("connect", async () => {
+		log.info("Established websocket connection");
+	});
+
 	onMount(() => {
 		if (!socket.connected) socket.connect();
 	});
 
 	onDestroy(() => {
-		socket.removeListener("user:active");
-		socket.removeListener("user:connected");
-		socket.removeListener("user:disconnected");
+		socket.removeAllListeners();
 	});
 </script>
 

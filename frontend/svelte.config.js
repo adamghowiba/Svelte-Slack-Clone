@@ -12,9 +12,13 @@ const config = {
 		adapter: adapter(),
 		target: '#svelte',
 		vite: {
+			build: {
+				sourcemap: true
+			},
 			resolve: {
 				alias: {
 					'@logic': path.resolve('./src/logic'),
+					'@utils': path.resolve('./src/utils'),
 				}
 			}
 		}

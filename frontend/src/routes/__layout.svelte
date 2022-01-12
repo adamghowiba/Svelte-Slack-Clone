@@ -1,26 +1,14 @@
 <script lang="ts">
-	import { browser } from "$app/env";
-
-	import { navigating, page, session } from "$app/stores";
 	import { loaderMessages } from "$lib/constants";
 	import ChatNotifcation from "$lib/global/ChatNotifcation.svelte";
 	import Spinner from "$lib/global/Spinner.svelte";
 	import { socket } from "$lib/socket";
 	import { notifcations } from "$lib/stores";
-	import { fetchUsersList } from "$lib/utils/requestUtils";
 	import { onDestroy, onMount } from "svelte";
 	import { fade } from "svelte/transition";
 
 	let loading: boolean = false;
 	let currentIndex = 0;
-
-	socket.on("connect", async () => {
-		// loading = true;
-		// await fetchUsersList(true);
-		// await fetchFriendsList($session.user.id, true);
-		// loading = false;
-		console.log("Connect to socket io server");
-	});
 
 	const cycleMessages = () => {
 		if (currentIndex == loaderMessages.length - 1) return (currentIndex = 0);
@@ -40,19 +28,15 @@
 			clearInterval(interval);
 		};
 	});
-
-	onDestroy(() => {
-		socket.removeListener("connect");
-	});
 </script>
 
+<!-- 
 {#if loading}
 	<div class="load-screen">
 		<Spinner />
 		{#key currentIndex}
 			<div class="messages" transition:fade={{ duration: 240 }}>
 				<h5>{loaderMessages[currentIndex].title}</h5>
-				<!-- <p>{loaderMessages[currentIndex].desc}...</p> -->
 			</div>
 		{/key}
 	</div>
@@ -64,8 +48,8 @@
 			{/each}
 		{/if}
 	</div>
-	<slot />
-{/if}
+	{/if} -->
+<slot />
 
 <style lang="scss">
 	.wrapper {

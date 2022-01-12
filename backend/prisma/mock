@@ -17,6 +17,7 @@ model User {
   display_name    String?
   channels        Channel[]
   messages        Message[]
+  privateChannels PrivateChannel[]
   // requesting   FriendRequest[] @relation("requesting")
   // requests     FriendRequest[] @relation("requests")
   // friend_of    Friendship[]    @relation("friend_of")
@@ -24,18 +25,35 @@ model User {
 }
 
 model Message {
-  id                 Int             @id @default(autoincrement())
-  sender_uid         Int
-  channel_id         Int
-  message            String
-  sender             User            @relation(fields: [sender_uid], references: [id])
-  channel            Channel?        @relation(fields: [channel_id], references: [id])
-  date               DateTime        @default(now())
+  id         Int    @id @default(autoincrement())
+  sender_uid Int
+  channel_id Int
+  message    String
+  private_channels PrivateChannelMessage[]
+  sender  User     @relation(fields: [sender_uid], references: [id])
+  channel Channel  @relation(fields: [channel_id], references: [id])
+  date    DateTime @default(now())
+}
+
+model PrivateChannel {
+  id           Int                     @id @default(autoincrement())
+  users        User[]
+  messages     PrivateChannelMessage[]
+  created_date DateTime                @default(now())
+}
+
+model PrivateChannelMessage {
+  channel    PrivateChannel @relation(fields: [channel_id], references: [id])
+  channel_id Int
+  message    Message        @relation(fields: [message_id], references: [id])
+  message_id Int
+
+  @@id([channel_id, message_id])
 }
 
 model Section {
   id      Int       @id @default(autoincrement())
-  name    String?    @unique
+  name    String    @unique
   channel Channel[]
 }
 
@@ -85,5 +103,4 @@ model Session {
 enum ChannelType {
   PUBLIC
   PRIVATE
-  DIRECT
 }

@@ -1,7 +1,7 @@
 <script lang="ts">
+	import { onlineUsers } from "$lib/store/users";
 	import type { ChannelType } from "$lib/types";
 	import Icon from "@iconify/svelte";
-	import { onlineUsers } from "$lib/store/users";
 
 	export let name: string;
 	export let type: ChannelType;

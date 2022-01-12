@@ -15,11 +15,11 @@ export const handle: Handle = async ({ request, resolve }) => {
 
 	if (!response.ok) {
 		request.locals.user = null;
-		return await resolve(request);
+	}else {
+		const result = await response.json();
+		request.locals.user = result;
 	}
 
-	const result = await response.json();
-	request.locals.user = result;
 	return resolve(request);
 };
 

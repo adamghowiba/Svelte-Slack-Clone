@@ -1,6 +1,20 @@
-import { DatabaseError } from '@errors/DatabaseError';
 import prisma from '@controllers/db-controller';
-import { ChannelType, Channel, User } from '@prisma/client';
+import { DatabaseError } from '@errors/DatabaseError';
+import { Channel, User } from '@prisma/client';
+
+export const findAllChannels = async (groupBy: string) => {
+	try {
+		const sectionChannels = await prisma.section.findMany({
+			include: {
+				channel: true
+			}
+		});
+
+		return sectionChannels;
+	} catch (error) {
+		throw new DatabaseError(error);
+	}
+};
 
 const findAllPublic = async (users = true) => {
 	try {
@@ -57,7 +71,34 @@ const findById = async (channelId: number, users = true) => {
 	}
 };
 
-const findAllPrivate = async (userId: number, type: ChannelType): Promise<Channel[]> => {
+export const findAllByUser = async (userId: number): Promise<unknown> => {
+	const userData = await prisma.user.findUnique({
+		where: {
+			id: userId
+		},
+		select: {
+			channels: {
+				where: {
+					type: 'PRIVATE'
+				},
+				select: {
+					id: true,
+					name: true,
+					users: {
+						select: {
+							id: true,
+							username: true
+						}
+					}
+				}
+			}
+		}
+	});
+
+	return userData.channels;
+};
+
+const findAllPrivate = async (userId: number): Promise<unknown> => {
 	const userData = await prisma.user.findUnique({
 		where: {
 			id: userId
@@ -65,7 +106,7 @@ const findAllPrivate = async (userId: number, type: ChannelType): Promise<Channe
 		include: {
 			channels: {
 				where: {
-					type
+					type: 'PRIVATE'
 				},
 				include: {
 					users: {
@@ -79,8 +120,9 @@ const findAllPrivate = async (userId: number, type: ChannelType): Promise<Channe
 		}
 	});
 
+	/* TODO: Self channel returns no user */
 	const sanitizedChannel = (data: Channel & { users: User[] }) => {
-		return { ...data, users: data.users.reduce((prev, curr) => (prev.id == userId ? curr : prev)) };
+		return { ...data, users: data.users.filter(user => user.id != userId)[0] };
 	};
 	const data = userData.channels.map(sanitizedChannel);
 
@@ -113,6 +155,7 @@ const createPrivate = async (senderId: number, receiverId: number): Promise<Chan
 		const result = await prisma.channel.create({
 			data: {
 				type: 'PRIVATE',
+				name: `dm--${Math.max(senderId, receiverId)}_${Math.min(senderId, receiverId)}`,
 				users: {
 					connect: [{ id: senderId }, { id: receiverId }]
 				}
@@ -125,11 +168,21 @@ const createPrivate = async (senderId: number, receiverId: number): Promise<Chan
 	}
 };
 
-const createPublic = async (name: string) => {
+const createPublic = async (name: string, section = 'channel') => {
 	try {
 		const result = await prisma.channel.create({
 			data: {
 				type: 'PUBLIC',
+				section: {
+					connectOrCreate: {
+						where: {
+							name: section
+						},
+						create: {
+							name: section
+						}
+					}
+				},
 				name
 			}
 		});
@@ -143,3 +196,4 @@ const createPublic = async (name: string) => {
 const updateChannel = async (senderId: number, channelId: number, message: string) => {};
 
 export { findById, createPrivate, createPublic, findAllPublic, findAllPrivate };
+

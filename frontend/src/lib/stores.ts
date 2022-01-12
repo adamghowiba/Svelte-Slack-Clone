@@ -4,11 +4,6 @@ import type { Notifcation } from './types';
 
 export const notifcations: Writable<Notifcation[]> = writable([]);
 
-/* OPTION 1 Using Svelte */
-// export const someState = {
-// 	sidebar: writable(sidebar) as Writable<Sidebar>,
-// 	ui: writable(uiState)
-// };
 
 /* 
 	Cache strat

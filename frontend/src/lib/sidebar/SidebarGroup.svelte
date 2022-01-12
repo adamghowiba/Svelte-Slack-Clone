@@ -6,7 +6,7 @@
 	export let addable = true;
 
 	beforeUpdate(() => {
-		console.log("Updated state for", title);
+		console.debug("Updated state for", title);
 	});
 </script>
 

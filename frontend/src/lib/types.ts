@@ -7,6 +7,12 @@ export interface Channel {
 	name?: string;
 }
 
+export interface ChannelGroup {
+	id: number;
+	name: string;
+	channel: Channel[]
+}
+
 /* TODO: Fix return value */
 export interface PrivateChannel {
 	id: number;
