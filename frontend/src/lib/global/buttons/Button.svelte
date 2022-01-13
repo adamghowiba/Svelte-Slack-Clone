@@ -18,6 +18,7 @@
 	a,
 	button {
 		display: flex;
+		position: relative;
 		justify-content: center;
 		align-items: center;
 		background-color: var(--color-blue);

@@ -66,6 +66,30 @@ h6 {
 	font-size: var(--fs-body);
 	font-weight: var(--fw-md);
 }
+.overlay {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.651);
+	z-index: 400;
+}
+.focused-input {
+	border: 1px solid #5865f2 !important;
+	transition: border 0.15s linear;
+}
+.focused-input::after {
+	content: '';
+	position: absolute;
+	display: block;
+	top: -5px;
+	bottom: -5px;
+	right: -5px;
+	left: -5px;
+	border: 5px solid #5865f256 !important;
+	border-radius: inherit;
+}
 
 ::-webkit-scrollbar {
 	background-color: rgba(32, 34, 37, 0.322);

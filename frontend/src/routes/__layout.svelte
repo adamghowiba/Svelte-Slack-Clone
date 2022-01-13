@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { loaderMessages } from "$lib/constants";
-	import ChatNotifcation from "$lib/global/ChatNotifcation.svelte";
-	import Spinner from "$lib/global/Spinner.svelte";
+	import ChatNotifcation from "$lib/chat/ChatNotifcation.svelte";
+	import Spinner from "$lib/global/loaders/Spinner.svelte";
 	import { socket } from "$lib/socket";
+	import { overlay } from "$lib/store/interface";
 	import { notifcations } from "$lib/stores";
 	import { onDestroy, onMount } from "svelte";
 	import { fade } from "svelte/transition";
@@ -49,6 +50,9 @@
 		{/if}
 	</div>
 	{/if} -->
+{#if $overlay}
+	<div class="overlay" on:click={() => $overlay = false} />
+{/if}
 <slot />
 
 <style lang="scss">
@@ -60,6 +64,13 @@
 		z-index: 100;
 		bottom: 15px;
 		right: 15px;
+	}
+	.overlay {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0, 0, 0, 0.651);
+		z-index: 100;
 	}
 	.load-screen {
 		width: 100%;

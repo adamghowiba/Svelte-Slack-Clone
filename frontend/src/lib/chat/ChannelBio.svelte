@@ -1,7 +1,7 @@
 <script lang="ts">
-	import Icon from '@iconify/svelte';
+	import Icon from "@iconify/svelte";
 
-	type ChannelType = 'user' | 'group';
+	type ChannelType = "user" | "group";
 
 	export let channel: string;
 	export let type: ChannelType;
@@ -13,18 +13,18 @@
 <div class="wrap">
 	<div class="description">
 		<div class="icon">
-			{#if type == 'user'}
+			{#if type == "user"}
 				<Icon icon="bx:bx-at" color="var(--color-muted)" width={21} height={21} />
 			{:else}
 				<Icon icon="fontisto:hashtag" color="var(--color-muted)" inline={true} hAlig />
 			{/if}
 		</div>
 
-		<header>
+		<header on:click>
 			<h5>{channel}</h5>
-			{#if type == 'group'}
+			{#if type == "group"}
 				<div class="members">
-					<span class="members__count">{members} member{members > 1 ? 's' : ''}</span>
+					<span class="members__count">{members} member{members > 1 ? "s" : ""}</span>
 					<span class="members__add">
 						<Icon icon="akar-icons:plus" width="16px" height="16px" color="var(--color-gray-s1)" />
 						<span>Add member</span>
@@ -40,12 +40,7 @@
 				<Icon icon="bi:pin-angle" width={iconSize} height={iconSize} color="inherit" />
 			</div>
 			<div class="icon">
-				<Icon
-					icon="ant-design:info-circle-outlined"
-					width={iconSize}
-					height={iconSize}
-					color="inherit"
-				/>
+				<Icon icon="ant-design:info-circle-outlined" width={iconSize} height={iconSize} color="inherit" />
 			</div>
 		</div>
 
@@ -72,6 +67,12 @@
 		width: 100%;
 		padding: 1.5em 3em;
 		border-bottom: 1px solid rgba(114, 114, 114, 0.345);
+	}
+
+	header {
+		&:hover {
+			cursor: pointer;
+		}
 	}
 
 	.actions {

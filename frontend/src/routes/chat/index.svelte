@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { fetchUsersList } from "$lib/api/user-api";
 	import UserPreview from "$lib/chat/UserPreview.svelte";
-	import Loader from "$lib/global/Loader.svelte";
-	import Search from "$lib/sidebar/Search.svelte";
+	import Loader from "$lib/global/loaders/Loader.svelte";
+	import Search from "$lib/global/Search.svelte";
 	import { allUsers, onlineUsers } from "$lib/store/users";
 
 	let searchValue: string;

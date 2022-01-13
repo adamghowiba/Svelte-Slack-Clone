@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Navbar from "$lib/global/Navbar.svelte";
+	import Navbar from "$lib/home/Navbar.svelte";
 	import WelcomePopup from "$lib/home/WelcomePopup.svelte";
 	import { onDestroy, onMount } from "svelte";
 </script>

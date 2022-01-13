@@ -193,7 +193,15 @@ const createPublic = async (name: string, section = 'channel') => {
 	}
 };
 
-const updateChannel = async (senderId: number, channelId: number, message: string) => {};
+export const updateChannel = async (id: number, data: Partial<Channel>): Promise<Channel> => {
+	const channel = await prisma.channel.update({
+		where: {
+			id
+		},
+		data
+	});
+
+	return channel;
+};
 
 export { findById, createPrivate, createPublic, findAllPublic, findAllPrivate };
-

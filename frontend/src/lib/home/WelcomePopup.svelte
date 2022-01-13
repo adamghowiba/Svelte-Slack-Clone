@@ -1,8 +1,7 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
 	import { session } from "$app/stores";
-
-	import Button from "$lib/global/Button.svelte";
+	import Button from "$lib/global/buttons/Button.svelte";
 	import TextInput from "$lib/global/TextInput.svelte";
 
 	let value: string;

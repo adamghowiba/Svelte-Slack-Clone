@@ -1,13 +1,13 @@
 <!-- <svelte:options immutable /> -->
 <script lang="ts">
-	import Button from "$lib/global/Button.svelte";
-	import Loader from "$lib/global/Loader.svelte";
+	import Button from "$lib/global/buttons/Button.svelte";
+	import Loader from "$lib/global/loaders/Loader.svelte";
 	import { privateChannels, publicChannels } from "$lib/store/channel";
 	import { allUsers } from "$lib/store/users";
 	import ChannelGroup from "./ChannelGroup.svelte";
 	import GroupChannel from "./GroupChannel.svelte";
 	import Popup from "./Popup.svelte";
-	import Search from "./Search.svelte";
+	import Search from "$lib/global/Search.svelte";
 	import SidebarGroup from "./SidebarGroup.svelte";
 	import UserChannel from "./UserChannel.svelte";
 

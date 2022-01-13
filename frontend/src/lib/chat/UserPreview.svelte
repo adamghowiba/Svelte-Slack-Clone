@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Action from "$lib/global/Action.svelte";
+	import Action from "$lib/global/buttons/Action.svelte";
 	import Icon from "@iconify/svelte";
 
 	export let username: string = "adam";

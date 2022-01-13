@@ -1,8 +1,8 @@
 <script lang="ts">
-    export let color = '#8E9297';
+	export let color = "#8E9297";
 </script>
 
-<div class="lds-ellipsis" style="--color: {color}">
+<div class="lds-ellipsis" style="--color: {color};">
 	<div />
 	<div />
 	<div />
@@ -14,11 +14,11 @@
 		display: inline-block;
 		position: relative;
 		width: 80px;
-		height: 35px;
+		height: 0px;
 	}
 	.lds-ellipsis div {
-        position: absolute;
-		top: 10px;
+		position: absolute;
+		top: -6px;
 		width: 13px;
 		height: 13px;
 		border-radius: 50%;

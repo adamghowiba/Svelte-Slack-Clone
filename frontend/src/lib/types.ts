@@ -5,6 +5,9 @@ export interface Channel {
 	notifcations?: number;
 	section: string | null;
 	name?: string;
+	topic?: string;
+	description?: string;
+	created_date: Date;
 }
 
 export interface ChannelGroup {

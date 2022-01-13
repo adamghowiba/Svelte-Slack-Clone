@@ -9,14 +9,14 @@ datasource db {
 }
 
 model User {
-  id              Int              @id @default(autoincrement())
-  email           String           @unique @default(uuid())
-  username        String           @unique
-  first_name      String?
-  last_name       String?
-  display_name    String?
-  channels        Channel[]
-  messages        Message[]
+  id           Int       @id @default(autoincrement())
+  email        String    @unique @default(uuid())
+  username     String    @unique
+  first_name   String?
+  last_name    String?
+  display_name String?
+  channels     Channel[]
+  messages     Message[]
   // requesting   FriendRequest[] @relation("requesting")
   // requests     FriendRequest[] @relation("requests")
   // friend_of    Friendship[]    @relation("friend_of")
@@ -24,30 +24,32 @@ model User {
 }
 
 model Message {
-  id                 Int             @id @default(autoincrement())
-  sender_uid         Int
-  channel_id         Int
-  message            String
-  sender             User            @relation(fields: [sender_uid], references: [id])
-  channel            Channel?        @relation(fields: [channel_id], references: [id])
-  date               DateTime        @default(now())
+  id         Int      @id @default(autoincrement())
+  sender_uid Int
+  channel_id Int
+  message    String
+  sender     User     @relation(fields: [sender_uid], references: [id])
+  channel    Channel? @relation(fields: [channel_id], references: [id])
+  date       DateTime @default(now())
 }
 
 model Section {
   id      Int       @id @default(autoincrement())
-  name    String?    @unique
+  name    String?   @unique
   channel Channel[]
 }
 
 model Channel {
   id           Int         @id @default(autoincrement())
   name         String?
-  section      Section?    @relation(fields: [section_id], references: [id])
   section_id   Int?
+  topic        String?
+  description  String?
+  created_date DateTime    @default(now())
   type         ChannelType
   messages     Message[]
   users        User[]
-  created_date DateTime    @default(now())
+  section      Section?    @relation(fields: [section_id], references: [id])
 }
 
 // model Friendship {

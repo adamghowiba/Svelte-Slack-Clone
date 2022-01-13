@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
 	import { session } from "$app/stores";
-	import Spinner from "$lib/global/Spinner.svelte";
+	import Spinner from "$lib/global/loaders/Spinner.svelte";
 	import { privateChannels } from "$lib/store/channel";
 	import { clickOutside } from "$lib/utils/clickOutside";
 	import { log } from "@utils/logger";
-	import Search from "./Search.svelte";
+	import Search from "$lib/global/Search.svelte";
 
 	export let active = false;
 	let searchValue: string = "";
@@ -64,7 +64,7 @@
 </script>
 
 {#if active}
-	<div class="popup" name="popup" use:clickOutside on:clickOutside>
+	<div class="popup" name="popup" use:clickOutside={() => (active = false)}>
 		<header>
 			<h4>Select Friend</h4>
 			<p>Choose a teammate to chat</p>

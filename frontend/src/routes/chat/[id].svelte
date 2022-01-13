@@ -1,11 +1,22 @@
 <script context="module" lang="ts">
+	import { navigating } from "$app/stores";
+	import { loadChatMessages } from "$lib/api/chat-api";
+	import ChannelBio from "$lib/chat/ChannelBio.svelte";
+	import ChatInput from "$lib/chat/ChatInput.svelte";
+	import Message from "$lib/chat/Message.svelte";
+	import ChannelPopup from "$lib/global/popup/channel/ChannelPopup.svelte";
+	import { socket } from "$lib/socket";
+	import { publicChannel, publicChannels } from "$lib/store/channel";
+	import { chatStore } from "$lib/store/chat";
+	import { overlay } from "$lib/store/interface";
+	import type { Channel, ChannelType } from "$lib/types";
 	import type { Load } from "@sveltejs/kit";
+	import { onDestroy } from "svelte";
 
 	export const load: Load = async ({ url, params }) => {
 		const channelId = parseInt(params.id);
 		const channelType = url.searchParams.get("type");
 		const room = url.searchParams.get(channelType);
-
 		socket.emit("room:join", { room });
 
 		return {
@@ -19,24 +30,13 @@
 </script>
 
 <script lang="ts">
-	import ChannelBio from "$lib/chat/ChannelBio.svelte";
-	import ChatInput from "$lib/chat/ChatInput.svelte";
-	import Message from "$lib/chat/Message.svelte";
-	import { onDestroy } from "svelte";
-	import { browser } from "$app/env";
-	import { socket } from "$lib/socket";
-	import { loadChatMessages } from "$lib/api/chat-api";
-	import type { ChannelType } from "$lib/types";
-	import { navigating } from "$app/stores";
-	import { chatStore } from "$lib/store/chat";
-	import ChannelPopup from "$lib/global/ChannelPopup.svelte";
-
 	export let room: string;
 	export let channelId: number;
 	export let channelType: ChannelType;
 
 	let messages = [];
 	let query: boolean;
+	// let channelData: Channel;
 
 	/* Read incoming messages */
 	socket.on("message:read", (payload) => {
@@ -61,6 +61,16 @@
 		messages = messageData;
 	};
 
+	$: popups = {
+		publicChannel: false,
+		privateChannel: false
+	};
+
+	const openPopup = (type: keyof typeof popups) => {
+		popups[type] = true;
+		$overlay = true;
+	};
+
 	onDestroy(() => {
 		messages = [];
 		socket.removeListener("message:read");
@@ -71,22 +81,18 @@
 		// const scroll = document.querySelector(".messages");
 	}
 
+	let channelData: Channel;
 	$: {
+		channelData = $publicChannel.find((channel) => channel.id == channelId);
 		loadMessages(channelId);
 	}
+	$: console.log(channelData);
 </script>
 
 <section>
-	<ChannelBio channel={room} type={channelType} members={5} />
-	<ChannelPopup navItems={["about", "members", "intergrations"]}>
-		<div slot="head">
-			<h5>hello</h5>
-		</div>
+	<ChannelBio channel={room} type={channelType} members={5} on:click={() => openPopup("publicChannel")} />
 
-		<div class="body" slot="body">
-			<h5>body</h5>
-		</div>
-	</ChannelPopup>
+	<ChannelPopup active={popups.publicChannel} {channelData} />
 
 	<div class="messages">
 		{#if !query}

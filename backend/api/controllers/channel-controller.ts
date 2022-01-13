@@ -7,6 +7,7 @@ import {
 	findAllChannels,
 	findAllPublic,
 	findById,
+	updateChannel
 } from '@services/channel-service';
 import { catchAsync } from '@utils/ErrorUtil';
 import { channelValidation } from '@validation/ChannelValidation';
@@ -73,6 +74,16 @@ export const postChannel = catchAsync(async (req: Request<any, any, ChannelBody>
 	}
 });
 
-export const putChannel = catchAsync(async (req: Request, res: Response) => {});
+export const putChannel = catchAsync(async (req: Request, res: Response) => {
+	const channelId = parseInt(req.params?.id);
+	if (!channelId) throw new ApiError('Invalid channel id');
+
+	const { error } = channelValidation.validate(req.body);
+	if (error) throw new ApiError(error.message);
+
+	const updatedChannel = await updateChannel(channelId, req.body);
+
+	res.json(updatedChannel);
+});
 
 export const deleteChannel = catchAsync(async (req: Request, res: Response) => {});
