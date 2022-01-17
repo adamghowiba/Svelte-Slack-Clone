@@ -2,7 +2,7 @@
 	import { goto } from "$app/navigation";
 	import { session } from "$app/stores";
 	import Button from "$lib/global/buttons/Button.svelte";
-	import TextInput from "$lib/global/TextInput.svelte";
+import TextInput from "$lib/global/input/TextInput.svelte";
 
 	let value: string;
 	let status = {
@@ -48,7 +48,7 @@
 	<p>Enter your name to begin</p>
 
 	<div class="body">
-		<TextInput name="username" bind:value label="username or name" />
+		<TextInput bind:value label="username or name" />
 		<Button on:click={loginUser} type="button">
 			{#if querying}
 				Loading...

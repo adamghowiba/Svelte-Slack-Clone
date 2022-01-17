@@ -20,6 +20,7 @@
 	import type { User } from "$lib/types";
 	import { onlineUsers } from "$lib/store/users";
 	import { log } from "@utils/logger";
+	import Topbar from "$lib/global/Topbar.svelte";
 
 	socket.on("user:active", (users: User[]) => {
 		$onlineUsers = users;
@@ -52,6 +53,7 @@
 </script>
 
 <section class="wrapper">
+	<Topbar />
 	<Sidebar />
 
 	<slot />
@@ -63,6 +65,6 @@
 		background-color: var(--color-black-s1);
 		display: grid;
 		grid-template-columns: auto 1fr;
-		grid-template-rows: 100%;
+		grid-template-rows: auto 1fr;
 	}
 </style>

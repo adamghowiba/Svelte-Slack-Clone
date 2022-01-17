@@ -8,7 +8,7 @@
 </script>
 
 <a href="/chat/{channelId}?group={channelName}&type=group" class="wrap" data--id={channelId}>
-	<Icon icon="fontisto:hashtag" color="inherit" />
+	<Icon icon="fontisto:hashtag" color="inherit" width={12} height={12} />
 	<h6>{channelName}</h6>
 
 	<NotifcationBadge {notifications} />
@@ -28,5 +28,6 @@
 	}
 	h6 {
 		color: inherit;
+		font-size: inherit;
 	}
 </style>

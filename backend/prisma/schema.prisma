@@ -17,10 +17,17 @@ model User {
   display_name String?
   channels     Channel[]
   messages     Message[]
+  status       Status?
   // requesting   FriendRequest[] @relation("requesting")
   // requests     FriendRequest[] @relation("requests")
   // friend_of    Friendship[]    @relation("friend_of")
   // friends      Friendship[]    @relation("friends")
+}
+
+model Status {
+  user    User @relation(references: [id], fields: [user_id])
+  user_id Int  @unique
+  id      Int
 }
 
 model Message {

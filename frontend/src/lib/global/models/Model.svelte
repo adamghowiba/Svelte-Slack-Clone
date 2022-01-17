@@ -2,13 +2,22 @@
 	import { overlay } from "$lib/store/interface";
 	import { clickOutside } from "$lib/utils/clickOutside";
 	import Icon from "@iconify/svelte";
-	import { createEventDispatcher } from "svelte";
+	import { createEventDispatcher, onMount } from "svelte";
 
 	const dispatch = createEventDispatcher();
+
+	const handleExitClick = () => {
+		dispatch("closeModel", true);
+		$overlay = false;
+	};
+	
+	onMount(() => {
+		$overlay = true;
+	});
 </script>
 
 <div class="popup" use:clickOutside={() => dispatch("closeModel", true)}>
-	<div class="exit" on:click={() => dispatch("closeModel", true)}><Icon icon="bi:x" width={30} height={30} /></div>
+	<div class="exit" on:click={handleExitClick}><Icon icon="bi:x" width={30} height={30} /></div>
 	<div class="header">
 		<slot name="header" />
 	</div>
@@ -23,7 +32,7 @@
 		background-color: #222529;
 		width: 100%;
 		max-width: 600px;
-		position: absolute;
+		position: fixed;
 		display: flex;
 		flex-direction: column;
 		top: 50%;

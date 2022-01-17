@@ -3,21 +3,36 @@
 	import Icon from "@iconify/svelte";
 	import { onlineUsers } from "$lib/store/users";
 	import NotifcationBadge from "./NotifcationBadge.svelte";
+	import Menu from "$lib/global/popup/Menu.svelte";
 
 	export let username: string;
 	export let channelId: number = 0;
 	export let notifications: number = 0;
+
+	let contextMenuOpen = false;
+	let contextX: number;
+	let contextY: number;
+
+	const handleContextMenu = (event: MouseEvent) => {
+		contextX = event.pageX;
+		contextY = event.pageY;
+		contextMenuOpen = true;
+		event.preventDefault();
+	};
 </script>
 
-<a href="/chat/{channelId}?user={username}&type=user" class="wrap" data--id={channelId}>
-	<div class="status" class:online={$onlineUsers.find((user) => user.username == username)} />
-	<h6>{username}</h6>
+<div class="wrap" on:contextmenu={handleContextMenu}>
+	<Menu xLocation={contextX} yLocation={contextY} bind:active={contextMenuOpen} />
+	<a href="/chat/{channelId}?user={username}&type=user" class="wrap" data--id={channelId}>
+		<div class="status" class:online={$onlineUsers.find((user) => user.username == username)} />
+		<h6>{username}</h6>
 
-	<NotifcationBadge {notifications} />
-</a>
+		<NotifcationBadge {notifications} />
+	</a>
+</div>
 
 <style lang="scss">
-	.wrap {
+	a {
 		display: flex;
 		gap: 0.7rem;
 		align-items: center;
@@ -30,10 +45,12 @@
 	}
 	h6 {
 		color: inherit;
+		font-size: inherit;
+		font-weight: 500;
 	}
 	.status {
-		width: 6px;
-		height: 6px;
+		width: 8px;
+		height: 8px;
 		border-radius: 50%;
 		background-color: rgba(224, 224, 224, 0.541);
 

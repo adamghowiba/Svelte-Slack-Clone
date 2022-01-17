@@ -3,11 +3,12 @@
 
 	export let placeholder = "Search";
 	export let color = "var(--color-black-s1)";
+	export let maxWidth = '732px'
 	export let icon = true;
 	export let value: string;
 </script>
 
-<div class="wrap" style="--color: {color}">
+<div class="wrap" style="--color: {color}; --maxWidth: {maxWidth}">
 	{#if icon}
 		<div class="icon">
 			<Icon icon="akar-icons:search" color="inherit" />
@@ -22,6 +23,7 @@
 		height: min-content;
 		position: relative;
 		display: flex;
+		max-width: var(--maxWidth, 732px);
 		background-color: var(--color, --color-black-s1);
 		color: var(--color-gray-s4);
 		border-radius: 3px;
@@ -36,9 +38,8 @@
 	}
 	input {
 		position: relative;
-		z-index: 30;
 		border-radius: inherit;
-		padding: 7px;
+		padding: 5px 7px;
 		appearance: none;
 		border: none;
 		width: 100%;

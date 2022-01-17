@@ -33,6 +33,9 @@
   },
   "type": "module",
   "dependencies": {
+    "@tiptap/core": "^2.0.0-beta.163",
+    "@tiptap/extension-placeholder": "^2.0.0-beta.46",
+    "@tiptap/starter-kit": "^2.0.0-beta.171",
     "socket.io-client": "^4.4.0"
   }
 }

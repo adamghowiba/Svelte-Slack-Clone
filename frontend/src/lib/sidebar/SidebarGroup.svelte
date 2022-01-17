@@ -40,7 +40,7 @@
 			color: var(--color-gray-s4);
 			font-weight: bold;
 			letter-spacing: 0.25px;
-			font-size: 14px;
+			font-size: 13px;
 			text-transform: uppercase;
 		}
 	}

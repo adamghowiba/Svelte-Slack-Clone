@@ -12,7 +12,7 @@
 
 	export let desc: string = null;
 	export let title: string = "Add people to #invirogen";
-	export let inputType: string;
+	export let inputType: InputType;
 	export let placeholder: string = null;
 	export let label: string = null;
 	export let value: string;

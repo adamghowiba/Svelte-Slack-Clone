@@ -358,3 +358,6 @@ error: Error: "value" must have at least 1 key
 error: Error: "value" must have at least 1 key
 error: Error: "value" must have at least 1 key
 error: Error: "topic" is not allowed
+error: Error: Invalid channel id
+error: Error: "value" must have at least 1 key
+error: Error: "value" must have at least 1 key

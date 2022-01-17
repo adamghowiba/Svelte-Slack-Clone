@@ -1,12 +1,23 @@
 <script lang="ts">
 	import Icon from "@iconify/svelte";
 
-	export let placeholder = "Search";
+	interface IconProps {
+		width?: number;
+		height?: number;
+		color?: string;
+		rotate?: number;
+	}
+
 	export let color = "var(--color-black-s1)";
-	export let icon = true;
-	export let value: string;
-	export let label = null;
+	export let iconProps: IconProps = {};
+	export let charcterLimit: number = 0;
 	export let autoFocus: boolean = false;
+	export let error: boolean = false;
+	export let value: string = "";
+	export let icon: string = null;
+	export let placeholder: string = null;
+	export let label: string = null;
+	export let desc: string = null;
 
 	let focused: boolean = autoFocus;
 </script>
@@ -15,10 +26,20 @@
 	{#if label}
 		<label for={label}>{label}</label>
 	{/if}
-	<div class="input-warp" style="--color: {color}" class:focused-input={focused}>
+	<div
+		class="input-warp"
+		style="--color: {color}"
+		class:error
+		class:focused-input={focused}
+		class:input--error={error || (charcterLimit && charcterLimit - value.length < 0)}>
 		{#if icon}
 			<div class="icon">
-				<Icon icon="akar-icons:search" color="inherit" />
+				<Icon
+					{icon}
+					color={iconProps?.color || "inherit"}
+					width={iconProps?.width || 20}
+					height={iconProps?.height || 20}
+					rotate={iconProps?.rotate || 0} />
 			</div>
 		{/if}
 		<!-- svelte-ignore a11y-autofocus -->
@@ -30,15 +51,34 @@
 			name="chat-search"
 			{placeholder}
 			bind:value />
+
+		{#if charcterLimit}
+			<div class="character-limit">
+				<span>{charcterLimit - value.length}</span>
+			</div>
+		{/if}
 	</div>
+	{#if desc}
+		<span class="desc">{desc}</span>
+	{/if}
 </div>
 
 <style lang="scss">
+	.wrapper {
+		.desc {
+			display: block;
+			margin-top: 4px;
+			color: #ababad;
+			font-size: 13px;
+		}
+	}
 	.input-warp {
 		width: 100%;
 		height: min-content;
 		position: relative;
 		display: flex;
+		padding-right: 10px;
+		align-items: center;
 		color: var(--color-gray-s4);
 		border: 1px solid rgba(255, 255, 255, 0.247);
 		border-radius: 3px;
@@ -49,6 +89,11 @@
 			justify-content: center;
 			color: inherit;
 			padding: 0 8px;
+		}
+		.character-limit {
+			font-weight: bold;
+			font-size: 16px;
+			color: #ababad;
 		}
 	}
 	input {

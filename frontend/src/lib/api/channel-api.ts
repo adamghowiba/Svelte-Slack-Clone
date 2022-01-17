@@ -31,3 +31,21 @@ export const updateChannel = async (id: number, data: Partial<Omit<Channel, 'id'
 	const result = await response.json();
 	return result;
 };
+
+export const createChannel = async (data: Pick<Channel, 'name' | 'description'>): Promise<unknown> => {
+	const url = `http://localhost:5000/channel`;
+
+	const response = await fetch(url, {
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		method: 'POST',
+		credentials: 'include',
+		body: JSON.stringify({ type: 'public', ...data })
+	});
+
+	if (!response.ok) throw new Error('Error while updating channel');
+
+	const result = await response.json();
+	return result;
+};
