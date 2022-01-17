@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -12,61 +9,90 @@ datasource db {
 }
 
 model User {
-  id       Int       @id @default(autoincrement())
-  username String    @unique
-  messages Message[]
-
-  friends   Friendship[] @relation("friends")
-  friend_of Friendship[] @relation("friend_of")
-
-  requesting FriendRequest[] @relation("requesting")
-  requests   FriendRequest[] @relation("requests")
+  id           Int       @id @default(autoincrement())
+  email        String    @unique @default(uuid())
+  username     String    @unique
+  first_name   String?
+  last_name    String?
+  display_name String?
+  channels     Channel[]
+  messages     Message[]
+  status       Status?
+  // requesting   FriendRequest[] @relation("requesting")
+  // requests     FriendRequest[] @relation("requests")
+  // friend_of    Friendship[]    @relation("friend_of")
+  // friends      Friendship[]    @relation("friends")
 }
 
-enum RelationshipStatus {
-  FRIENDS
-  MUTED
-  BLOCKED
-}
-
-model Friendship {
-  user      User               @relation(name: "friends", fields: [user_id], references: [id])
-  user_id   Int
-  friend    User               @relation(name: "friend_of", fields: [friend_id], references: [id])
-  friend_id Int
-  status    RelationshipStatus @default(FRIENDS)
-
-  @@id([user_id, friend_id])
-}
-
-enum FriendRequestStatus {
-  PENDING
-  DENIED
-  ACCEPTED
-  BLOCKED
-}
-
-model FriendRequest {
-  from_user User                @relation(name: "requesting", fields: [from_uid], references: [id])
-  from_uid  Int
-  to_user   User                @relation(name: "requests", fields: [to_uid], references: [id])
-  to_uid    Int
-  status    FriendRequestStatus @default(PENDING)
-
-  @@id([from_uid, to_uid])
+model Status {
+  user    User @relation(references: [id], fields: [user_id])
+  user_id Int  @unique
+  id      Int
 }
 
 model Message {
-  id      Int      @id @default(autoincrement())
-  message String
-  date    DateTime @default(now())
-  user    User     @relation(fields: [userId], references: [id])
-  userId  Int
+  id         Int      @id @default(autoincrement())
+  sender_uid Int
+  channel_id Int
+  message    String
+  sender     User     @relation(fields: [sender_uid], references: [id])
+  channel    Channel? @relation(fields: [channel_id], references: [id])
+  date       DateTime @default(now())
 }
+
+model Section {
+  id      Int       @id @default(autoincrement())
+  name    String?   @unique
+  channel Channel[]
+}
+
+model Channel {
+  id           Int         @id @default(autoincrement())
+  name         String?
+  section_id   Int?
+  topic        String?
+  description  String?
+  created_date DateTime    @default(now())
+  type         ChannelType
+  messages     Message[]
+  users        User[]
+  section      Section?    @relation(fields: [section_id], references: [id])
+}
+
+// model Friendship {
+//   friend_id Int
+//   user_id   Int
+//   status    RelationshipStatus @default(FRIENDS)
+//   friend    User               @relation("friend_of", fields: [friend_id], references: [id])
+//   user      User               @relation("friends", fields: [user_id], references: [id])
+
+//   @@id([user_id, friend_id])
+// }
+
+// model FriendRequest {
+//   from_uid  Int
+//   to_uid    Int
+//   from_user User @relation("requesting", fields: [from_uid], references: [id])
+//   to_user   User @relation("requests", fields: [to_uid], references: [id])
+
+//   @@id([from_uid, to_uid])
+// }
+
+// enum RelationshipStatus {
+//   FRIENDS
+//   MUTED
+//   BLOCKED
+// }
 
 model Session {
   id        String   @id
   sid       String   @unique
   data      String
   expiresAt DateTime
+}
+
+enum ChannelType {
+  PUBLIC
+  PRIVATE
+  DIRECT
 }

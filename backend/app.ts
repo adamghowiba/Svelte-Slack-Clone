@@ -1,59 +1,39 @@
-const path = require('path');
 import express from 'express';
-import userRouter from './api/routes/user/UserEntry';
-import indexRouter from './api/routes/index';
-import authRouter from './api/routes/Auth';
-import setupError from './loaders/setupError';
-import setupParsers from './loaders/setupParsers';
-import setupSession from './loaders/session';
+import expressInitialization from './loaders/express';
+import logger from '@logger';
+import config from '@config';
+import { errorHandler } from '@middlewear';
 import http from 'http';
-import { Server } from 'socket.io';
-
+import { InitializeSocket } from './socket';
+import { connectDb } from '@controllers/db-controller';
 const app = express();
 const server = http.createServer(app);
 
-/* Setup View Engine & Parsers */
-app.set('views', path.join(__dirname, 'api/views'));
-app.set('view engine', 'ejs');
-app.use(setupParsers);
+process.on('unhandledRejection', (reason: string, promise: Promise<any>) => {
+  logger.warn(`Unhandled promise ${promise}`)
+  throw reason;
+})
 
-/* Setup Sessions */
-app.use(setupSession);
+/* Setup Database Connection */
+connectDb();
 
-/* Routes */
-app.use('/', indexRouter);
-app.use('/auth', authRouter);
-app.use('/user', userRouter);
+/* Initlize Express Application */
+new expressInitialization(app)
+  .registerCors()
+  .registerParsers()
+  .registerSessions()
+  .registerRoutes();
 
-/* Establish Websocket */
-const io = new Server(server, {
-  cors: {
-    origin: 'http://localhost:3000',
-    credentials: true
-  }
-});
+/* Setup Socket Handler */
+const socket = InitializeSocket(server);
 
-io.on('connection', (socket) => {
-  console.log('User has connected to the socket');
-  socket.send('Websocket has been established');
+/* Error Handleing */
+app.use(errorHandler.notFoundError);
+app.use(errorHandler.apiError);
 
-  socket.on('chat_message', (message) => {
-    io.emit('new_message', {
-      ...message
-    })
-    console.log(`${message.username} says ${message.message}`)
-  })
-
-  socket.on('disconnect', () => {
-    console.log('User has disconnected from socket');
-  })
-});
-
-/* Setup Error Handleing */
-app.use(setupError);
-
-server.listen(5000, () => {
-  console.log('Listenting on port 5000');
+/* Lights, Camera, Action. */
+server.listen(config.port, () => {
+  logger.info(`Loaded app sucessfully on port ${config.port}`)
 })
 
 export default app;

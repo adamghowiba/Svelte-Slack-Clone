@@ -7,15 +7,28 @@
     "moduleResolution": "node",
     "sourceMap": true,
     "outDir": "dist",
+    "pretty": true,
+    "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
-      "@controller/*": ["app/controller/*"],
-      "@services/*": ["app/services/*"],
-      "@validation/*": ["validation/*"],
-      "@errors/*": ["/errors/*"],
+      "@controllers/*": ["api/controllers/*"],
+      "@controllers": ["api/controllers"],
+      
+      "@services/*": ["services/*"],
+      "@services": ["services"],
+      
+      "@middlewear/*": ["api/middlewears/*"],
+      "@middlewear": ["api/middlewears"],
+      
       "@config/*": ["config/*"],
+      "@config": ["config"],
+      
+      "@logger": ["loaders/logger.ts"],
+      "@routes/*": ["api/routes/*"],
+      "@validation/*": ["validation/*"],
+      "@errors/*": ["errors/*"],
       "@utils/*": ["utils/*"],
-      "@repo/*": ["repository/*"],
+      "@repo/*": ["repositories/*"],
       "*": ["node_modules/*"]
     }
   }

@@ -1,0 +1,106 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+model User {
+  id              Int              @id @default(autoincrement())
+  email           String           @unique @default(uuid())
+  username        String           @unique
+  first_name      String?
+  last_name       String?
+  display_name    String?
+  channels        Channel[]
+  messages        Message[]
+  privateChannels PrivateChannel[]
+  // requesting   FriendRequest[] @relation("requesting")
+  // requests     FriendRequest[] @relation("requests")
+  // friend_of    Friendship[]    @relation("friend_of")
+  // friends      Friendship[]    @relation("friends")
+}
+
+model Message {
+  id         Int    @id @default(autoincrement())
+  sender_uid Int
+  channel_id Int
+  message    String
+  private_channels PrivateChannelMessage[]
+  sender  User     @relation(fields: [sender_uid], references: [id])
+  channel Channel  @relation(fields: [channel_id], references: [id])
+  date    DateTime @default(now())
+}
+
+model PrivateChannel {
+  id           Int                     @id @default(autoincrement())
+  users        User[]
+  messages     PrivateChannelMessage[]
+  created_date DateTime                @default(now())
+}
+
+model PrivateChannelMessage {
+  channel    PrivateChannel @relation(fields: [channel_id], references: [id])
+  channel_id Int
+  message    Message        @relation(fields: [message_id], references: [id])
+  message_id Int
+
+  @@id([channel_id, message_id])
+}
+
+model Section {
+  id      Int       @id @default(autoincrement())
+  name    String    @unique
+  channel Channel[]
+}
+
+model Channel {
+  id           Int         @id @default(autoincrement())
+  name         String?
+  section      Section?    @relation(fields: [section_id], references: [id])
+  section_id   Int?
+  type         ChannelType
+  messages     Message[]
+  users        User[]
+  created_date DateTime    @default(now())
+}
+
+// model Friendship {
+//   friend_id Int
+//   user_id   Int
+//   status    RelationshipStatus @default(FRIENDS)
+//   friend    User               @relation("friend_of", fields: [friend_id], references: [id])
+//   user      User               @relation("friends", fields: [user_id], references: [id])
+
+//   @@id([user_id, friend_id])
+// }
+
+// model FriendRequest {
+//   from_uid  Int
+//   to_uid    Int
+//   from_user User @relation("requesting", fields: [from_uid], references: [id])
+//   to_user   User @relation("requests", fields: [to_uid], references: [id])
+
+//   @@id([from_uid, to_uid])
+// }
+
+// enum RelationshipStatus {
+//   FRIENDS
+//   MUTED
+//   BLOCKED
+// }
+
+model Session {
+  id        String   @id
+  sid       String   @unique
+  data      String
+  expiresAt DateTime
+}
+
+enum ChannelType {
+  PUBLIC
+  PRIVATE
+}

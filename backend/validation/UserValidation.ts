@@ -7,3 +7,9 @@ export const requestBody = Joi.object({
         post: (schema) => schema.optional()
     })
 })
+
+export const User = Joi.object({
+    username: Joi.string().required().alter({
+        put: (schema) => schema.optional()
+    })
+})

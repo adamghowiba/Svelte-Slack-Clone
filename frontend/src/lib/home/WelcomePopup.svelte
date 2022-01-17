@@ -1,9 +1,8 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
-	import { session } from '$app/stores';
-
-	import Button from '$lib/global/Button.svelte';
-	import TextInput from '$lib/global/TextInput.svelte';
+	import { goto } from "$app/navigation";
+	import { session } from "$app/stores";
+	import Button from "$lib/global/buttons/Button.svelte";
+import TextInput from "$lib/global/input/TextInput.svelte";
 
 	let value: string;
 	let status = {
@@ -17,22 +16,21 @@
 		status.success = null;
 		querying = true;
 
-		const response = await fetch('http://localhost:5000/auth/login', {
-			method: 'POST',
-			credentials: 'include',
+		const response = await fetch("http://localhost:5000/auth/login", {
+			method: "POST",
+			credentials: "include",
 			headers: {
-				'Content-Type': 'application/json'
+				"Content-Type": "application/json"
 			},
 			body: JSON.stringify({ username: value })
 		});
 		const result = await response.json();
 		querying = false;
 
-		if (!response.ok) return (status.error = result.error);
-		
-		$session.user = response;
-		goto('/chat');
-		status.success = 'Sucessful login. Redirecting...';
+		if (!response.ok) return (status.error = result.message);
+
+		goto("/chat");
+		status.success = "Sucessful login. Redirecting...";
 	};
 </script>
 
@@ -42,8 +40,7 @@
 			class="status"
 			class:error={status.error}
 			class:success={status.success}
-			on:click={() => (status.error = null)}
-		>
+			on:click={() => (status.error = null)}>
 			<p>{status.success || status.error}</p>
 		</div>
 	{/if}
@@ -51,7 +48,7 @@
 	<p>Enter your name to begin</p>
 
 	<div class="body">
-		<TextInput name="username" bind:value label="username or name" />
+		<TextInput bind:value label="username or name" />
 		<Button on:click={loginUser} type="button">
 			{#if querying}
 				Loading...

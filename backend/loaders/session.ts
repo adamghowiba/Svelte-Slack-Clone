@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import session from 'express-session';
 import { PrismaSessionStore } from '@quixo3/prisma-session-store';
-import prisma from '@controller/DatabaseController';
+import prisma from '@controllers/db-controller';
 import { User } from '@prisma/client';
 
 const prismaStore = new PrismaSessionStore(prisma, {

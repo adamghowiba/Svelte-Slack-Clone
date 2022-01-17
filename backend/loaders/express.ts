@@ -1,43 +1,59 @@
 const cookieParser = require('cookie-parser');
-const logger = require('morgan');
-import path from 'path';
-import createError from 'http-errors';
+const morgan = require('morgan');
+import userRouter from '@routes/User';
+import indexRouter from '@routes/index';
+import messageRouter from '@routes/Messages';
+import channelRouter from '@routes/Channels';
+import authRouter from '@routes/Auth';
 import cors from 'cors';
-import express, { Application, Request, Response, NextFunction } from 'express';
+import express, { Application } from 'express';
 import session from './session';
+import logger from '@logger';
 
-export default (app: Application) => {
-    app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+export default class App {
+    readonly app: Application
 
-    /* Setup View Engine */
-    app.set('views', path.join(__dirname, 'views'));
-    app.set('view engine', 'jade');
+    /**
+     * @param app Express Application
+     * Provides functions related to the setup process of express. 
+     */
+    constructor(app: Application) {
+        this.app = app;
+    }
 
-    /* Setup Parsers */
-    app.use(logger('dev'));
-    app.use(express.json());
-    app.use(express.urlencoded({ extended: false }));
-    app.use(cookieParser());
+    registerCors() {
+        this.app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+        return this;
+    }
+    
+    registerParsers() {
+        this.app.use(morgan('dev'));
+        this.app.use(express.json());
+        this.app.use(express.urlencoded({ extended: false }));
+        this.app.use(cookieParser());
+        return this;
+    }
 
-    /* Setup Sessions */
-    app.use(session);
+    registerSessions() {
+        this.app.use(session);
+        logger.info('Sessions have been initialized')
+        return this;
+    }
 
-    /* 404 Error Handler */
-    app.use((req: Request, res: Response, next: NextFunction) => {
-        next(createError(404));
-    });
+    registerRoutes() {
+        this.app.use('/', indexRouter);
+        this.app.use('/auth', authRouter);
+        this.app.use('/user', userRouter);
+        this.app.use('/messages', messageRouter);
+        this.app.use('/channel', channelRouter);
+        logger.info('API Routes registered sucessfully')
+        return this;
+    }
 
-    /* General Error Handler */
-    app.use(function (err: any, req: Request, res: Response, next: NextFunction) {
-        res.locals.message = err.message;
-        res.locals.error = req.app.get('env') === 'development' ? err : {};
+    /***
+     * @deprecated
+     */
+    setupErrorHandleing() {
 
-        res.status(err.status || 500);
-        res.render('error');
-    });
-
-    app.listen(5000, () => {
-        console.log('Listenting on port 5000');
-    })
-
+    }
 }

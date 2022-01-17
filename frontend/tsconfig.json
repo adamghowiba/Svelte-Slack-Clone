@@ -24,7 +24,11 @@
 		"checkJs": true,
 		"paths": {
 			"$lib": ["src/lib"],
-			"$lib/*": ["src/lib/*"]
+			"$lib/*": ["src/lib/*"],
+			"@logic": ["src/logic"],
+			"@logic/*": ["src/logic/*"],
+			"@utils": ["src/utils"],
+			"@utils/*": ["src/utils/*"]
 		}
 	},
 	"include": ["src/**/*.d.ts", "src/**/*.js", "src/**/*.ts", "src/**/*.svelte"]

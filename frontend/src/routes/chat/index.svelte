@@ -1,77 +1,32 @@
-<script context="module" lang="ts">
-	import type { Load } from '@sveltejs/kit';
-	export const load: Load = async ({ session }) => {
-		if (!session.user) {
-			return {
-				status: 302,
-				redirect: '/'
-			};
-		}
-		return {
-			status: 200
-		};
-	};
-</script>
-
 <script lang="ts">
-	import ChatInput from '$lib/chat/ChatInput.svelte';
-	import MessageElement from '$lib/chat/Message.svelte';
-	import { messages, user } from '$lib/stores';
-	import { io } from 'socket.io-client';
-	import type { Socket } from 'socket.io-client';
-	import { onDestroy } from 'svelte';
-	import Button from '$lib/global/Button.svelte';
-	import { session } from '$app/stores';
-	import Sidebar from '$lib/chat/sidebar/Sidebar.svelte';
-	import ChannelBio from '$lib/chat/ChannelBio.svelte';
+	import { fetchUsersList } from "$lib/api/user-api";
+	import UserPreview from "$lib/chat/UserPreview.svelte";
+	import Loader from "$lib/global/loaders/Loader.svelte";
+	import Search from "$lib/global/Search.svelte";
+	import { allUsers, onlineUsers } from "$lib/store/users";
 
-	let socket: Socket = io('ws://localhost:5000');
-
-	socket.on('message', (message) => {
-		console.log(message);
-	});
-
-	socket.on('new_message', (message) => {
-		$messages = [
-			...$messages,
-			{ username: message.username, message: message.message, attached: false, date: new Date() }
-		];
-		console.log(message);
-	});
-
-	onDestroy(() => {
-		socket.disconnect();
-	});
-
-	function submitMessage(event: CustomEvent) {
-		let attached = false;
-
-		/* Check if the sender is the last message */
-		if ($messages.length >= 1 && $messages[$messages.length - 1].username == $user.username) {
-			attached = true;
-		}
-
-		/* Transmit Websocket message */
-		const messageData = { username: $session.user.username, message: event.detail };
-		socket.emit('chat_message', messageData);
-	}
+	let searchValue: string;
 </script>
 
 <section class="wrapper">
-	<ChannelBio channel="Projects" type="group" members={5} />
+	<Search value={searchValue} color="#202225" />
 
-	<div class="messages">
-		{#each $messages as message}
-			<MessageElement
-				message={message?.message}
-				user={message?.username}
-				attachedMessage={message?.attached}
-				date={message?.date}
-			/>
-		{/each}
+	<div class="online">
+		<span>Online - {$onlineUsers.length}</span>
+
+		{#if $allUsers.state == "loading"}
+			<Loader />
+		{:else}
+			<div class="online__users">
+				{#each $allUsers.data as user}
+					<hr />
+					<UserPreview
+						username={user.username}
+						status={$onlineUsers.find((users) => users.username == user.username) ? "Online" : "Offline"} />
+				{/each}
+			</div>
+		{/if}
 	</div>
-
-	<ChatInput on:submitMessage={submitMessage} />
 </section>
 
 <style lang="scss">
@@ -80,14 +35,30 @@
 		grid-template-rows: auto 1fr auto;
 		width: 100%;
 		height: 100%;
-	}
-	.messages {
-		display: flex;
-		height: 100%;
-		overflow-y: auto;
-		flex-direction: column;
-		padding: 0.3rem 1.8rem;
+		padding: 1.5rem 2rem;
 	}
 
+	.online {
+		margin-top: 1rem;
 
+		&__users {
+			display: flex;
+			flex-direction: column;
+		}
+
+		span {
+			font-weight: 500;
+			margin-bottom: 0.5rem;
+			display: block;
+		}
+
+		hr {
+			background-color: rgba(255, 255, 255, 0.096);
+			border-radius: 10px;
+			height: 1px;
+			border: none;
+			width: 100%;
+			margin: 0;
+		}
+	}
 </style>
