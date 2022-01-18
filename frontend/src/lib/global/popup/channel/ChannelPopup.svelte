@@ -23,6 +23,7 @@
 		membersPopup: false,
 		channelPopup: false
 	};
+
 </script>
 
 {#if active}
@@ -30,7 +31,7 @@
 		<header class="head">
 			<div class="head__content">
 				<h5>{channelData?.name}</h5>
-				<div class="exit" on:click={() => (active = false)}><Icon icon="bi:x" width={30} height={30} /></div>
+				<div class="exit" on:click={closePopup}><Icon icon="bi:x" width={30} height={30} /></div>
 			</div>
 
 			<ModelTabs bind:selected options={popupOptions} />

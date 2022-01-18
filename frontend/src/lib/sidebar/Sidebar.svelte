@@ -1,6 +1,7 @@
 <!-- <svelte:options immutable /> -->
 <script lang="ts">
 	import { createChannel } from "$lib/api/channel-api";
+	import EmojiPicker from "$lib/global/emoji/EmojiPicker.svelte";
 	import TextInput from "$lib/global/input/TextInput.svelte";
 	import Loader from "$lib/global/loaders/Loader.svelte";
 	import Model from "$lib/global/models/Model.svelte";
@@ -36,6 +37,8 @@
 		on:createChannel={() => (createChannelPopup = true)}
 		workspace="Web Revived"
 		url="webrevived.saber.com" />
+
+	<EmojiPicker />
 
 	<div class="body">
 		<div class="link-group">

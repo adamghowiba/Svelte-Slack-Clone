@@ -14,7 +14,7 @@
 			<Icon icon="akar-icons:search" color="inherit" />
 		</div>
 	{/if}
-	<input type="text" name="chat-search" {placeholder} bind:value />
+	<input type="text" name="chat-search" {placeholder} bind:value autocomplete="off" />
 </div>
 
 <style lang="scss">

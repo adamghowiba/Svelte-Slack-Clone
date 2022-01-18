@@ -18,15 +18,14 @@ model User {
   channels     Channel[]
   messages     Message[]
   status       Status?
-  // requesting   FriendRequest[] @relation("requesting")
-  // requests     FriendRequest[] @relation("requests")
-  // friend_of    Friendship[]    @relation("friend_of")
-  // friends      Friendship[]    @relation("friends")
 }
 
 model Status {
-  user    User @relation(references: [id], fields: [user_id])
-  user_id Int  @unique
+  status  String
+  emoji   String
+  clear_date DateTime?   
+  user    User    @relation(references: [id], fields: [user_id])
+  user_id Int     @unique
   id      Int
 }
 
@@ -58,31 +57,6 @@ model Channel {
   users        User[]
   section      Section?    @relation(fields: [section_id], references: [id])
 }
-
-// model Friendship {
-//   friend_id Int
-//   user_id   Int
-//   status    RelationshipStatus @default(FRIENDS)
-//   friend    User               @relation("friend_of", fields: [friend_id], references: [id])
-//   user      User               @relation("friends", fields: [user_id], references: [id])
-
-//   @@id([user_id, friend_id])
-// }
-
-// model FriendRequest {
-//   from_uid  Int
-//   to_uid    Int
-//   from_user User @relation("requesting", fields: [from_uid], references: [id])
-//   to_user   User @relation("requests", fields: [to_uid], references: [id])
-
-//   @@id([from_uid, to_uid])
-// }
-
-// enum RelationshipStatus {
-//   FRIENDS
-//   MUTED
-//   BLOCKED
-// }
 
 model Session {
   id        String   @id
