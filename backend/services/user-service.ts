@@ -3,6 +3,7 @@ import prisma from '@controllers/db-controller';
 import ApiError from '@errors/ApiError';
 import logger from '@logger';
 import { DatabaseError } from '@errors/DatabaseError';
+import * as status from '@services/status-service';
 
 const findAll = async (): Promise<User[]> => {
 	const allUsers = await prisma.user.findMany();
@@ -51,4 +52,4 @@ const createUser = async (username: string): Promise<Partial<User>> => {
 	}
 };
 
-export { findById, findAll, createUser, findByUsername };
+export { findById, findAll, createUser, findByUsername, status };

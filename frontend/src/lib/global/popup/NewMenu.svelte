@@ -22,7 +22,7 @@ import { overlay } from "$lib/store/interface";
 	style="--top: {top}; --bottom: {bottom}; --width: {width}; --left: {left}; --right: {right};"
 	bind:this={menuElement}
 	use:clickOutside={() => {
-		$overlay = false;
+		// $overlay = false;
 		dispatch("closeModal");
 	}}>
 	<slot />

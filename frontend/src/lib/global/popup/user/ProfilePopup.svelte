@@ -17,6 +17,10 @@
 	let statusValue: string;
 	let selectValue: any;
 
+	const handleSaveStatus = () => {
+
+	}
+
 	const selectOptions = [
 		{ name: "Don't clear", value: "null" },
 		{ name: "30 Minutes", value: "1031230" },
@@ -29,7 +33,7 @@
 	<Model on:closeModel={() => (statusModelOpen = false)}>
 		<h4 slot="header">Set your status</h4>
 		<div class="status-model" slot="body">
-			<TextInput placeholder="What's your status" bind:value={statusValue} />
+			<TextInput emoji={true} placeholder="What's your status" charcterLimit={10} bind:value={statusValue} />
 			{#if statusValue}
 				<div class="clear">
 					<Select options={selectOptions} defaultValue={selectOptions[0]} bind:selected={selectValue}>
@@ -50,7 +54,7 @@
 				</div>
 			{/if}
 		</div>
-		<ModelActions slot="footer" />
+		<ModelActions slot="footer" on:save={handleSaveStatus} />
 	</Model>
 {/if}
 

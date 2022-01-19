@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Icon from "@iconify/svelte";
+	import EmojiPicker from "../emoji/EmojiPicker.svelte";
 
 	interface IconProps {
 		width?: number;
@@ -8,18 +9,28 @@
 		rotate?: number;
 	}
 
-	export let color = "var(--color-black-s1)";
 	export let iconProps: IconProps = {};
 	export let charcterLimit: number = 0;
+	
 	export let autoFocus: boolean = false;
 	export let error: boolean = false;
+	
+	export let color = "var(--color-black-s1)";
 	export let value: string = "";
-	export let icon: string = null;
 	export let placeholder: string = null;
 	export let label: string = null;
 	export let desc: string = null;
+	export let icon: string = null;
+	
+	export let emoji: boolean = null;
+	export let selectedEmoji: string = null;
 
 	let focused: boolean = autoFocus;
+	let emojiPopupOpen: boolean = false;
+
+	const openEmojiPopup = () => {
+		emojiPopupOpen = !emojiPopupOpen;
+	};
 </script>
 
 <div class="wrapper">
@@ -32,7 +43,20 @@
 		class:error
 		class:focused-input={focused}
 		class:input--error={error || (charcterLimit && charcterLimit - value.length < 0)}>
-		{#if icon}
+		{#if emoji}
+			<div class="icon icon--emoji">
+				<span on:click={openEmojiPopup}>
+					{#if !selectedEmoji}
+						<Icon icon="gg:smile-mouth-open" width={20} height={20} />
+					{:else}
+						{selectedEmoji}
+					{/if}
+				</span>
+				{#if emojiPopupOpen}
+					<EmojiPicker on:clickOutside={() => (emojiPopupOpen = false)} bind:selectedEmoji />
+				{/if}
+			</div>
+		{:else if icon}
 			<div class="icon">
 				<Icon
 					{icon}
@@ -83,17 +107,29 @@
 		border: 1px solid rgba(255, 255, 255, 0.247);
 		border-radius: 3px;
 
-		.icon {
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			color: inherit;
-			padding: 0 8px;
-		}
 		.character-limit {
 			font-weight: bold;
 			font-size: 16px;
 			color: #ababad;
+		}
+	}
+	.icon {
+		position: relative;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: inherit;
+		padding: 0 8px;
+
+		&--emoji:hover {
+			cursor: pointer;
+		}
+
+		&--emoji span {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 20px;
 		}
 	}
 	input {

@@ -38,8 +38,6 @@
 		workspace="Web Revived"
 		url="webrevived.saber.com" />
 
-	<EmojiPicker />
-
 	<div class="body">
 		<div class="link-group">
 			<SidebarLink icon="fluent:list-20-filled" size={17}>All unreads</SidebarLink>
@@ -119,7 +117,7 @@
 		display: flex;
 		flex-direction: column;
 		gap: 1rem;
-		width: 300px;
+		width: 314px;
 		height: 100%;
 		background-color: #1a1d21;
 		border-right: 1px solid var(--color-tran);

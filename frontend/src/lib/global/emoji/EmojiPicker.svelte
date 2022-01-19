@@ -1,6 +1,11 @@
 <script lang="ts">
 	import { emoji } from "$lib/emoji_v2";
+	import { clickOutside } from "$lib/utils/clickOutside";
+	import { createEventDispatcher } from "svelte";
 	import EmojiTopbar from "./EmojiTopbar.svelte";
+
+	export let selectedEmoji: string;
+	const dispatch = createEventDispatcher();
 
 	const handleMouseEnter = (event: Event) => {
 		const target = event.target as HTMLElement;
@@ -30,16 +35,25 @@
 		return Object.entries(result);
 	}
 
+	const handleSelectEmoji = (emoji: string) => {
+		selectedEmoji = emoji;
+		dispatch("clickOutside");
+	};
+
 	const groupedEmojis = getEmojiByGroup(emoji.emojis, "category");
 </script>
 
-<div class="picker">
+<div class="picker" use:clickOutside={() => dispatch("clickOutside")}>
 	<EmojiTopbar />
 	<div class="emojis">
 		{#each groupedEmojis as [cat, obj]}
 			<h6>{cat}</h6>
 			{#each obj as emojiObj}
-				<div class="emoji" on:mouseenter={handleMouseEnter} on:mouseleave={handleMouseLeave}>
+				<div
+					class="emoji"
+					on:mouseenter={handleMouseEnter}
+					on:mouseleave={handleMouseLeave}
+					on:click={() => handleSelectEmoji(emojiObj.emoji)}>
 					<span>
 						{emojiObj.emoji}
 					</span>
@@ -56,10 +70,13 @@
 		flex-wrap: wrap;
 		width: 280px;
 		border-radius: 7px;
-		position: fixed;
-		top: 50%;
+		position: absolute;
+		top: 100%;
 		left: 50%;
-		transform: translate(-50%, -50%);
+		transform: translate(-50%, 15px);
+		// top: 50%;
+		// left: 50%;
+		// transform: translate(-50%, -50%);
 		background-color: #1a1d21;
 		border: 1px solid var(--color-tran);
 		z-index: 100;

@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { userService } from '@services';
 import { onError } from '@utils/ErrorUtil';
+import * as status from '@controllers/user/status-controller';
 import logger from '@logger';
 import ApiError from '@errors/ApiError';
 import { catchAsync } from '@utils/ErrorUtil';
@@ -9,43 +10,38 @@ import { findAllByUser, findAllPrivate } from '@services/channel-service';
 
 // TODO: Implement async catch handler to avoid try { catch } blocks
 const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const allUsers = await userService.findAll();
+	try {
+		const allUsers = await userService.findAll();
 
-        res.status(200).json(allUsers);
-    } catch (error) {
-        next(error);
-    }
-}
+		res.status(200).json(allUsers);
+	} catch (error) {
+		next(error);
+	}
+};
 
 const getUserById = async (req: Request, res: Response, next: NextFunction) => {
-    const userId = parseInt(req.params.id);
+	const userId = parseInt(req.params.id);
 
-    if (!userId) return next(new ApiError('Invalid or missing query paramter id. Must be a number'));
+	if (!userId) return next(new ApiError('Invalid or missing query paramter id. Must be a number'));
 
-    try {
-        const user = await userService.findById(userId);
+	try {
+		const user = await userService.findById(userId);
 
-        /* Question: Should we handle unknown users on the backend or frontend? Is it an error? */
-        res.status(200).json(user);
-    } catch (error) {
-        next(error);
-    }
-}
+		/* Question: Should we handle unknown users on the backend or frontend? Is it an error? */
+		res.status(200).json(user);
+	} catch (error) {
+		next(error);
+	}
+};
 
 const getAllUserChannels = catchAsync(async (req: Request, res: Response) => {
-    const userId = parseInt(req.params.id);
+	const userId = parseInt(req.params.id);
 
-    if (!userId) throw new ApiError('Invalid or missing query paramter id. Must be a number');
+	if (!userId) throw new ApiError('Invalid or missing query paramter id. Must be a number');
 
-    const userChannels = await findAllPrivate(userId);
-    
-    res.status(200).json(userChannels);
+	const userChannels = await findAllPrivate(userId);
+
+	res.status(200).json(userChannels);
 });
 
-
-export {
-    getAllUserChannels,
-    getAllUsers,
-    getUserById,
-}
+export { getAllUserChannels, getAllUsers, getUserById, status };

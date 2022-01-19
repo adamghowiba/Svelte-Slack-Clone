@@ -21,12 +21,13 @@ model User {
 }
 
 model Status {
-  status  String
-  emoji   String
-  clear_date DateTime?   
-  user    User    @relation(references: [id], fields: [user_id])
-  user_id Int     @unique
-  id      Int
+  status     String
+  emoji      String
+  clear_date DateTime?
+  user       User      @relation(references: [id], fields: [user_id])
+  user_id    Int       @unique
+
+  @@id([user_id])
 }
 
 model Message {
