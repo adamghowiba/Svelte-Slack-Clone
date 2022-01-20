@@ -7,7 +7,6 @@
 	import SmallUserPreview from "$lib/global/input/UserPreview.svelte";
 	import UserPreview from "$lib/chat/UserPreview.svelte";
 	import { allUsers, onlineUsers } from "$lib/store/users";
-	import { setContext } from "svelte";
 	import { overlay } from "$lib/store/interface";
 	import UserChannel from "$lib/sidebar/UserChannel.svelte";
 

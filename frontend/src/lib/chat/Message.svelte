@@ -1,10 +1,12 @@
 <script lang="ts">
 	import { parseDate } from "@utils/dateUtils";
+	import sanitizeHtml from "sanitize-html";
 
 	export let user: String;
 	export let message: string;
 	export let attachedMessage: boolean;
 	export let date: Date;
+
 </script>
 
 <div class="message">
@@ -14,7 +16,7 @@
 			<span>{parseDate(date)}</span>
 		</div>
 	{/if}
-	<p>{message}</p>
+	<p>{@html sanitizeHtml(message)}</p>
 </div>
 
 <style lang="scss">

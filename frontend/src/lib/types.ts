@@ -10,6 +10,13 @@ export interface Channel {
 	created_date: Date;
 }
 
+export interface Status {
+	emoji: string;
+	clear_date: Date;
+	user_id: number; 
+	status?: string; 
+}
+
 export interface ChannelGroup {
 	id: number;
 	name: string;

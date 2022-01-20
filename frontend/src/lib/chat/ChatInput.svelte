@@ -10,9 +10,8 @@
 	import SubmitChatAction from "$lib/global/buttons/SubmitChatAction.svelte";
 
 	let value: string = "";
-	let textAreaElement: HTMLElement;
 	let editor: EditorType;
-	let element: HTMLElement;
+	let textElement: HTMLElement;
 
 	const dispatch = createEventDispatcher();
 
@@ -33,16 +32,16 @@
 
 	onMount(() => {
 		editor = new Editor({
-			element: element,
+			element: textElement,
+			injectCSS: false,
 			extensions: [
 				StarterKit,
 				Placeholder.configure({
 					placeholder: "Jot something down"
 				})
 			],
-			injectCSS: false,
-			onUpdate: ({ editor, transaction }) => {
-				value = editor.getText();
+			onUpdate: ({ editor }) => {
+				value = editor.getHTML();
 			},
 			onTransaction: () => {
 				editor = editor;
@@ -58,8 +57,8 @@
 <div class="wrap">
 	<div class="actions">
 		<SmallAction on:click={() => editor.chain().focus().toggleBold().run()}><b>B</b></SmallAction>
-		<SmallAction on:click={() => editor.chain().focus().toggleBold().run()}><i>I</i></SmallAction>
-		<SmallAction on:click={() => editor.chain().focus().toggleBold().run()}><strike>S</strike></SmallAction>
+		<SmallAction on:click={() => editor.chain().focus().toggleItalic().run()}><i>I</i></SmallAction>
+		<SmallAction on:click={() => editor.chain().focus().toggleStrike().run()}><strike>S</strike></SmallAction>
 		<div class="seperator" />
 		<SmallAction on:click={() => editor.chain().focus().toggleBulletList().run()}>
 			<Icon icon="bi:list-ol" width={20} height={20} color="inherit" />
@@ -73,13 +72,13 @@
 		</SmallAction>
 	</div>
 
-	<div class="div" on:keydown={handleKeyDown} bind:this={element} />
+	<div on:keydown={handleKeyDown} bind:this={textElement} />
 	<div class="actions">
 		<SmallAction>D</SmallAction>
 		<SmallAction>I</SmallAction>
 		<SmallAction>B</SmallAction>
 		<div class="submit">
-			<SubmitChatAction on:click={submitMessage} active={Boolean(value.trim())} />
+			<SubmitChatAction on:click={submitMessage} active={value.trim().length > 1} />
 		</div>
 	</div>
 </div>

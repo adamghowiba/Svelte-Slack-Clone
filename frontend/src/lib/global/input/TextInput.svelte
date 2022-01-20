@@ -11,17 +11,17 @@
 
 	export let iconProps: IconProps = {};
 	export let charcterLimit: number = 0;
-	
+
 	export let autoFocus: boolean = false;
 	export let error: boolean = false;
-	
+
 	export let color = "var(--color-black-s1)";
 	export let value: string = "";
 	export let placeholder: string = null;
 	export let label: string = null;
 	export let desc: string = null;
 	export let icon: string = null;
-	
+
 	export let emoji: boolean = null;
 	export let selectedEmoji: string = null;
 
@@ -44,8 +44,8 @@
 		class:focused-input={focused}
 		class:input--error={error || (charcterLimit && charcterLimit - value.length < 0)}>
 		{#if emoji}
-			<div class="icon icon--emoji">
-				<span on:click={openEmojiPopup}>
+			<div class="icon icon--emoji" on:click={openEmojiPopup}>
+				<span>
 					{#if !selectedEmoji}
 						<Icon icon="gg:smile-mouth-open" width={20} height={20} />
 					{:else}
@@ -70,7 +70,6 @@
 		<input
 			on:blur={() => (focused = false)}
 			on:focus={() => (focused = true)}
-			{autoFocus}
 			type="text"
 			name="chat-search"
 			{placeholder}
@@ -130,6 +129,11 @@
 			align-items: center;
 			justify-content: center;
 			font-size: 20px;
+		}
+
+		&--emoji {
+			height: 40px;
+			z-index: 10;
 		}
 	}
 	input {

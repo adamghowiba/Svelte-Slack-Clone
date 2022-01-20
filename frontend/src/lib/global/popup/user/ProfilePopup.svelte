@@ -1,12 +1,18 @@
 <script lang="ts">
 	import { session } from "$app/stores";
+	import { clearUserStatus, uploadUserStatus } from "$lib/api/user-api";
+	import { emoji } from "$lib/emoji_v2";
+	import Button from "$lib/global/buttons/Button.svelte";
 
 	import Select from "$lib/global/input/Select.svelte";
 	import TextInput from "$lib/global/input/TextInput.svelte";
 	import Model from "$lib/global/models/Model.svelte";
 	import ModelActions from "$lib/global/models/ModelActions.svelte";
 	import UpdateStatus from "$lib/global/UpdateStatus.svelte";
+	import { overlay } from "$lib/store/interface";
+	import { statusStore } from "$lib/store/status";
 	import Icon from "@iconify/svelte";
+	import { log } from "@utils/logger";
 	import MenuBlurb from "../MenuBlurb.svelte";
 	import MenuItem from "../MenuItem.svelte";
 	import NewMenu from "../NewMenu.svelte";
@@ -14,12 +20,41 @@
 
 	export let statusModelOpen: boolean = false;
 	export let profilePopupOpen: boolean = false;
-	let statusValue: string;
+
+	/* Value for clear status */
 	let selectValue: any;
 
-	const handleSaveStatus = () => {
+	/* Status text input value */
+	let statusValue: string;
 
-	}
+	/* Emoji status from popup modal 👍 */
+	let statusEmoji: string;
+	
+	const closeStatusModal = () => {
+		statusModelOpen = false;
+		$overlay = false;
+	};
+
+	const saveStatus = async () => {
+		$statusStore = { ...$statusStore, emoji: statusEmoji, status: statusValue };
+		closeStatusModal();
+		const updatedStatus = await uploadUserStatus($session.user.id, statusEmoji, statusValue);
+
+		console.log(updatedStatus);
+	};
+
+	const cancelStatusModal = () => {
+		closeStatusModal();
+		statusEmoji = $statusStore?.emoji;
+		statusValue = $statusStore?.status;
+	};
+
+	const clearStatus = async () => {
+		$statusStore = null;
+		closeStatusModal();
+		await clearUserStatus($session.user.id);
+		log.info("Cleared user status");
+	};
 
 	const selectOptions = [
 		{ name: "Don't clear", value: "null" },
@@ -27,14 +62,31 @@
 		{ name: "1 Hour", value: "12312302" },
 		{ name: "This week", value: "1231230" }
 	];
+
+	$: hasStatus = statusEmoji || statusValue;
+	$: sameStatus = $statusStore?.emoji == statusEmoji && $statusStore?.status == statusValue;
+
+	$: if (statusEmoji == null && $statusStore?.emoji) {
+		statusEmoji = $statusStore.emoji;
+	}
+
+	$: if (statusValue == null && $statusStore?.status) {
+		statusValue = $statusStore.status;
+	}
 </script>
 
 {#if statusModelOpen}
-	<Model on:closeModel={() => (statusModelOpen = false)}>
+	<Model on:closeModel={cancelStatusModal}>
 		<h4 slot="header">Set your status</h4>
 		<div class="status-model" slot="body">
-			<TextInput emoji={true} placeholder="What's your status" charcterLimit={10} bind:value={statusValue} />
-			{#if statusValue}
+			<TextInput
+				emoji={true}
+				placeholder="What's your status"
+				charcterLimit={10}
+				bind:selectedEmoji={statusEmoji}
+				bind:value={statusValue} />
+
+			{#if hasStatus}
 				<div class="clear">
 					<Select options={selectOptions} defaultValue={selectOptions[0]} bind:selected={selectValue}>
 						<div class="clear__time">
@@ -54,7 +106,14 @@
 				</div>
 			{/if}
 		</div>
-		<ModelActions slot="footer" on:save={handleSaveStatus} />
+		<ModelActions slot="footer">
+			{#if hasStatus && sameStatus}
+				<Button on:click={clearStatus}>Clear Status</Button>
+			{:else}
+				<Button on:click={closeStatusModal}>Cancel</Button>
+				<Button on:click={saveStatus}>Save Changes</Button>
+			{/if}
+		</ModelActions>
 	</Model>
 {/if}
 

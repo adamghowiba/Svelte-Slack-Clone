@@ -122,6 +122,7 @@
 		background-color: #1a1d21;
 		border-right: 1px solid var(--color-tran);
 		font-size: 15px;
+		overflow-y: auto;
 	}
 	.create-channel {
 		&__header {

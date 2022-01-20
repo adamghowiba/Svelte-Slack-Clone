@@ -1,9 +1,11 @@
 import { writable } from 'svelte/store';
+import type{ Writable } from 'svelte/store';
+import { log } from '@utils/logger';
 
-export const fetchStore = (url: string) => {
+export const fetchStore = <T>(url: string) => {
 	const loading = writable(false);
 	const error = writable(false);
-	const data = writable({});
+	const data: Writable<T> = writable();
 
 	const get = async () => {
 		loading.set(true);
@@ -19,6 +21,7 @@ export const fetchStore = (url: string) => {
 
 	if (!data || (Array.isArray(data) && data.length == 0)) {
 		get();
+		log.info('Fetching data for query store')
 	}
 
 	return { data, loading, error, get };

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Search from "$lib/global/Search.svelte";
-	import { createEventDispatcher, setContext } from "svelte";
+	import { createEventDispatcher } from "svelte";
 	import Button from "$lib/global/buttons/Button.svelte";
 	import TextArea from "../input/TextArea.svelte";
 	import TextInput from "../input/TextInput.svelte";

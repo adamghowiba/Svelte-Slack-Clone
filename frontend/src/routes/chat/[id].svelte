@@ -1,17 +1,5 @@
 <script context="module" lang="ts">
-	import { navigating } from "$app/stores";
-	import { loadChatMessages } from "$lib/api/chat-api";
-	import ChannelBio from "$lib/chat/ChannelBio.svelte";
-	import ChatInput from "$lib/chat/ChatInput.svelte";
-	import Message from "$lib/chat/Message.svelte";
-	import ChannelPopup from "$lib/global/popup/channel/ChannelPopup.svelte";
-	import { socket } from "$lib/socket";
-	import { publicChannel, publicChannels } from "$lib/store/channel";
-	import { chatStore } from "$lib/store/chat";
-	import { overlay } from "$lib/store/interface";
-	import type { Channel, ChannelType } from "$lib/types";
 	import type { Load } from "@sveltejs/kit";
-	import { onDestroy } from "svelte";
 
 	export const load: Load = async ({ url, params }) => {
 		const channelId = parseInt(params.id);
@@ -30,13 +18,26 @@
 </script>
 
 <script lang="ts">
+	import { navigating } from "$app/stores";
+	import { loadChatMessages } from "$lib/api/chat-api";
+	import ChannelBio from "$lib/chat/ChannelBio.svelte";
+	import ChatInput from "$lib/chat/ChatInput.svelte";
+	import Message from "$lib/chat/Message.svelte";
+	import ChannelPopup from "$lib/global/popup/channel/ChannelPopup.svelte";
+	import { socket } from "$lib/socket";
+	import { publicChannel } from "$lib/store/channel";
+	import { chatStore } from "$lib/store/chat";
+	import { overlay } from "$lib/store/interface";
+	import type { Channel, ChannelType } from "$lib/types";
+	import { onDestroy } from "svelte";
+
 	export let room: string;
 	export let channelId: number;
 	export let channelType: ChannelType;
 
 	let messages = [];
 	let query: boolean;
-	// let channelData: Channel;
+	let channelData: Channel;
 
 	/* Read incoming messages */
 	socket.on("message:read", (payload) => {
@@ -61,11 +62,6 @@
 		messages = messageData;
 	};
 
-	$: popups = {
-		publicChannel: false,
-		privateChannel: false
-	};
-
 	const openPopup = (type: keyof typeof popups) => {
 		popups[type] = true;
 		$overlay = true;
@@ -81,12 +77,15 @@
 		// const scroll = document.querySelector(".messages");
 	}
 
-	let channelData: Channel;
+	$: popups = {
+		publicChannel: false,
+		privateChannel: false
+	};
+
 	$: {
 		channelData = $publicChannel.find((channel) => channel.id == channelId);
 		loadMessages(channelId);
 	}
-	$: console.log(channelData);
 </script>
 
 <section>
@@ -117,13 +116,14 @@
 		width: 100%;
 		display: grid;
 		grid-template-rows: auto 1fr auto;
+		overflow-y: auto;
 	}
 	.messages {
 		display: flex;
 		position: relative;
 		height: 100%;
-		overflow-y: auto;
 		flex-direction: column-reverse;
+		overflow-y: auto;
 		padding: 0.3rem 1.8rem;
 		padding-bottom: 1rem;
 	}

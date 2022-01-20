@@ -10,7 +10,7 @@
 </script>
 
 <div class="actions">
-	<slot name="actions">
+	<slot>
 		<Button type="button" on:click={() => dispatch("cancel")}>Cancel</Button>
 		<Button type="button" on:click={() => dispatch("save")}>
 			{#if loading}

@@ -14,15 +14,35 @@ export const fetchUsersList = async (): Promise<User[]> => {
 	return result;
 };
 
-export const uploadUserStatus = async () => {
-	const url = `http://localhost:5000/user`;
+export const uploadUserStatus = async (userId: number, emoji: string, status: string = undefined) => {
+	const url = `http://localhost:5000/user/${userId}/status`;
 
 	const response = await fetch(url, {
-		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		method: 'PUT',
+		body: JSON.stringify({ emoji, status }),
 		credentials: 'include'
 	});
 
-	if (!response.ok) throw new Error('Error retriving friends...');
+	if (!response.ok) throw new Error('Error updating status...');
+
+	const result = await response.json();
+
+	return result;
+};
+
+export const clearUserStatus = async (userId: number) => {
+	const url = `http://localhost:5000/user/${userId}/status`;
+
+	const response = await fetch(url, {
+		method: 'DELETE',
+		credentials: 'include'
+	});
+
+	if (!response.ok) throw new Error('Error deleting status...');
+
 	const result = await response.json();
 
 	return result;

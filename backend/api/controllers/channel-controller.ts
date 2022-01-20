@@ -23,7 +23,6 @@ export const getAllChannels = catchAsync(async (req: Request, res: Response) => 
 
 		return res.json(groupedChannels);
 	}
-
 	const channels = await findAllPublic();
 	return res.status(200).json(channels);
 });

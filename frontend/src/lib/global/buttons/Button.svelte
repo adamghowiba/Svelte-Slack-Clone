@@ -2,15 +2,15 @@
 	type Type = 'button' | 'link';
 
 	export let type: Type = 'link';
-	export let href = '/';
+	export let href = '';
 	export let buttonType = 'button';
 </script>
 
-{#if type == 'button'}
+{#if !href}
 	<button type={buttonType} on:click><slot /></button>
 {/if}
 
-{#if type == 'link'}
+{#if href}
 	<a on:click {href}><slot /></a>
 {/if}
 

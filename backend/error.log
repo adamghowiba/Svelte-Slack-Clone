@@ -7,3 +7,5 @@ error: Error: "value" must have at least 1 key
 error: Error: Invalid user id NaN
 error: Error: "value" must have at least 1 key
 error: Error: "value" must have at least 1 key
+error: Error: "status" is not allowed to be empty
+error: Error: "status" is not allowed to be empty

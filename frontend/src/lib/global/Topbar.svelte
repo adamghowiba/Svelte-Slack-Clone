@@ -1,19 +1,26 @@
 <script lang="ts">
+	import { session } from "$app/stores";
+	import { statusStore } from "$lib/store/status";
 	import Icon from "@iconify/svelte";
+	import { log } from "@utils/logger";
 	import ProfilePopup from "./popup/user/ProfilePopup.svelte";
 	import Search from "./Search.svelte";
+
+	let statusEmoji: string;
 
 	let profilePopupOpen = false;
 </script>
 
 <div class="topbar">
 	<div class="search">
-		<Icon icon="bx:bx-time" width={24} height={24} color="#AFB0B1" />
+		<Icon icon="bx:bx-time" width={24} height={24} color="#AFB0B" />
 		<Search value={""} color="#333333" />
 	</div>
 	<Icon icon="fa-regular:question-circle" width={23} height={23} color="#AFB0B1" />
-
 	<div class="avatar" on:click={() => (profilePopupOpen = true)}>
+		{#if $statusStore}
+			<span class="emoji"> {$statusStore?.emoji} </span>
+		{/if}
 		<img alt="Profile Avatar" src="/images/mock-avatar.jpg" />
 		<div class:online={true} class="status-icon" />
 		<ProfilePopup bind:profilePopupOpen />
@@ -31,6 +38,11 @@
 		width: 100%;
 		padding: 5px 10px;
 		border-bottom: 1px solid var(--color-tran);
+
+		.emoji {
+			font-size: 18px;
+			margin-right: 10px;
+		}
 
 		.avatar {
 			position: relative;

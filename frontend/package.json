@@ -15,6 +15,7 @@
     "@iconify/svelte": "^2.1.0",
     "@sveltejs/adapter-auto": "next",
     "@sveltejs/kit": "next",
+    "@types/sanitize-html": "^2.6.2",
     "@typescript-eslint/eslint-plugin": "^4.31.1",
     "@typescript-eslint/parser": "^4.31.1",
     "eslint": "^7.32.0",
@@ -36,6 +37,8 @@
     "@tiptap/core": "^2.0.0-beta.163",
     "@tiptap/extension-placeholder": "^2.0.0-beta.46",
     "@tiptap/starter-kit": "^2.0.0-beta.171",
+    "effector": "^22.1.2",
+    "sanitize-html": "^2.6.1",
     "socket.io-client": "^4.4.0"
   }
 }

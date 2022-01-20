@@ -10,8 +10,8 @@ export const getStatus = catchAsync(async (req: Request, res: Response) => {
 	if (!userId) throw new ApiError(`Invalid user id ${userId}`);
 
 	const userStatus = await status.getStatus(userId);
-
-	res.status(200).send(userStatus);
+	
+	res.status(200).json(userStatus);
 });
 
 export const updateStatus = catchAsync(async (req: Request, res: Response) => {
@@ -27,6 +27,11 @@ export const updateStatus = catchAsync(async (req: Request, res: Response) => {
 });
 
 /* Unimplemented */
-export const deleteStatus = catchAsync(async () => {
-	//
+export const deleteStatus = catchAsync(async (req: Request, res: Response) => {
+	const userId = parseInt(req.params.id);
+	if (!userId) throw new ApiError(`Invalid user id ${userId}`);
+
+	const userStatus = await status.deleteStatus(userId);
+	
+	res.status(200).json(userStatus);
 });
