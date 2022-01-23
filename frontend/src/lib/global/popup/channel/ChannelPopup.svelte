@@ -23,7 +23,6 @@
 		membersPopup: false,
 		channelPopup: false
 	};
-
 </script>
 
 {#if active}

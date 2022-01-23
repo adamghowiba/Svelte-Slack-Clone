@@ -35,7 +35,7 @@
 		background-color: #1a1d21;
 		padding: 1rem;
 		border-radius: inherit;
-		
+
 		&.canEdit:hover {
 			background-color: rgba(87, 87, 87, 0.123);
 			cursor: pointer;

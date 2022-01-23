@@ -1,12 +1,12 @@
-import { io, Socket } from 'socket.io-client';
+import { io, Socket } from "socket.io-client";
 
-const socket: Socket = io('ws://localhost:5000/', {
+const socket: Socket = io("ws://localhost:5000/", {
 	withCredentials: true,
 	reconnectionAttempts: 10,
 	reconnectionDelay: 3000,
 	autoConnect: false,
 	auth: {
-		sid: 'abc'
+		sid: "abc"
 	}
 });
 

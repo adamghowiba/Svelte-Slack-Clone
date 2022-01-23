@@ -51,7 +51,7 @@
 	</div>
 	{/if} -->
 {#if $overlay}
-	<div class="overlay" on:click={() => $overlay = false} />
+	<div class="overlay" on:click={() => ($overlay = false)} />
 {/if}
 <slot />
 

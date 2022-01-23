@@ -6,7 +6,6 @@
 	export let message: string;
 	export let attachedMessage: boolean;
 	export let date: Date;
-
 </script>
 
 <div class="message">

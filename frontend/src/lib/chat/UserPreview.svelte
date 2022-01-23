@@ -35,7 +35,7 @@
 		border-radius: 3px;
 
 		&:hover {
-			background-color: rgba(79,84,92,0.16);
+			background-color: rgba(79, 84, 92, 0.16);
 		}
 
 		img {

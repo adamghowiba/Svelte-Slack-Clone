@@ -10,7 +10,7 @@
 		dispatch("closeModel", true);
 		$overlay = false;
 	};
-	
+
 	onMount(() => {
 		$overlay = true;
 	});

@@ -13,7 +13,7 @@
 		justify-content: center;
 		border-radius: var(--borderRadius, 4px);
 		padding: 5px 6px;
-        min-width: 28px;
+		min-width: 28px;
 
 		&:hover {
 			background-color: rgba(129, 129, 129, 0.267);

@@ -1,3 +1,3 @@
 export function getPlayer() {
-    console.log('Testing realtive imports');
+	console.log("Testing realtive imports");
 }

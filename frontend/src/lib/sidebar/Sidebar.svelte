@@ -22,7 +22,6 @@
 
 	let directMessagePopup = false;
 	let createChannelPopup = false;
-
 </script>
 
 <section>
@@ -42,7 +41,7 @@
 		<!-- Group Channels -->
 		<SidebarGroup title="Group Chats" on:click={() => (createChannelPopup = true)}>
 			{#if createChannelPopup}
-				<CreateChannelPopup on:closeModel={() => createChannelPopup = false} />
+				<CreateChannelPopup on:closeModel={() => (createChannelPopup = false)} />
 			{/if}
 
 			{#if $publicChannels.state == "loading"}

@@ -1,5 +1,5 @@
 <script lang="ts">
-import { overlay } from "$lib/store/interface";
+	import { overlay } from "$lib/store/interface";
 
 	import { clickOutside } from "$lib/utils/clickOutside";
 	import { createEventDispatcher, onMount } from "svelte";

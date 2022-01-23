@@ -1,21 +1,21 @@
-import type { Handle, GetSession } from '@sveltejs/kit';
+import type { Handle, GetSession } from "@sveltejs/kit";
 
 const mockUser = {
-	username: 'adamscode',
+	username: "adamscode",
 	id: 1
 };
 
 export const handle: Handle = async ({ request, resolve }) => {
-	const response = await fetch('http://localhost:5000/user/me', {
+	const response = await fetch("http://localhost:5000/user/me", {
 		headers: {
-			cookie: request.headers['cookie']
+			cookie: request.headers["cookie"]
 		},
-		credentials: 'include'
+		credentials: "include"
 	});
 
 	if (!response.ok) {
 		request.locals.user = null;
-	}else {
+	} else {
 		const result = await response.json();
 		request.locals.user = result;
 	}
@@ -23,7 +23,7 @@ export const handle: Handle = async ({ request, resolve }) => {
 	return resolve(request);
 };
 
-export const getSession: GetSession = request => {
+export const getSession: GetSession = (request) => {
 	return {
 		user: request.locals.user
 	};

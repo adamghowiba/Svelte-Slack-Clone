@@ -3,7 +3,7 @@
 
 	export let active: boolean = false;
 
-	$: color = active ? 'white' : '#56595C';
+	$: color = active ? "white" : "#56595C";
 </script>
 
 <div class="action" on:click class:active>
@@ -19,7 +19,7 @@
 		padding: 4px 10px;
 		border-radius: 5px;
 		gap: 7px;
-		
+
 		&.active {
 			background-color: #007a5a;
 		}

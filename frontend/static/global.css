@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap");
 
 *,
 *:before,
@@ -17,12 +17,12 @@ body {
 	padding: 0;
 	margin: 0;
 	background-color: var(--color-black-s2);
-	font-family: 'Open Sans', sans-serif;
+	font-family: "Open Sans", sans-serif;
 	color: var(--color-gray-s2);
 }
 input,
 textarea {
-	font-family: 'DM Sans', sans-serif;
+	font-family: "DM Sans", sans-serif;
 }
 a {
 	color: inherit;
@@ -80,7 +80,7 @@ h6 {
 	transition: border 0.15s linear;
 }
 .focused-input::after {
-	content: '';
+	content: "";
 	position: absolute;
 	display: block;
 	top: -5px;
@@ -95,7 +95,7 @@ h6 {
 	transition: border 0.15s linear;
 }
 .input--error::after {
-	content: '';
+	content: "";
 	position: absolute;
 	display: block;
 	top: -5px;

@@ -5,11 +5,11 @@ export function parseDate(date: Date): string {
 		return date.toLocaleDateString();
 	}
 
-	return 'Today at ' + date.toLocaleTimeString('en-US', { timeStyle: 'short' });
+	return "Today at " + date.toLocaleTimeString("en-US", { timeStyle: "short" });
 }
 
 export const parseTime = (date: Date): string => {
-	const time = date.toLocaleTimeString('en-US', { timeStyle: 'short' }).split(' ')[0].toString();
+	const time = date.toLocaleTimeString("en-US", { timeStyle: "short" }).split(" ")[0].toString();
 
 	return time;
 };

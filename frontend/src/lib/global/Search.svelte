@@ -3,7 +3,7 @@
 
 	export let placeholder = "Search";
 	export let color = "var(--color-black-s1)";
-	export let maxWidth = '732px'
+	export let maxWidth = "732px";
 	export let icon = true;
 	export let value: string;
 </script>

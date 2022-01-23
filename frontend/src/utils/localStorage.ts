@@ -1,9 +1,9 @@
-import { browser } from '$app/env';
+import { browser } from "$app/env";
 
 const stateOptions = {
-	ui: 'ui-state',
-	channel: 'channel-state',
-	message: 'message-history'
+	ui: "ui-state",
+	channel: "channel-state",
+	message: "message-history"
 };
 
 type StateOptions = keyof typeof stateOptions;
@@ -34,7 +34,7 @@ class Storage<T> {
 	}
 
 	create(): void {
-		this.localStorage.setItem(this.state, '{}');
+		this.localStorage.setItem(this.state, "{}");
 	}
 
 	getAll(): T {

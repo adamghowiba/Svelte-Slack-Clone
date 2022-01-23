@@ -1,4 +1,4 @@
-import { parseTime } from '@utils/dateUtils';
+import { parseTime } from "@utils/dateUtils";
 
 type ILevelOptions = {
 	[Prop in LogLevel]?: LevelOptions;
@@ -13,7 +13,7 @@ interface LevelOptions {
 	color?: string;
 	prefix?: LogPrefix | false;
 	underline?: boolean;
-	spaced?: boolean;	
+	spaced?: boolean;
 }
 
 interface LogOptions extends ILevelOptions {
@@ -32,25 +32,25 @@ const logLevels = {
 const logOptions: LogOptions = {
 	date: false,
 	debug: {
-		color: '#4C91E8',
-		spaced: true,
+		color: "#4C91E8",
+		spaced: true
 	},
 	info: {
 		prefix: {
-			color: 'tan'
+			color: "tan"
 		},
-		color: '#CDCDCD'
+		color: "#CDCDCD"
 	},
 	error: {
-		color: 'tan',
+		color: "tan",
 		prefix: {
-			color: 'coral'
+			color: "coral"
 		}
 	},
 	warn: {
-		color: 'lightyellow',
+		color: "lightyellow",
 		prefix: {
-			color: 'yellow'
+			color: "yellow"
 		}
 	}
 };
@@ -85,7 +85,7 @@ class logger {
 	 * @returns {string} Prefix string attached to the log level
 	 */
 	private prefix(level: LogLevel): string {
-		return `%c[${level.toUpperCase()}]%c ${this.date ? ' [' + this.formattedDate + ']' : ''}`;
+		return `%c[${level.toUpperCase()}]%c ${this.date ? " [" + this.formattedDate + "]" : ""}`;
 	}
 
 	/**
@@ -104,7 +104,8 @@ class logger {
 			optionsString[argCount++] = `color: ${defaultOptions.prefix.color};`;
 		}
 		optionsString[argCount] = `padding: 1px 0;`;
-		if (defaultOptions.underline) optionsString[argCount] = `border-bottom: 1px solid white; padding: 2px 0; margin: 10px 3px;`;
+		if (defaultOptions.underline)
+			optionsString[argCount] = `border-bottom: 1px solid white; padding: 2px 0; margin: 10px 3px;`;
 		if (defaultOptions.color) optionsString[argCount] += `color: ${defaultOptions.color};`;
 		if (defaultOptions.spaced) optionsString[argCount] += `margin: 10px 0;`;
 
@@ -120,15 +121,15 @@ class logger {
 	 */
 	private constructMessage(message: unknown[], level: LogLevel): { message: unknown[]; objects: unknown[] } {
 		const objects = [];
-		message = [logOptions[level].prefix ? `${this.prefix(level)}` : '%c', ...message];
+		message = [logOptions[level].prefix ? `${this.prefix(level)}` : "%c", ...message];
 
 		return {
 			message: message.map((message, i) => {
 				if (message instanceof Object) {
 					objects.push(message);
-					message = '\n%o';
+					message = "\n%o";
 				}
-				if (i > 0) message = message + ' ';
+				if (i > 0) message = message + " ";
 				return message;
 			}),
 			objects
@@ -136,7 +137,7 @@ class logger {
 	}
 
 	format(options: LevelOptions, message: string) {
-		console.info(`%c[INFO] %c${message}`, `color: #33CE33`, this.formatStyle('info', options));
+		console.info(`%c[INFO] %c${message}`, `color: #33CE33`, this.formatStyle("info", options));
 	}
 
 	log(level: LogLevel, message: unknown[], options?: LogOptions) {
@@ -144,26 +145,26 @@ class logger {
 
 		const messageConstruct = this.constructMessage(message, level);
 
-		console.info(messageConstruct.message.join(''), ...this.formatStyle(level), ...messageConstruct.objects);
+		console.info(messageConstruct.message.join(""), ...this.formatStyle(level), ...messageConstruct.objects);
 	}
 
 	debug(...message: unknown[]) {
-		return this.log('debug', message);
+		return this.log("debug", message);
 	}
 
 	info(...message: unknown[]) {
-		return this.log('info', message);
+		return this.log("info", message);
 	}
 
 	warn(...message: unknown[]) {
-		return this.log('warn', message);
+		return this.log("warn", message);
 	}
 
 	error(...message: unknown[]) {
-		return this.log('error', message);
+		return this.log("error", message);
 	}
 }
 
-const log = new logger('debug');
+const log = new logger("debug");
 
 export { log };

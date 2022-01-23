@@ -1,9 +1,8 @@
-import { writable, get, derived } from 'svelte/store';
-import type { Writable } from 'svelte/store';
-import type { Notifcation } from './types';
+import { writable, get, derived } from "svelte/store";
+import type { Writable } from "svelte/store";
+import type { Notifcation } from "./types";
 
 export const notifcations: Writable<Notifcation[]> = writable([]);
-
 
 /* 
 	Cache strat

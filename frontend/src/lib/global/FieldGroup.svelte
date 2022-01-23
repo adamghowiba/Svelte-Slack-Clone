@@ -2,9 +2,9 @@
 </script>
 
 <div class="wrapper">
-    <div class="field">
-        <slot />
-    </div>
+	<div class="field">
+		<slot />
+	</div>
 
 	<div class="button">
 		<slot name="button" />
@@ -22,7 +22,7 @@
 
 			&:hover {
 				background-color: rgba(87, 87, 87, 0.123);
-                cursor: pointer;
+				cursor: pointer;
 			}
 		}
 	}

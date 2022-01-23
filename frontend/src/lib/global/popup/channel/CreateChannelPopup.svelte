@@ -20,7 +20,7 @@
 		log.info("Attempting to create channel", { ...channelData });
 		dispatch("closeModel");
 		$overlay = false;
-		
+
 		const createdChannel = await createChannel(channelData);
 
 		publicChannels.update((channels) => {

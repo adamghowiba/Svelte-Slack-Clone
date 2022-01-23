@@ -59,9 +59,9 @@
 		&.selected {
 			color: #1579c5;
 		}
-        &.selected:hover {
-            color: white;
-        }
+		&.selected:hover {
+			color: white;
+		}
 		&:hover {
 			background-color: #1264a3;
 		}

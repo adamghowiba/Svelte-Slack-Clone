@@ -32,7 +32,6 @@
 			inputType="text"
 			placeholder="Add description"
 			on:closeModel={() => (active = false)}>
-			
 			<SearchDropdown active={Boolean(addMemberValue)} data={filteredAddMember} slot="dropdown" />
 		</InputModel>
 	{/if}

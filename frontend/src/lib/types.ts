@@ -13,20 +13,20 @@ export interface Channel {
 export interface Status {
 	emoji: string;
 	clear_date: Date;
-	user_id: number; 
-	status?: string; 
+	user_id: number;
+	status?: string;
 }
 
 export interface ChannelGroup {
 	id: number;
 	name: string;
-	channel: Channel[]
+	channel: Channel[];
 }
 
 /* TODO: Fix return value */
 export interface PrivateChannel {
 	id: number;
-	users: User
+	users: User;
 }
 
 export interface ChannelStore {
@@ -50,4 +50,4 @@ export interface Notifcation extends Message {
 }
 
 /* TYPES */
-export type ChannelType = 'user' | 'group';
+export type ChannelType = "user" | "group";

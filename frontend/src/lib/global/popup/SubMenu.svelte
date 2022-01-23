@@ -9,7 +9,6 @@
 	export let label: string;
 	export let width: string = "auto";
 	export let side: SubMenuSide = "right";
-
 </script>
 
 <div class="submenu">
@@ -47,7 +46,7 @@
 			left: 100%;
 			top: -10px;
 		}
-		
+
 		&__menu.side--left {
 			left: 0;
 		}

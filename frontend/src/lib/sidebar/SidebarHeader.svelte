@@ -29,7 +29,7 @@
 				<MenuBlurb imgSrc="/images/mock-workspace.png" name={workspace} desc={url} />
 			</MenuItem>
 			<MenuItem>Invite people to {workspace}</MenuItem>
-			<MenuItem seperator on:click={() => dispatch('createChannel')}>Create a channel</MenuItem>
+			<MenuItem seperator on:click={() => dispatch("createChannel")}>Create a channel</MenuItem>
 			<MenuItem>Prefrences</MenuItem>
 			<MenuItem seperator submenu>
 				<SubMenu width="300px" label="Settings & administration">

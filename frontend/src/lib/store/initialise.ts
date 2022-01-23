@@ -1,2 +1,2 @@
-// TODO Initilize nedded store componots like sidebar. 
-export {}
+// TODO Initilize nedded store componots like sidebar.
+export {};

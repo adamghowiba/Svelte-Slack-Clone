@@ -1,9 +1,9 @@
 <script lang="ts">
-	type Type = 'button' | 'link';
+	type Type = "button" | "link";
 
-	export let type: Type = 'link';
-	export let href = '';
-	export let buttonType = 'button';
+	export let type: Type = "link";
+	export let href = "";
+	export let buttonType = "button";
 </script>
 
 {#if !href}

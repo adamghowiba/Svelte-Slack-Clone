@@ -29,7 +29,7 @@
 
 	/* Emoji status from popup modal 👍 */
 	let statusEmoji: string;
-	
+
 	const closeStatusModal = () => {
 		statusModelOpen = false;
 		$overlay = false;
