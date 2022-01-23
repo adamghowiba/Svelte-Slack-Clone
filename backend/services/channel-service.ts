@@ -1,6 +1,6 @@
 import prisma from '@controllers/db-controller';
 import { DatabaseError } from '@errors/DatabaseError';
-import { Channel, User } from '@prisma/client';
+import { Channel, User, Section, ChannelType } from '@prisma/client';
 
 export const findAllChannels = async (groupBy: string) => {
 	try {
@@ -38,7 +38,11 @@ const findAllPublic = async (users = true) => {
 			}
 		});
 
-		return channelData;
+		const sanitizedChannel = channelData.map(val => {
+			return { ...val, section: val.section.name };
+		});
+
+		return sanitizedChannel;
 	} catch (error) {
 		throw new DatabaseError(error);
 	}

@@ -281,3 +281,105 @@ info: Socket yJjt7I5U4aiRPKFBAAAP has disconnected
 info: adamscode has joined room design
 info: Socket EKBB_qk9R3y1n2h4AAAR has disconnected
 info: adamscode has joined room design
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+error: Database connection failed! Can't reach database server at `95.179.169.95`:`5432`
+
+Please make sure your database server is running at `95.179.169.95`:`5432`. {"stack":"Error: Can't reach database server at `95.179.169.95`:`5432`\n\nPlease make sure your database server is running at `95.179.169.95`:`5432`.\n    at C:\\Code\\Personal Projects\\Chatapp\\backend\\node_modules\\@prisma\\client\\runtime\\index.js:36261:21"}
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+warn: Unhandled promise [object Promise]
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+error: Error: Unauthorized
+info: Socket vrXqO0RJHyFiFf33AAAB has disconnected
+info: adamscode has joined room budget
+info: adamscode has joined room admin
+info: adamscode has joined room budget
+info: adamscode has joined room admin
+info: adamscode has joined room projects
+info: adamscode has joined room Other
+info: adamscode has joined room budget
+info: adamscode has joined room admin
+info: adamscode has joined room projects
+info: adamscode has joined room Other
+info: adamscode has joined room budget
+info: adamscode has joined room adam
+info: adamscode has joined room boss
+info: adamscode has joined room james
+info: adamscode has joined room boss
+info: adamscode has joined room adam
+info: adamscode has joined room james
+info: adamscode has joined room adam
+info: adamscode has joined room boss
+info: adamscode has joined room james
+info: Socket 8if7VtIIjblKsie7AAAD has disconnected
+info: adamscode has joined room james
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: Socket 5OKRWVanhW0Jdd5YAAAB has disconnected
+info: Socket 3gsJHahj0dbD2auUAAAD has disconnected
+info: adamscode has joined room working-hopefully
+info: adamscode has joined room admin
+info: adamscode has joined room working-hopefully
+info: adamscode has joined room projects
+info: adamscode has joined room admin
+info: adamscode has joined room budget
+info: adamscode has joined room working-hopefully
+info: adamscode has joined room budget
+info: adamscode has joined room admin
+info: adamscode has joined room projects
+info: adamscode has joined room Other
+info: adamscode has joined room budget
+info: adamscode has joined room testdesc
+info: Sessions have been initialized
+info: API Routes registered sucessfully
+info: Loaded app sucessfully on port 5000
+info: Databse connection established successfully.
+info: adamscode has joined room admin
+info: adamscode has joined room projects
+info: adamscode has joined room budget
+info: adamscode has joined room projects
+info: adamscode has joined room budget
+info: adamscode has joined room admin
+info: adamscode has joined room another
+info: adamscode has joined room testdesc
+info: adamscode has joined room testagain
+info: adamscode has joined room admin
+info: adamscode has joined room budget
+info: adamscode has joined room projects
+info: adamscode has joined room budget
+info: adamscode has joined room boss
+info: adamscode has joined room james
+info: adamscode has joined room adam
+info: adamscode has joined room james
+info: adamscode has joined room adam
+info: adamscode has joined room james
+info: adamscode has joined room boss
+info: adamscode has joined room james
+info: adamscode has joined room adam
+error: Error: Invalid channel id
+info: adamscode has joined room james

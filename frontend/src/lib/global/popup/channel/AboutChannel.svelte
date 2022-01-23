@@ -6,8 +6,6 @@
 	import { updateChannel } from "$lib/api/channel-api";
 	import { log } from "@utils/logger";
 	import { parseDate } from "@utils/dateUtils";
-	import Popup from "$lib/sidebar/Popup.svelte";
-	import { each } from "svelte/internal";
 
 	export let channelData: Channel;
 

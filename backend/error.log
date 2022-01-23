@@ -9,3 +9,8 @@ error: Error: "value" must have at least 1 key
 error: Error: "value" must have at least 1 key
 error: Error: "status" is not allowed to be empty
 error: Error: "status" is not allowed to be empty
+error: Database connection failed! Can't reach database server at `95.179.169.95`:`5432`
+
+Please make sure your database server is running at `95.179.169.95`:`5432`. {"stack":"Error: Can't reach database server at `95.179.169.95`:`5432`\n\nPlease make sure your database server is running at `95.179.169.95`:`5432`.\n    at C:\\Code\\Personal Projects\\Chatapp\\backend\\node_modules\\@prisma\\client\\runtime\\index.js:36261:21"}
+error: Error: Unauthorized
+error: Error: Invalid channel id

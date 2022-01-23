@@ -6,30 +6,23 @@
 	import Loader from "$lib/global/loaders/Loader.svelte";
 	import Model from "$lib/global/models/Model.svelte";
 	import ModelActions from "$lib/global/models/ModelActions.svelte";
-	import { privateChannels, publicChannels } from "$lib/store/channel";
+	import { privateChannels, publicChannel, publicChannels } from "$lib/store/channel";
 	import { overlay } from "$lib/store/interface";
 	import { allUsers } from "$lib/store/users";
 	import { log } from "@utils/logger";
 	import ChannelGroup from "./ChannelGroup.svelte";
 	import GroupChannel from "./GroupChannel.svelte";
-	import Popup from "./Popup.svelte";
+	import DirectMessagePopup from "../global/popup/user/DirectMessagePopup.svelte";
 	import SidebarGroup from "./SidebarGroup.svelte";
 	import SidebarHeader from "./SidebarHeader.svelte";
 	import SidebarLink from "./SidebarLink.svelte";
 	import UserChannel from "./UserChannel.svelte";
+	import { groupChannelsByKey } from "@utils/array-utils";
+	import CreateChannelPopup from "$lib/global/popup/channel/CreateChannelPopup.svelte";
 
 	let directMessagePopup = false;
 	let createChannelPopup = false;
 
-	const handleCreateChannel = async () => {
-		log.debug("Attempting to create channel", channelName, channelDescription);
-		await createChannel({ name: channelName, description: channelDescription });
-		createChannelPopup = false;
-		$overlay = false;
-	};
-
-	let channelName: string;
-	let channelDescription: string;
 </script>
 
 <section>
@@ -46,37 +39,18 @@
 			<SidebarLink icon="bx:bx-at" size={17}>Mentions</SidebarLink>
 			<SidebarLink icon="akar-icons:search" size={17}>Channel browser</SidebarLink>
 		</div>
-		<!-- Group Chats -->
+		<!-- Group Channels -->
 		<SidebarGroup title="Group Chats" on:click={() => (createChannelPopup = true)}>
 			{#if createChannelPopup}
-				<Model on:closeModel={() => (createChannelPopup = false)}>
-					<header class="create-channel__header" slot="header">
-						<h4>Create a channel</h4>
-						<p>
-							Channels are where your team communicates. They’re best when organized around a topic — #marketing, for
-							example.
-						</p>
-					</header>
-
-					<div class="create-channel__body" slot="body">
-						<TextInput
-							icon="clarity:hashtag-solid"
-							bind:value={channelName}
-							label="Name"
-							placeholder="eg. plan-budget"
-							charcterLimit={30} />
-						<TextInput bind:value={channelDescription} label="Description" desc="What's this channel about?" />
-					</div>
-
-					<ModelActions slot="footer" on:save={handleCreateChannel} />
-				</Model>
+				<CreateChannelPopup on:closeModel={() => createChannelPopup = false} />
 			{/if}
+
 			{#if $publicChannels.state == "loading"}
 				<Loader />
 			{:else if $publicChannels.state == "available"}
-				{#each $publicChannels.data || [] as group}
-					<ChannelGroup groupName={group.name}>
-						{#each group.channel as channel}
+				{#each Object.entries(groupChannelsByKey($publicChannels.data, "section")) || [] as [name, channels]}
+					<ChannelGroup groupName={name}>
+						{#each channels as channel}
 							<GroupChannel channelName={channel.name} channelId={channel.id} notifications={0} />
 						{/each}
 					</ChannelGroup>
@@ -88,7 +62,7 @@
 
 		<!-- All Users -->
 		<SidebarGroup title="Direct Mesasages" on:click={() => (directMessagePopup = true)}>
-			<Popup bind:active={directMessagePopup} on:clickOutside={() => (directMessagePopup = false)} />
+			<DirectMessagePopup bind:active={directMessagePopup} on:clickOutside={() => (directMessagePopup = false)} />
 
 			{#if $privateChannels.state == "loading"}
 				<Loader />
@@ -122,7 +96,6 @@
 		background-color: #1a1d21;
 		border-right: 1px solid var(--color-tran);
 		font-size: 15px;
-		overflow-y: auto;
 	}
 	.create-channel {
 		&__header {

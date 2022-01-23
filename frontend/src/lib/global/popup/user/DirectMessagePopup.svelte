@@ -24,6 +24,7 @@
 
 		if (!channel) {
 			log.debug("Private channel not found... Attempting to createa.");
+			active = false;
 
 			const response = await fetch("http://localhost:5000/channel", {
 				method: "POST",
@@ -48,7 +49,6 @@
 			});
 
 			log.info("Private channel created sucessfully, redirecting..", result);
-			active = false;
 			goto(`/chat/${result.id}?user=${username}&type=user`);
 			return;
 		}
@@ -96,14 +96,15 @@
 		z-index: 100;
 		gap: 0.9rem;
 		flex-direction: column;
-		top: 30px;
-		left: 100%;
+		top: 10px;
+		left: 105%;
 		width: 460px;
 		height: auto;
 		max-height: 360px;
 		padding: 1rem;
 		background-color: var(--color-black-s1);
 		border-radius: 7px;
+		border: 1px solid var(--color-tran);
 		box-shadow: 0 0 0 1px rgba(32, 34, 37, 0.6), 0 2px 10px 0 rgba(0, 0, 0, 0.2);
 	}
 

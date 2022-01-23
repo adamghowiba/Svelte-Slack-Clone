@@ -3,11 +3,11 @@ export interface Channel {
 	users: User[];
 	type: ChannelType;
 	notifcations?: number;
-	section: string | null;
+	section?: string | null;
 	name?: string;
 	topic?: string;
 	description?: string;
-	created_date: Date;
+	created_date?: Date;
 }
 
 export interface Status {

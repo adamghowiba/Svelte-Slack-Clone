@@ -1,7 +1,7 @@
 import type { Channel, ChannelType } from '$lib/types';
 
 export const fetchChannelData = async <T>(type: ChannelType, userId: number): Promise<T> => {
-	const url = `http://localhost:5000/channel${type == 'user' ? `/user/${userId}` : '?group=section'}`;
+	const url = `http://localhost:5000/channel${type == 'user' ? `/user/${userId}` : ''}`;
 
 	const response = await fetch(url, {
 		method: 'GET',
@@ -14,7 +14,7 @@ export const fetchChannelData = async <T>(type: ChannelType, userId: number): Pr
 	return result;
 };
 
-export const updateChannel = async (id: number, data: Partial<Omit<Channel, 'id'>>): Promise<unknown> => {
+export const updateChannel = async (id: number, data: Partial<Omit<Channel, 'id'>>): Promise<Channel> => {
 	const url = `http://localhost:5000/channel/${id}`;
 
 	const response = await fetch(url, {
@@ -32,7 +32,7 @@ export const updateChannel = async (id: number, data: Partial<Omit<Channel, 'id'
 	return result;
 };
 
-export const createChannel = async (data: Pick<Channel, 'name' | 'description'>): Promise<unknown> => {
+export const createChannel = async (data: Pick<Channel, 'name' | 'description'>): Promise<Channel> => {
 	const url = `http://localhost:5000/channel`;
 
 	const response = await fetch(url, {
