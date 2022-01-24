@@ -3,8 +3,8 @@
 	"version": "0.0.0",
 	"private": true,
 	"scripts": {
-		"start": "node ./app.ts",
-		"dev": "nodemon -e ts,js --exec ts-node -r tsconfig-paths/register ./app.ts",
+		"start": "node ./build/app.js",
+		"dev": "nodemon --config nodemon.json ./src/app.ts",
 		"build": "npm run format & npm run lint & npm run transpile",
 		"transpile": "tsc ",
 		"lint": "prettier --ignore-path .gitignore --check --plugin-search-dir=. . & eslint --ext .js,.ts --ignore-path .gitignore .",
@@ -28,7 +28,8 @@
 		"morgan": "~1.9.1",
 		"nodemon": "^2.0.15",
 		"socket.io": "^4.4.0",
-		"winston": "^3.3.3"
+		"winston": "^3.3.3",
+		"tsconfig-paths": "^3.12.0"
 	},
 	"devDependencies": {
 		"@types/cookie-signature": "^1.0.4",
@@ -48,7 +49,6 @@
 		"prettier": "^2.5.1",
 		"prisma": "^3.6.0",
 		"ts-node": "^10.4.0",
-		"tsconfig-paths": "^3.12.0",
 		"tslib": "^2.3.1",
 		"typescript": "^4.5.4"
 	}

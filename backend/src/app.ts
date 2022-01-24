@@ -15,6 +15,8 @@ process.on('unhandledRejection', (reason: string) => {
 	throw reason;
 });
 
+// -e ts,js --exec ts-node -r tsconfig-paths/register
+
 /* Setup Database Connection */
 connectDb().then(logger.info).catch(logger.error);
 

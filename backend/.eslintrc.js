@@ -4,8 +4,9 @@ module.exports = {
 		es2021: true
 	},
 	parserOptions: {
-		sourceType: 'module',
-		project: ['./tsconfig.json']
+		project: './tsconfig.json',
+		tsconfigRootDir: __dirname,
+		sourceType: 'module'
 	},
 	settings: {
 		'import/resolver': {

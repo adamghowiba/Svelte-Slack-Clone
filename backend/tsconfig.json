@@ -10,8 +10,6 @@
 		"pretty": true,
 		"forceConsistentCasingInFileNames": true,
 		"baseUrl": "./src",
-		"rootDir": "./",
-		"typeRoots": ["./node_modules/@types"],
 		"paths": {
 			"@controllers/*": ["api/controllers/*"],
 			"@controllers": ["api/controllers"],
@@ -33,5 +31,7 @@
 			"@repo/*": ["repositories/*"],
 			"*": ["node_modules/*"]
 		}
-	}
+	},
+	"include": ["src/**/*"],
+	"exclude": ["node_modules", "build"]
 }
