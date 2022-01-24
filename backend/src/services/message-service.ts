@@ -1,11 +1,6 @@
-import { DatabaseError } from '@errors/DatabaseError';
+import { DatabaseError, PrismaError } from '@errors/DatabaseError';
 import prisma from '@controllers/db-controller';
 import { Message } from '@prisma/client';
-
-/* 
-- Older Method (Users with messages & Channel with messages)
- * Get group messages 389 ms
-*/
 
 const findChannelMessagesById = async (channelId: number, page: number): Promise<Message[]> => {
 	const pageCount = 13;
@@ -35,7 +30,7 @@ const findChannelMessagesById = async (channelId: number, page: number): Promise
 
 		return groupMessages.messages;
 	} catch (error) {
-		throw new DatabaseError(error);
+		throw new DatabaseError(error as PrismaError);
 	}
 };
 
@@ -51,7 +46,7 @@ const createMessage = async (senderId: number, channelId: number, message: strin
 
 		return result;
 	} catch (error) {
-		throw new DatabaseError(error);
+		throw new DatabaseError(error as PrismaError);
 	}
 };
 

@@ -6,10 +6,13 @@
  * @param {number} [statusCode=400] HTTP Status code
  */
 
-export abstract class ICustomError extends Error {
+export default abstract class ICustomError extends Error {
 	abstract isOperational: boolean;
+
 	message: string;
+
 	statusCode: number;
+
 	status: string;
 
 	constructor(message: string, statusCode?: number) {

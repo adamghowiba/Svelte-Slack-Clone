@@ -1,5 +1,6 @@
 # Keep environment variables out of version control
 node_modules
+build
 error.log
 general.log
 .env

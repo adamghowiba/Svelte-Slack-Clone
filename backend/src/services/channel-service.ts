@@ -1,8 +1,9 @@
 import prisma from '@controllers/db-controller';
 import { DatabaseError } from '@errors/DatabaseError';
-import { Channel, User, Section, ChannelType } from '@prisma/client';
+import { Channel, User } from '@prisma/client';
+import type { PrismaError } from '@errors/DatabaseError';
 
-export const findAllChannels = async (groupBy: string) => {
+export const findAllChannels = async () => {
 	try {
 		const sectionChannels = await prisma.section.findMany({
 			include: {
@@ -12,7 +13,7 @@ export const findAllChannels = async (groupBy: string) => {
 
 		return sectionChannels;
 	} catch (error) {
-		throw new DatabaseError(error);
+		throw new DatabaseError(error as PrismaError);
 	}
 };
 
@@ -38,13 +39,11 @@ const findAllPublic = async (users = true) => {
 			}
 		});
 
-		const sanitizedChannel = channelData.map(val => {
-			return { ...val, section: val.section.name };
-		});
+		const sanitizedChannel = channelData.map(val => ({ ...val, section: val.section.name }));
 
 		return sanitizedChannel;
 	} catch (error) {
-		throw new DatabaseError(error);
+		throw new DatabaseError(error as PrismaError);
 	}
 };
 
@@ -71,7 +70,7 @@ const findById = async (channelId: number, users = true) => {
 
 		return channelData;
 	} catch (error) {
-		throw new DatabaseError(error);
+		throw new DatabaseError(error as PrismaError);
 	}
 };
 
@@ -125,9 +124,7 @@ const findAllPrivate = async (userId: number): Promise<unknown> => {
 	});
 
 	/* TODO: Self channel returns no user */
-	const sanitizedChannel = (data: Channel & { users: User[] }) => {
-		return { ...data, users: data.users.filter(user => user.id != userId)[0] };
-	};
+	const sanitizedChannel = (data: Channel & { users: User[] }) => ({ ...data, users: data.users.filter(user => user.id !== userId)[0] });
 	const data = userData.channels.map(sanitizedChannel);
 
 	return data;
@@ -148,9 +145,9 @@ export const checkPrivateExists = async (user1Id: number, user2Id: number) => {
 			}
 		});
 
-		return result ? true : false;
+		return result;
 	} catch (error) {
-		throw new DatabaseError(error);
+		throw new DatabaseError(error as PrismaError);
 	}
 };
 
@@ -168,7 +165,7 @@ const createPrivate = async (senderId: number, receiverId: number): Promise<Chan
 
 		return result;
 	} catch (error) {
-		throw new DatabaseError(error);
+		throw new DatabaseError(error as PrismaError);
 	}
 };
 
@@ -193,7 +190,7 @@ const createPublic = async (name: string, section = 'channel') => {
 
 		return result;
 	} catch (error) {
-		throw new DatabaseError(error);
+		throw new DatabaseError(error as PrismaError);
 	}
 };
 

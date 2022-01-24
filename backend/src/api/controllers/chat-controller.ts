@@ -1,24 +1,14 @@
-import ApiError from '@errors/ApiError';
 import { catchAsync } from '@utils/ErrorUtil';
 import { Request, Response } from 'express';
 
-export const getGroupMessages = catchAsync(async (req: Request, res: Response) => {
-	const name = req.params.name;
+export const getGroupMessages = catchAsync((req: Request, res: Response) => {
+	// const { name } = req.params;
 
-	if (!name) throw new ApiError('Must specify a group name to query');
+	res.status(500).json('Unimplemented');
+});
 
-	const page = parseInt(`${req.query.page}`) || 1;
-    // const cacheKey = `room-${name}`
+export const deleteGroupMessages = catchAsync((req: Request, res: Response) => {
+	// const { name } = req.params;
 
-    // const cachedMessages = cache.get(cacheKey);
-    // if (cachedMessages) {
-    //     console.log(`Cached results were hit for ${cacheKey}`);
-    //     return res.json(cachedMessages);
-    // }
-
-	// const messages = await fetchGroupMessages(name, page);
-
-    // cache.put(cacheKey, messages, 1000 * 60)
-
-	// res.json(messages);
+	res.status(500).json('Unimplemented');
 });

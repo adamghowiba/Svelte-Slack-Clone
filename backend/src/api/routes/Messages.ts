@@ -1,19 +1,19 @@
-import { getGroupMessages } from '@controllers/chat-controller';
 import ApiError from '@errors/ApiError';
 import { createMessage, findChannelMessagesById } from '@services/message-service';
 import { catchAsync } from '@utils/ErrorUtil';
 import { Response, Request, Router } from 'express';
-const router = Router();
 
+// TODO: Move into seperate file
+const router = Router();
 // router.get('/group/:name', getGroupMessages);
 
 router.get(
 	'/channel/:id',
 	catchAsync(async (req: Request, res: Response) => {
-		const channel_id = parseInt(req.params.id);
-		if (!channel_id) throw new ApiError('Invalid channel id');
+		const channelId = parseInt(req.params.id, 10);
+		if (!channelId) throw new ApiError('Invalid channel id');
 
-		const messages = await findChannelMessagesById(channel_id, 1);
+		const messages = await findChannelMessagesById(channelId, 1);
 
 		res.json(messages);
 	})
@@ -21,17 +21,16 @@ router.get(
 
 router.post(
 	'/channel/:id',
-	catchAsync(async (req: Request, res: Response) => {
-		const channel_id = parseInt(req.params.id);
-		if (!channel_id) throw new ApiError('Invalid channel id');
+	catchAsync(async (req: Request<{ id: string }, unknown, { message: string; senderId: string }>, res: Response) => {
+		const channelId = parseInt(req.params.id, 10);
+		if (!channelId) throw new ApiError('Invalid channel id');
 
-		const message = req.body.message;
-		if (!message) throw new ApiError('No valid message to send');
+		if (!req.body.message) throw new ApiError('No valid message to send');
 
-		const senderId = parseInt(req.body.senderId);
+		const senderId = parseInt(req.body.senderId, 10);
 		if (!senderId) throw new ApiError('No valid message to send');
 
-		const messages = await createMessage(senderId, channel_id, message);
+		const messages = await createMessage(senderId, channelId, req.body.message);
 
 		res.json(messages);
 	})

@@ -1,5 +1,6 @@
-import { Router, Request, Response } from "express";
-import { authController } from "@controllers";
+import { authController } from '@controllers';
+import { Router } from 'express';
+
 const router = Router();
 
 router.post('/register', authController.register);

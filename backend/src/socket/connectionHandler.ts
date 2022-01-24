@@ -1,8 +1,8 @@
 import logger from '@logger';
 import { Socket, Server } from 'socket.io';
 
-export const handleDisconnect = (io: Server, socket: Socket) => {
-	const disconnect = async () => {
+export default (io: Server, socket: Socket) => {
+	const disconnect = () => {
 		logger.info(`Socket ${socket.id} has disconnected`);
 	};
 

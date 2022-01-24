@@ -1,9 +1,11 @@
+// TODO Fix eslint disable
+/* eslint-disable vars-on-top */
+/* eslint-disable no-var */
 import config from '@config';
-import logger from '@logger';
 import { PrismaClient } from '@prisma/client';
 
 declare global {
-    var prisma: PrismaClient
+	var prisma: PrismaClient;
 }
 
 const prisma = global.prisma || new PrismaClient({ errorFormat: 'minimal' });
@@ -11,14 +13,13 @@ const prisma = global.prisma || new PrismaClient({ errorFormat: 'minimal' });
 if (config.isDevelopment) global.prisma = prisma;
 
 export const connectDb = async () => {
-    try {
-        await prisma.$connect()
-        logger.info('Databse connection established successfully.')
-    } catch (error) {
-        const { message, stack, statusCode } = error;
-        logger.error(`Database connection failed!`, { message, stack, statusCode });
-        process.exitCode = 1;
-    }
-}
+	try {
+		await prisma.$connect();
+		return 'Databse connection established successfully.';
+	} catch (error) {
+		process.exitCode = 1;
+		return `Database connection failed!, ${error as string}`;
+	}
+};
 
 export default prisma;

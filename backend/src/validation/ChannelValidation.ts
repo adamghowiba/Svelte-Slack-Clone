@@ -1,5 +1,6 @@
 import Joi from 'joi';
 
+// eslint-disable-next-line import/prefer-default-export
 export const channelValidation = Joi.object({
 	type: Joi.string().valid('private', 'public').insensitive().optional(),
 	section: Joi.string().optional(),

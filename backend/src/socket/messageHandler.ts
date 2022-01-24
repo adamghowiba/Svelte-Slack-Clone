@@ -1,7 +1,5 @@
 import { Server, Socket } from 'socket.io';
-import logger from '@logger';
 import prisma from '@controllers/db-controller';
-import cache from '@utils/CacheUtils';
 
 interface GroupMessage {
 	room: string;
@@ -9,12 +7,13 @@ interface GroupMessage {
 	message: string;
 }
 
-interface PrivateMessage {
-	username: string;
-	message: string;
-	socketId?: string | number;
-	userId?: number;
-}
+// TODO Remove comments
+// interface PrivateMessage {
+// 	username: string;
+// 	message: string;
+// 	socketId?: string | number;
+// 	userId?: number;
+// }
 
 export default (io: Server, socket: Socket) => {
 	const onGroupMessageSend = async ({ message, room, channelId }: GroupMessage) => {
@@ -23,7 +22,7 @@ export default (io: Server, socket: Socket) => {
 		const payload = { message, username: socket.user.username, room };
 		io.in(room).emit('message:read', payload);
 
-		const parsedChannelId = parseInt(channelId);
+		const parsedChannelId = parseInt(channelId, 10);
 
 		await prisma.message.create({
 			data: {
@@ -35,10 +34,10 @@ export default (io: Server, socket: Socket) => {
 		});
 	};
 
-	const onPrivateMessageSend = ({message, username, socketId}: PrivateMessage) => {
-		const payload = { message, username: socket.user.username };
-	};
+	// const onPrivateMessageSend = ({ message, username, socketId }: PrivateMessage) => {
+	// 	const payload = { message, username: socket.user.username };
+	// };
 
 	socket.on('message:send', onGroupMessageSend);
-	socket.on('private:send', onPrivateMessageSend);
+	// socket.on('private:send', onPrivateMessageSend);
 };

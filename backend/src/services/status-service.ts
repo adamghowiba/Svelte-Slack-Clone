@@ -1,6 +1,5 @@
-import { DatabaseError } from '@errors/DatabaseError';
+import { DatabaseError, PrismaError } from '@errors/DatabaseError';
 import { Status, User } from '@prisma/client';
-import { catchAsync } from '@utils/ErrorUtil';
 
 export const getStatus = async (userId: number) => {
 	try {
@@ -12,7 +11,7 @@ export const getStatus = async (userId: number) => {
 
 		return userStatus;
 	} catch (error) {
-		throw new DatabaseError(error);
+		throw new DatabaseError(error as PrismaError);
 	}
 };
 
@@ -37,7 +36,7 @@ export const updateStatus = async (userId: number, status: string, emoji: string
 
 		return updatedStatus;
 	} catch (error) {
-		throw new DatabaseError(error);
+		throw new DatabaseError(error as PrismaError);
 	}
 };
 
@@ -51,6 +50,6 @@ export const deleteStatus = async (userId: User['id']) => {
 
 		return updatedStatus;
 	} catch (error) {
-		throw new DatabaseError(error);
+		throw new DatabaseError(error as PrismaError);
 	}
 };

@@ -1,36 +1,30 @@
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response } from 'express';
 import { userService } from '@services';
-import logger from '@logger';
-import { User } from '@validation/UserValidation';
+import { User as UserValidation } from '@validation/UserValidation';
 import ApiError from '@errors/ApiError';
 import { catchAsync } from '@utils/ErrorUtil';
+import { User as UserType } from '@prisma/client';
 
+const register = catchAsync(async (req: Request<unknown, unknown, UserType>, res: Response) => {
+	const { error } = UserValidation.validate(req.body);
+	if (error) throw new ApiError(error.message);
 
-const register = catchAsync(async (req: Request, res: Response) => {
-    const { error } = User.validate(req.body);
+	const createdUser = await userService.createUser(req.body.username);
 
-    if (error) throw new ApiError(error.message);
-
-    const createdUser = await userService.createUser(req.body.username);
-
-    res.status(200).send(createdUser);
+	res.status(200).send(createdUser);
 });
 
-const login = catchAsync(async (req: Request, res: Response) => {
-    const { error } = User.validate(req.body);
+const login = catchAsync(async (req: Request<unknown, unknown, UserType>, res: Response) => {
+	const { error } = UserValidation.validate(req.body);
 
-    if (error) throw new ApiError(error.message);
+	if (error) throw new ApiError(error.message);
 
-    const foundUser = await userService.findByUsername(req.body.username);
+	const foundUser = await userService.findByUsername(req.body.username);
 
-    if (!foundUser) throw new ApiError(`Username ${req.body.username} does not exsist.`)
-    
-    req.session.user = foundUser;
-    res.status(200).send(foundUser);
+	if (!foundUser) throw new ApiError(`Username ${req.body.username} does not exsist.`);
+
+	req.session.user = foundUser;
+	res.status(200).send(foundUser);
 });
 
-
-export {
-    login,
-    register
-}
+export { login, register };

@@ -1,7 +1,4 @@
-import * as errorHandler from './error-mw'
-import * as userHandler from './user-mw'
+import * as errorHandler from './error-mw';
 
-export {
-    errorHandler,
-    userHandler
-};
+// eslint-disable-next-line import/prefer-default-export
+export { errorHandler };

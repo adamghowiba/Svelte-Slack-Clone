@@ -1,8 +1,6 @@
-import { Channel, ChannelType, User } from '@prisma/client';
 import prisma from '@controllers/db-controller';
-import ApiError from '@errors/ApiError';
-import logger from '@logger';
-import { DatabaseError } from '@errors/DatabaseError';
+import { DatabaseError, PrismaError } from '@errors/DatabaseError';
+import { User } from '@prisma/client';
 import * as status from '@services/status-service';
 
 const findAll = async (): Promise<User[]> => {
@@ -48,7 +46,7 @@ const createUser = async (username: string): Promise<Partial<User>> => {
 
 		return createdUser;
 	} catch (error) {
-		throw new DatabaseError(error);
+		throw new DatabaseError(error as PrismaError);
 	}
 };
 

@@ -1,6 +1,10 @@
-import { ICustomError } from '@errors/ICustomError';
-import { Prisma } from '@prisma/client';
-import { PrismaClientKnownRequestError, PrismaClientUnknownRequestError, PrismaClientValidationError } from '@prisma/client/runtime';
+import {
+	PrismaClientInitializationError,
+	PrismaClientKnownRequestError,
+	PrismaClientRustPanicError,
+	PrismaClientUnknownRequestError,
+	PrismaClientValidationError
+} from '@prisma/client/runtime';
 
 /* Different Prisma Errors:
 
@@ -11,7 +15,13 @@ import { PrismaClientKnownRequestError, PrismaClientUnknownRequestError, PrismaC
 - PrismaClientValidationError
 */
 
-type KnownErrorType = 'duplicate' | 'notfound';
+type KnownErrorType = 'duplicate' | 'notfound' | 'unknown';
+export type PrismaError =
+	| PrismaClientKnownRequestError
+	| PrismaClientKnownRequestError
+	| PrismaClientRustPanicError
+	| PrismaClientInitializationError
+	| PrismaClientValidationError;
 
 /* TODO Implement or delete */
 export const parseErrorMessages = (code: string): KnownErrorType => {
@@ -20,18 +30,23 @@ export const parseErrorMessages = (code: string): KnownErrorType => {
 			return 'notfound';
 		case 'P2002':
 			return 'duplicate';
+		default:
+			return 'unknown';
 	}
 };
 
 export class DatabaseError extends Error {
 	message: string;
+
 	status: string;
+
 	statusCode: number;
 
-	constructor(error: any) {
-		super(error);
+	constructor(error: PrismaError) {
+		super(error.message);
 
-		this.message = error.message ?? error;
+		// TODO FIgure out typesafe way
+		this.message = error.message;
 		this.statusCode = 500;
 
 		if (error instanceof PrismaClientKnownRequestError) {
@@ -44,6 +59,7 @@ export class DatabaseError extends Error {
 
 		// TODO: Should this be an operational error
 		if (error instanceof PrismaClientValidationError) {
+			this.status = 'validation';
 		}
 
 		Error.captureStackTrace(this, this.constructor as typeof DatabaseError);
