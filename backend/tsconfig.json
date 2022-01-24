@@ -1,35 +1,37 @@
 {
-  "compilerOptions": {
-    "module": "CommonJS",
-    "esModuleInterop": true,
-    "target": "es6",
-    "noImplicitAny": true,
-    "moduleResolution": "node",
-    "sourceMap": true,
-    "outDir": "dist",
-    "pretty": true,
-    "forceConsistentCasingInFileNames": true,
-    "baseUrl": ".",
-    "paths": {
-      "@controllers/*": ["api/controllers/*"],
-      "@controllers": ["api/controllers"],
-      
-      "@services/*": ["services/*"],
-      "@services": ["services"],
-      
-      "@middlewear/*": ["api/middlewears/*"],
-      "@middlewear": ["api/middlewears"],
-      
-      "@config/*": ["config/*"],
-      "@config": ["config"],
-      
-      "@logger": ["loaders/logger.ts"],
-      "@routes/*": ["api/routes/*"],
-      "@validation/*": ["validation/*"],
-      "@errors/*": ["errors/*"],
-      "@utils/*": ["utils/*"],
-      "@repo/*": ["repositories/*"],
-      "*": ["node_modules/*"]
-    }
-  }
+	"compilerOptions": {
+		"module": "CommonJS",
+		"esModuleInterop": true,
+		"target": "ES6",
+		"noImplicitAny": true,
+		"moduleResolution": "node",
+		"sourceMap": true,
+		"outDir": "build",
+		"pretty": true,
+		"forceConsistentCasingInFileNames": true,
+		"baseUrl": "./src",
+		"paths": {
+			"@controllers/*": ["api/controllers/*"],
+			"@controllers": ["api/controllers"],
+
+			"@services/*": ["services/*"],
+			"@services": ["services"],
+
+			"@middlewear/*": ["api/middlewears/*"],
+			"@middlewear": ["api/middlewears"],
+
+			"@config/*": ["config/*"],
+			"@config": ["config"],
+
+			"@logger": ["loaders/logger.ts"],
+			"@routes/*": ["api/routes/*"],
+			"@validation/*": ["validation/*"],
+			"@errors/*": ["errors/*"],
+			"@utils/*": ["utils/*"],
+			"@repo/*": ["repositories/*"],
+			"*": ["node_modules/*"]
+		}
+	},
+	"include": ["src/**/*"],
+	"exclude": ["node_modules", "build"]
 }
