@@ -5,7 +5,7 @@
 		const channelId = parseInt(params.id);
 		const channelType = url.searchParams.get("type");
 		const room = url.searchParams.get(channelType);
-		socket.emit("room:join", { room });
+		socket.emit("room:join", { channelId });
 
 		return {
 			props: {
@@ -18,7 +18,7 @@
 </script>
 
 <script lang="ts">
-	import { navigating } from "$app/stores";
+	import { navigating, session } from "$app/stores";
 	import { loadChatMessages } from "$lib/api/chat-api";
 	import ChannelBio from "$lib/chat/ChannelBio.svelte";
 	import ChatInput from "$lib/chat/ChatInput.svelte";
@@ -30,6 +30,7 @@
 	import { overlay } from "$lib/store/interface";
 	import type { Channel, ChannelType } from "$lib/types";
 	import { onDestroy } from "svelte";
+	import { notifcations } from "$lib/stores";
 
 	export let room: string;
 	export let channelId: number;
@@ -41,11 +42,18 @@
 
 	/* Read incoming messages */
 	socket.on("message:read", (payload) => {
-		const messageData = { message: payload.message, sender: { username: payload.username, id: 0 }, channelId };
-		messages = [messageData, ...messages];
-		chatStore.addMessages(channelId, messageData);
+		const { message, username } = payload;
+		const messageData = { message, sender: { username, id: 0 }, channelId };
 
-		console.log("Socket Recvied Message");
+		chatStore.addMessages(channelId, messageData);
+		
+		// Show message if they're in the payload channel is in view.
+		if (payload.channelId == channelId) {
+			messages = [messageData, ...messages];
+		}
+
+		// Send notifcation
+		if (username != $session.user.username) return $notifcations = [...$notifcations, { ...messageData, id: $session.user.id }];
 	});
 
 	const handleMessageSubmit = (event) => {

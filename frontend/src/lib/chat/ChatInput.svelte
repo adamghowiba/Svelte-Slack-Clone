@@ -1,5 +1,4 @@
 <script lang="ts">
-	import Action from "$lib/global/buttons/Action.svelte";
 	import SmallAction from "$lib/global/buttons/SmallAction.svelte";
 	import { createEventDispatcher, onMount, run } from "svelte/internal";
 	import { Editor } from "@tiptap/core";
@@ -52,6 +51,8 @@
 			editor.destroy();
 		};
 	});
+
+	// $: console.log(escapeHTML(value.trim()).length >= 1, escapeHTML(value));
 </script>
 
 <div class="wrap">
@@ -78,7 +79,7 @@
 		<SmallAction>I</SmallAction>
 		<SmallAction>B</SmallAction>
 		<div class="submit">
-			<SubmitChatAction on:click={submitMessage} active={value.trim().length > 1} />
+			<SubmitChatAction on:click={submitMessage} active={value.trim().length >= 1} />
 		</div>
 	</div>
 </div>

@@ -26,6 +26,7 @@
 		$onlineUsers = users;
 	});
 
+	// Maintain online users
 	socket.on("user:connected", (user: User) => {
 		onlineUsers.update((users) => {
 			users.push(user);

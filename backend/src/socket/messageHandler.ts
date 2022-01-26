@@ -16,11 +16,11 @@ interface GroupMessage {
 // }
 
 export default (io: Server, socket: Socket) => {
-	const onGroupMessageSend = async ({ message, room, channelId }: GroupMessage) => {
-		if (!socket.rooms.has(room)) return;
+	const onGroupMessageSend = async ({ message, channelId }: GroupMessage) => {
+		if (!socket.rooms.has(channelId)) return;
 
-		const payload = { message, username: socket.user.username, room };
-		io.in(room).emit('message:read', payload);
+		const payload = { message, username: socket.user.username, channelId };
+		io.in(channelId).emit('message:read', payload);
 
 		const parsedChannelId = parseInt(channelId, 10);
 
@@ -34,10 +34,5 @@ export default (io: Server, socket: Socket) => {
 		});
 	};
 
-	// const onPrivateMessageSend = ({ message, username, socketId }: PrivateMessage) => {
-	// 	const payload = { message, username: socket.user.username };
-	// };
-
 	socket.on('message:send', onGroupMessageSend);
-	// socket.on('private:send', onPrivateMessageSend);
 };

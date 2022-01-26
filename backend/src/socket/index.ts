@@ -1,9 +1,11 @@
 import logger from '@logger';
+import prisma from '@controllers/db-controller';
 import { Server as HttpServer } from 'http';
 import { Server, Server as SocketServer, ServerOptions, Socket } from 'socket.io';
-import handleDisconnect from './connectionHandler';
+import { Channel } from '@prisma/client';
 import registerMessageHandler from './messageHandler';
 import registerRoomHandler from './roomHandler';
+import handleDisconnect from './connectionHandler';
 import { validateUser } from './socketMiddlewear';
 
 const SOCKET_SERVER_CONFIG: Partial<ServerOptions> = {
@@ -16,7 +18,31 @@ const SOCKET_SERVER_CONFIG: Partial<ServerOptions> = {
 	path: '/socket.io'
 };
 
+// TODO Abstract away - Used for joining users into their respective channels
+const joinUserChannels = async (socket: Socket) => {
+	const userChannels = await prisma.user.findUnique({
+		where: {
+			id: socket.user.id
+		},
+		include: {
+			channels: {
+				select: {
+					id: true,
+					name: true
+				}
+			}
+		}
+	});
+
+	const channels = userChannels.channels.reduce((acc, curr): Pick<Channel, 'id' | 'name'>[] => {
+		acc.push(curr.id);
+		return acc;
+	}, []);
+	await socket.join(channels);
+};
+
 const handleConnection = async (io: Server, socket: Socket) => {
+	await joinUserChannels(socket);
 	const sockets = await io.fetchSockets();
 	const data = sockets.map(socketCon => socketCon.user);
 	socket.broadcast.emit('user:connected', socket.user);

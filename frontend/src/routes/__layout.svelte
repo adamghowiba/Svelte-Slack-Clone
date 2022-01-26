@@ -50,6 +50,13 @@
 		{/if}
 	</div>
 	{/if} -->
+<div class="wrapper">
+	{#if $notifcations}
+		{#each $notifcations as data}
+			<ChatNotifcation id={data.id} message={data.message} username={data.sender.username} />
+		{/each}
+	{/if}
+</div>
 {#if $overlay}
 	<div class="overlay" on:click={() => ($overlay = false)} />
 {/if}

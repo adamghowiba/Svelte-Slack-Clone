@@ -2,6 +2,7 @@
 	import { notifcations } from "$lib/stores";
 	import { onDestroy, onMount } from "svelte";
 	import { fade } from "svelte/transition";
+	import sanitizeHtml from "sanitize-html";
 
 	export let message: string;
 	export let username: string;
@@ -17,12 +18,12 @@
 			state.shift();
 			return state;
 		});
-	}, 5000);
+	}, 3500);
 </script>
 
 <div class="notifcation" on:click={closeNotifcation}>
 	<h5>{username}</h5>
-	<p>{message}</p>
+	<p>{@html sanitizeHtml(message)}</p>
 </div>
 
 <style lang="scss">
