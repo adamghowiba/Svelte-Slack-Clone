@@ -2,7 +2,7 @@
 
 <p align="center"><img src="https://webrevived.s3.amazonaws.com/images/wr_logo.png" width="100px" alt="project-image"></p>
 
-<p id="description">Zulip is an open-source team collaboration tool with unique topic-based threading that combines the best of email and chat to make remote work productive and delightful.</p>
+<p id="description">A slack clone built with Svelte & ❤️
 
 <h2>🚀 Demo</h2>
 
