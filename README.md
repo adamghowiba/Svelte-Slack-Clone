@@ -1,4 +1,4 @@
-<h1 align="center" id="title">DMT ADventure Monorepo</h1>
+<h1 align="center" id="title">DMT Adventure Monorepo</h1>
 
 <p id="description" align="center">DMT Adventure monorepo made with NX, NestJS & Svelte
 
